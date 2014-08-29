@@ -1,6 +1,6 @@
 /*
  * Copyright © 2006 Robert Millan
- * Copyright © 2010-2011 Guillem Jover
+ * Copyright © 2010-2012 Guillem Jover <guillem@hadrons.org>
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -33,14 +33,22 @@
 #include <string.h>
 #include <stdlib.h>
 
+#ifdef HAVE___PROGNAME
+extern const char *__progname;
+#else
 static const char *__progname = NULL;
+#endif
 
 const char *
 getprogname(void)
 {
-#ifdef __GLIBC__
+#if defined(HAVE_PROGRAM_INVOCATION_SHORT_NAME)
 	if (__progname == NULL)
 		__progname = program_invocation_short_name;
+#elif defined(HAVE_GETEXECNAME)
+	/* getexecname(3) returns an absolute pathname, normalize it. */
+	if (__progname == NULL)
+		setprogname(getexecname());
 #endif
 
 	return __progname;

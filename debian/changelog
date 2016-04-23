@@ -1,3 +1,65 @@
+libbsd (0.8.3-1) unstable; urgency=medium
+
+  * New upstream release.
+    - Fix a memory leak.
+    - Various portability fixes.
+    - Improve test suite.
+  * Switch Homepage and debian/watch URLs from http:// to https://.
+  * Now using Standards-Version 3.9.8 (no changes needed).
+  * Switch to the dpkg makefile fragments in debian/rules.
+  * Enable hardening bindnow feature.
+
+ -- Guillem Jover <guillem@debian.org>  Sat, 23 Apr 2016 11:11:35 +0200
+
+libbsd (0.8.2-1) unstable; urgency=medium
+
+  * New upstream release.
+    - Fix heap buffer overflow in fgetwln().
+    - Various test suite fixes.
+  * Switch debug package to an automatic dbgsym package.
+  * Output the test suite log on errors.
+  * Remove old upgrade postinst to handle lost replaced nlist.h.
+  * Switch Vcs-Git URL from git to https.
+  * Switch debian/copyright Format field URL to https.
+
+ -- Guillem Jover <guillem@debian.org>  Wed, 27 Jan 2016 17:25:11 +0100
+
+libbsd (0.8.1-1) unstable; urgency=medium
+
+  * New upstream release.
+    - Add support for GNU/Hurd and GNU/kFreeBSD. (Closes: #806840)
+    - Fix implicit dependencies for non-overlaid headers. (Closes: #807730)
+  * Switch debian/copyright to machine readable format, reusing upstream
+    COPYING file.
+  * Use https for hadrons.org URLs.
+
+ -- Guillem Jover <guillem@debian.org>  Mon, 14 Dec 2015 04:10:23 +0100
+
+libbsd (0.8.0-2) unstable; urgency=medium
+
+  * Revert addition of libtestu01-0-dev into Build-Depends as it is only
+    available in the non-free area of the archive for now.
+
+ -- Guillem Jover <guillem@debian.org>  Wed, 02 Dec 2015 00:40:34 +0100
+
+libbsd (0.8.0-1) unstable; urgency=medium
+
+  * New upstream release.
+    - Add new man page for reallocarray(3).
+    - Rename funopen.3 manpage to funopen.3bsd.
+    - Add __DECONST, __DEVOLATILE, __DEQUALIFY, __offsetof, __rangeof and
+      __containerof to sys/cdefs.h.
+    - Sync sys/queue.h from FreeBSD.
+    - Add compile and link-time deprecation warnings for fgetln().
+    - Add explicit_bzero() function from OpenBSD.
+    - Fix arc4random prototypes from uchar to unsigned char. (Closes: #719640)
+    - Update arc4random to use ChaCha20. (Closes: #747671)
+  * Switch Vcs-Browser to a cgit URL.
+  * Now using Standards-Version 3.9.6 (no changes needed).
+  * Add libtestu01-0-dev to Build-Depends to test arc4random implementation.
+
+ -- Guillem Jover <guillem@debian.org>  Mon, 30 Nov 2015 23:34:00 +0100
+
 libbsd (0.7.0-2) unstable; urgency=high
 
   * Fix typo in package descriptions. (Closes: #756596)

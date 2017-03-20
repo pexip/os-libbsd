@@ -1,5 +1,5 @@
 /*
- * Copyright © 2009 Guillem Jover
+ * Copyright © 2009, 2012 Guillem Jover <guillem@hadrons.org>
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -46,7 +46,11 @@
 #elif defined(__amd64__)
 
 #define ELF_TARG_MACH	EM_X86_64
+#if defined(__ILP32__)
+#define ELF_TARG_CLASS	ELFCLASS32
+#else
 #define ELF_TARG_CLASS	ELFCLASS64
+#endif
 #define ELF_TARG_DATA	ELFDATA2LSB
 
 #elif defined(__arm__)
@@ -54,6 +58,16 @@
 #define ELF_TARG_MACH	EM_ARM
 #define ELF_TARG_CLASS	ELFCLASS32
 #if defined(__ARMEB__)
+#define ELF_TARG_DATA	ELFDATA2MSB
+#else
+#define ELF_TARG_DATA	ELFDATA2LSB
+#endif
+
+#elif defined(__aarch64__)
+
+#define ELF_TARG_MACH	EM_AARCH64
+#define ELF_TARG_CLASS	ELFCLASS64
+#if defined(__AARCH64EB__)
 #define ELF_TARG_DATA	ELFDATA2MSB
 #else
 #define ELF_TARG_DATA	ELFDATA2LSB
@@ -163,6 +177,12 @@
 #else
 #define ELF_TARG_CLASS	ELFCLASS32
 #endif
+#define ELF_TARG_DATA	ELFDATA2MSB
+
+#elif defined(__or1k__)
+
+#define ELF_TARG_MACH	EM_OPENRISC
+#define ELF_TARG_CLASS	ELFCLASS32
 #define ELF_TARG_DATA	ELFDATA2MSB
 
 #else

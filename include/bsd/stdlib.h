@@ -1,7 +1,7 @@
 /*
  * Copyright © 2005 Aurelien Jarno
  * Copyright © 2006 Robert Millan
- * Copyright © 2008-2011 Guillem Jover
+ * Copyright © 2008-2011 Guillem Jover <guillem@hadrons.org>
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -26,13 +26,6 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef LIBBSD_STDLIB_H
-#define LIBBSD_STDLIB_H
-
-#include <sys/cdefs.h>
-#include <sys/stat.h>
-#include <stdint.h>
-
 #ifdef LIBBSD_OVERLAY
 #include_next <stdlib.h>
 #else
@@ -46,16 +39,12 @@
 #include <bsd/libutil.h>
 #endif
 
-/* FIXME: Temporary inclusions to avoid API breakage, will be removed soon. */
-#ifndef LIBBSD_DISABLE_DEPRECATED
-#ifdef LIBBSD_OVERLAY
-#include <stdio.h>
-#include <unistd.h>
-#else
-#include <bsd/stdio.h>
-#include <bsd/unistd.h>
-#endif
-#endif
+#ifndef LIBBSD_STDLIB_H
+#define LIBBSD_STDLIB_H
+
+#include <sys/cdefs.h>
+#include <sys/stat.h>
+#include <stdint.h>
 
 __BEGIN_DECLS
 u_int32_t arc4random();
@@ -78,9 +67,12 @@ int sradixsort(const unsigned char **base, int nmemb,
                const unsigned char *table, unsigned endbyte);
 
 void *reallocf(void *ptr, size_t size);
+void *reallocarray(void *ptr, size_t nmemb, size_t size);
 
 long long strtonum(const char *nptr, long long minval, long long maxval,
                    const char **errstr);
+
+char *getbsize(int *headerlenp, long *blocksizep);
 __END_DECLS
 
 #endif

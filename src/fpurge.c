@@ -1,5 +1,5 @@
 /*
- * Copyright © 2011 Guillem Jover
+ * Copyright © 2011 Guillem Jover <guillem@hadrons.org>
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -24,13 +24,11 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#define _GNU_SOURCE 1
-
 #include <errno.h>
 #include <stdio.h>
 #include <stdio_ext.h>
 
-#ifdef __GLIBC__
+#ifdef HAVE___FPURGE
 int
 fpurge(FILE *fp)
 {

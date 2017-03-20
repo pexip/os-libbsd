@@ -40,7 +40,10 @@
 #define _LIBUTIL_H_
 
 #include <features.h>
+#include <sys/cdefs.h>
 #include <sys/types.h>
+#include <stdint.h>
+#include <stdio.h>
 
 /* for pidfile.c */
 struct pidfh {
@@ -53,6 +56,7 @@ struct pidfh {
 __BEGIN_DECLS
 int humanize_number(char *buf, size_t len, int64_t bytes,
     const char *suffix, int scale, int flags);
+int expand_number(const char *_buf, uint64_t *_num);
 
 int flopen(const char *_path, int _flags, ...);
 
@@ -60,6 +64,8 @@ struct pidfh *pidfile_open(const char *path, mode_t mode, pid_t *pidptr);
 int pidfile_write(struct pidfh *pfh);
 int pidfile_close(struct pidfh *pfh);
 int pidfile_remove(struct pidfh *pfh);
+
+char   *fparseln(FILE *, size_t *, size_t *, const char[3], int);
 __END_DECLS
 
 /* humanize_number(3) */
@@ -70,5 +76,14 @@ __END_DECLS
 
 #define HN_GETSCALE             0x10
 #define HN_AUTOSCALE            0x20
+
+/*
+ * fparseln() specific operation flags.
+ */
+#define FPARSELN_UNESCESC	0x01
+#define FPARSELN_UNESCCONT	0x02
+#define FPARSELN_UNESCCOMM	0x04
+#define FPARSELN_UNESCREST	0x08
+#define FPARSELN_UNESCALL	0x0f
 
 #endif /* !_LIBUTIL_H_ */

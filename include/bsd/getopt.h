@@ -1,5 +1,5 @@
 /*
- * Copyright © 2011 Guillem Jover
+ * Copyright © 2011 Guillem Jover <guillem@hadrons.org>
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -24,16 +24,10 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef LIBBSD_GETOPT_H
-#define LIBBSD_GETOPT_H
-
 #ifdef LIBBSD_OVERLAY
 #include_next <getopt.h>
 #include <unistd.h>
 #else
-#warning "Deprecated header, use <bsd/unistd.h> or <unistd.h> with libbsd-overlay.pc instead."
 #include <getopt.h>
 #include <bsd/unistd.h>
-#endif
-
 #endif

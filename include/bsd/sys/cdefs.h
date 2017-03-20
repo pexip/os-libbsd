@@ -1,5 +1,5 @@
 /*
- * Copyright © 2004-2006, 2009-2011 Guillem Jover
+ * Copyright © 2004-2006, 2009-2011 Guillem Jover <guillem@hadrons.org>
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -24,14 +24,14 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef LIBBSD_SYS_CDEFS_H
-#define LIBBSD_SYS_CDEFS_H
-
 #ifdef LIBBSD_OVERLAY
 #include_next <sys/cdefs.h>
 #else
 #include <sys/cdefs.h>
 #endif
+
+#ifndef LIBBSD_SYS_CDEFS_H
+#define LIBBSD_SYS_CDEFS_H
 
 /*
  * Some kFreeBSD headers expect those macros to be set for sanity checks.

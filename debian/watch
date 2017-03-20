@@ -1,2 +1,3 @@
 version=3
-http://libbsd.freedesktop.org/releases/	libbsd-(.*)\.tar\.gz	debian	uupdate
+opts=pgpsigurlmangle=s/$/.asc/ \
+http://libbsd.freedesktop.org/releases/	libbsd-(.*)\.tar\.[xg]z	debian	uupdate

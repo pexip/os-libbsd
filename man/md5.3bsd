@@ -32,13 +32,13 @@
 .Ft void
 .Fn MD5Init "MD5_CTX *context"
 .Ft void
-.Fn MD5Update "MD5_CTX *context" "const u_int8_t *data" "size_t len"
+.Fn MD5Update "MD5_CTX *context" "const uint8_t *data" "size_t len"
 .Ft void
 .Fn MD5Pad "MD5_CTX *context"
 .Ft void
-.Fn MD5Final "u_int8_t digest[MD5_DIGEST_LENGTH]" "MD5_CTX *context"
+.Fn MD5Final "uint8_t digest[MD5_DIGEST_LENGTH]" "MD5_CTX *context"
 .Ft void
-.Fn MD5Transform "u_int32_t state[4]" "u_int8_t block[MD5_BLOCK_LENGTH]"
+.Fn MD5Transform "uint32_t state[4]" "uint8_t block[MD5_BLOCK_LENGTH]"
 .Ft "char *"
 .Fn MD5End "MD5_CTX *context" "char *buf"
 .Ft "char *"
@@ -46,7 +46,7 @@
 .Ft "char *"
 .Fn MD5FileChunk "const char *filename" "char *buf" "off_t offset" "off_t length"
 .Ft "char *"
-.Fn MD5Data "const u_int8_t *data" "size_t len" "char *buf"
+.Fn MD5Data "const uint8_t *data" "size_t len" "char *buf"
 .Sh DESCRIPTION
 The MD5 functions calculate a 128-bit cryptographic checksum (digest)
 for any number of input bytes.

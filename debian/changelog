@@ -1,3 +1,9 @@
+libbsd (0.8.3-1pexip1) pexip; urgency=medium
+
+  * Migrate to Stretch
+
+ -- John-Mark Bell <jmb@pexip.com>  Tue, 10 Jul 2018 11:10:36 +0000
+
 libbsd (0.8.3-1) unstable; urgency=medium
 
   * New upstream release.

@@ -3,11 +3,13 @@ Priority: optional
 Section: libs
 Maintainer: Pexip AS <packaging@pexip.com>
 XSBC-Pexip-Original-Maintainer: Guillem Jover <guillem@debian.org>
-Vcs-Browser: http://git.hadrons.org/?p=debian/pkgs/libbsd.git
-Vcs-Git: git://git.hadrons.org/git/debian/pkgs/libbsd.git
-Build-Depends: dpkg-dev (>= 1.15.7), debhelper (>= 9), autotools-dev
-Standards-Version: 3.9.5
-Homepage: http://libbsd.freedesktop.org/
+Vcs-Browser: https://git.hadrons.org/cgit/debian/pkgs/libbsd.git
+Vcs-Git: https://git.hadrons.org/git/debian/pkgs/libbsd.git
+Build-Depends: dpkg-dev (>= 1.15.7), debhelper (>= 9.20160114), autotools-dev
+# Consider readding the following once and if it moves out of non-free.
+# libtestu01-0-dev <!nocheck>
+Standards-Version: 3.9.8
+Homepage: https://libbsd.freedesktop.org/
 XS-Pexip-Upstream: http://ftp.debian.org/debian/ stretch
 
 Package: libbsd-dev
@@ -33,6 +35,7 @@ Description: utility functions from BSD systems - development files
   * be16enc, be32enc, be64enc, le16enc, le32enc, le64enc.
   * closefrom.
   * expand_number, dehumanize_number, humanize_number, strtonum, fmtcheck.
+  * explicit_bzero.
   * errc, verrc, vwarnc, warnc.
   * fgetln, fparseln, fgetwln, flopen, fpurge, funopen.
   * getbsize.
@@ -73,19 +76,6 @@ Section: debian-installer
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: utility functions from BSD systems - shared library
- This library provides some C functions such as strlcpy() that are commonly
- available on BSD systems but not on others like GNU systems.
- .
- For a detailed list of the provided functions, please see the libbsd-dev
- package description.
-
-Package: libbsd0-dbg
-Section: debug
-Priority: extra
-Architecture: any
-Multi-Arch: same
-Depends: libbsd0 (= ${binary:Version}), ${misc:Depends}
-Description: utility functions from BSD systems - debugging symbols
  This library provides some C functions such as strlcpy() that are commonly
  available on BSD systems but not on others like GNU systems.
  .

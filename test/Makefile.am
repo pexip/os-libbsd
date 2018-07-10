@@ -1,36 +1,70 @@
 ## Process this file with automake to produce Makefile.in
 
-AM_CPPFLAGS = \
+HEADERS_CPPFLAGS = \
 	-I$(top_builddir) \
-	-isystem $(top_srcdir)/include/bsd/ \
 	-include $(top_builddir)/config.h \
-	-DLIBBSD_OVERLAY -DLIBBSD_DISABLE_DEPRECATED \
+	-DLIBBSD_DISABLE_DEPRECATED \
 	-D__REENTRANT
 
+AM_CPPFLAGS = \
+	-isystem $(top_srcdir)/include/bsd/ \
+	$(HEADERS_CPPFLAGS) \
+	-DLIBBSD_OVERLAY
+
+AM_TESTS_ENVIRONMENT = \
+	export CC="$(CC)"; \
+	export CPPFLAGS="$(HEADERS_CPPFLAGS)"; \
+	export top_srcdir="$(top_srcdir)"; \
+	$(nil)
+
+LDADD = $(top_builddir)/src/libbsd.la
+
+EXTRA_DIST = \
+	headers-overlay.sh \
+	headers-system.sh \
+	$(nil)
+
+check_SCRIPTS = \
+	headers-overlay.sh \
+	headers-system.sh \
+	$(nil)
+
 check_PROGRAMS = \
-	headers \
 	overlay \
+	bzero \
+	closefrom \
 	endian \
 	humanize \
 	fgetln \
 	funopen \
+	fparseln \
+	fpurge \
+	md5 \
 	proctitle-init \
+	strmode \
 	$(nil)
 
-if BUILD_LIBBSD_CTOR
-check_PROGRAMS += proctitle
+if HAVE_LIBTESTU01
+arc4random_LDADD = $(LDADD) $(TESTU01_LIBS)
+
+check_PROGRAMS += arc4random
 endif
 
-humanize_LDFLAGS = $(top_builddir)/src/libbsd.la
-fgetln_LDFLAGS = $(top_builddir)/src/libbsd.la
-funopen_LDFLAGS = $(top_builddir)/src/libbsd.la
-proctitle_init_SOURCES = proctitle.c
-proctitle_init_CPPFLAGS = $(AM_CPPFLAGS) -DTEST_USE_SETPROCTITLE_INIT=1
-proctitle_init_LDFLAGS = $(top_builddir)/src/libbsd.la
+if BUILD_LIBBSD_CTOR
 proctitle_LDFLAGS = \
 	-Wl,-u,libbsd_init_func \
 	$(top_builddir)/src/libbsd-ctor.a \
 	$(top_builddir)/src/libbsd.la \
 	$(nil)
 
-TESTS = $(check_PROGRAMS)
+check_PROGRAMS += proctitle
+endif
+
+fgetln_SOURCES = test-stream.c test-stream.h fgetln.c
+fgetln_CFLAGS = -Wno-deprecated-declarations
+fparseln_SOURCES = test-stream.c test-stream.h fparseln.c
+
+proctitle_init_SOURCES = proctitle.c
+proctitle_init_CPPFLAGS = $(AM_CPPFLAGS) -DTEST_USE_SETPROCTITLE_INIT=1
+
+TESTS = $(check_SCRIPTS) $(check_PROGRAMS)

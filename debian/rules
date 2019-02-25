@@ -23,7 +23,7 @@ D := $(CURDIR)/debian
 
 config.status: configure
 	dh_testdir
-	dh_autotools-dev_updateconfig
+	dh_update_autotools_config
 
 	./configure \
 		CPPFLAGS="$(CPPFLAGS)" \
@@ -57,7 +57,6 @@ clean:
 
 	[ ! -f Makefile ] || $(MAKE) distclean
 
-	dh_autotools-dev_restoreconfig
 	dh_clean
 
 install-arch: check-arch
@@ -66,8 +65,7 @@ install-arch: check-arch
 	dh_prep
 	dh_installdirs
 
-	$(MAKE) install DESTDIR=$(D)/tmp \
-	                runtimelibdir=/lib/$(DEB_HOST_MULTIARCH)
+	$(MAKE) install DESTDIR=$(D)/tmp
 
 binary-indep:
 # Nothing to do.
@@ -81,7 +79,7 @@ binary-arch: install-arch
 	dh_installman
 	dh_installexamples
 	dh_link
-	dh_strip --dbgsym-migration='$(libdbg) (<< 0.8.1-1~)'
+	dh_strip
 	dh_compress
 	dh_fixperms
 	dh_makeshlibs --add-udeb=$(libudeb)

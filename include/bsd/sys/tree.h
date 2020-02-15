@@ -27,10 +27,14 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef	_SYS_TREE_H_
-#define	_SYS_TREE_H_
+#ifndef LIBBSD_SYS_TREE_H
+#define LIBBSD_SYS_TREE_H
 
+#ifdef LIBBSD_OVERLAY
 #include <sys/cdefs.h>
+#else
+#include <bsd/sys/cdefs.h>
+#endif
 
 /*
  * This file defines data structures for different types of trees:
@@ -762,4 +766,4 @@ name##_RB_MINMAX(struct name *head, int val)				\
 	    ((x) != NULL) && ((y) = name##_RB_PREV(x), (x) != NULL);	\
 	     (x) = (y))
 
-#endif	/* _SYS_TREE_H_ */
+#endif /* LIBBSD_SYS_TREE_H */

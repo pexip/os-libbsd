@@ -51,7 +51,7 @@ char *
 MD5FileChunk(const char *filename, char *buf, off_t off, off_t len)
 {
 	struct stat sb;
-	u_char buffer[BUFSIZ];
+	unsigned char buffer[BUFSIZ];
 	MD5_CTX ctx;
 	int fd, save_errno;
 	ssize_t nr;
@@ -92,7 +92,7 @@ MD5File(const char *filename, char *buf)
 }
 
 char *
-MD5Data(const u_char *data, size_t len, char *buf)
+MD5Data(const unsigned char *data, size_t len, char *buf)
 {
 	MD5_CTX ctx;
 

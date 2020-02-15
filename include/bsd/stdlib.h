@@ -42,14 +42,18 @@
 #ifndef LIBBSD_STDLIB_H
 #define LIBBSD_STDLIB_H
 
+#ifdef LIBBSD_OVERLAY
 #include <sys/cdefs.h>
+#else
+#include <bsd/sys/cdefs.h>
+#endif
 #include <sys/stat.h>
 #include <stdint.h>
 
 __BEGIN_DECLS
 uint32_t arc4random(void);
 void arc4random_stir(void);
-void arc4random_addrandom(u_char *dat, int datlen);
+void arc4random_addrandom(unsigned char *dat, int datlen);
 void arc4random_buf(void *_buf, size_t n);
 uint32_t arc4random_uniform(uint32_t upper_bound);
 
@@ -67,7 +71,10 @@ int sradixsort(const unsigned char **base, int nmemb,
                const unsigned char *table, unsigned endbyte);
 
 void *reallocf(void *ptr, size_t size);
+#if !defined(__GLIBC__) || \
+    (defined(__GLIBC__) && (!__GLIBC_PREREQ(2, 26) || !defined(_GNU_SOURCE)))
 void *reallocarray(void *ptr, size_t nmemb, size_t size);
+#endif
 
 long long strtonum(const char *nptr, long long minval, long long maxval,
                    const char **errstr);

@@ -20,8 +20,8 @@
  * Materiel Command, USAF, under agreement number F39502-99-1-0512.
  */
 
-#ifndef _READPASSPHRASE_H_
-#define _READPASSPHRASE_H_
+#ifndef LIBBSD_READPASSPHRASE_H
+#define LIBBSD_READPASSPHRASE_H
 
 #define RPP_ECHO_OFF    0x00		/* Turn off echo (default). */
 #define RPP_ECHO_ON     0x01		/* Leave echo on. */
@@ -31,11 +31,15 @@
 #define RPP_SEVENBIT    0x10		/* Strip the high bit from input. */
 #define RPP_STDIN       0x20		/* Read from stdin, not /dev/tty */
 
+#ifdef LIBBSD_OVERLAY
 #include <sys/cdefs.h>
+#else
+#include <bsd/sys/cdefs.h>
+#endif
 #include <sys/types.h>
 
 __BEGIN_DECLS
 char * readpassphrase(const char *, char *, size_t, int);
 __END_DECLS
 
-#endif /* !_READPASSPHRASE_H_ */
+#endif /* !LIBBSD_READPASSPHRASE_H */

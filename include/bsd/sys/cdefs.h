@@ -24,14 +24,47 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+#ifndef __has_include
+#define __has_include(x) 1
+#endif
+#ifndef __has_include_next
+#define __has_include_next(x) 1
+#endif
+
 #ifdef LIBBSD_OVERLAY
+/*
+ * Some libc implementations do not have a <sys/cdefs.h>, in particular
+ * musl, try to handle this gracefully.
+ */
+#if __has_include_next(<sys/cdefs.h>)
 #include_next <sys/cdefs.h>
+#endif
 #else
+#if __has_include(<sys/cdefs.h>)
 #include <sys/cdefs.h>
+#endif
 #endif
 
 #ifndef LIBBSD_SYS_CDEFS_H
 #define LIBBSD_SYS_CDEFS_H
+
+#ifndef __BEGIN_DECLS
+#ifdef __cplusplus
+#define __BEGIN_DECLS	extern "C" {
+#define __END_DECLS	}
+#else
+#define __BEGIN_DECLS
+#define __END_DECLS
+#endif
+#endif
+
+/*
+ * On non-glibc based systems, we cannot unconditionally use the
+ * __GLIBC_PREREQ macro as it gets expanded before evaluation.
+ */
+#ifndef __GLIBC_PREREQ
+#define __GLIBC_PREREQ(maj, min) 0
+#endif
 
 /*
  * Some kFreeBSD headers expect those macros to be set for sanity checks.
@@ -43,11 +76,28 @@
 #define _SYS_CDEFS_H
 #endif
 
+#define LIBBSD_CONCAT(x, y)	x ## y
+#define LIBBSD_STRING(x)	#x
+
 #ifdef __GNUC__
 #define LIBBSD_GCC_VERSION (__GNUC__ << 8 | __GNUC_MINOR__)
 #else
 #define LIBBSD_GCC_VERSION 0
 #endif
+
+#if LIBBSD_GCC_VERSION >= 0x0405
+#define LIBBSD_DEPRECATED(x) __attribute__((deprecated(x)))
+#elif LIBBSD_GCC_VERSION >= 0x0301
+#define LIBBSD_DEPRECATED(x) __attribute__((deprecated))
+#else
+#define LIBBSD_DEPRECATED(x)
+#endif
+
+#if LIBBSD_GCC_VERSION >= 0x0200
+#define LIBBSD_REDIRECT(name, proto, alias) name proto __asm__(LIBBSD_ASMNAME(#alias))
+#endif
+#define LIBBSD_ASMNAME(cname) LIBBSD_ASMNAME_PREFIX(__USER_LABEL_PREFIX__, cname)
+#define LIBBSD_ASMNAME_PREFIX(prefix, cname) LIBBSD_STRING(prefix) cname
 
 #ifndef __dead2
 # if LIBBSD_GCC_VERSION >= 0x0207
@@ -113,6 +163,12 @@
 #ifndef __bounded__
 # define __bounded__(x, y, z)
 #endif
+
+/*
+ * Return the number of elements in a statically-allocated array,
+ * __x.
+ */
+#define	__arraycount(__x)	(sizeof(__x) / sizeof(__x[0]))
 
 /*
  * We define this here since <stddef.h>, <sys/queue.h>, and <sys/types.h>

@@ -1,3 +1,116 @@
+libbsd (0.9.1-2) unstable; urgency=medium
+
+  * Perform a proper and correct /usr-merge transition by moving the package
+    contents from / to /usr.
+  * Now using Standards-Version 4.3.0 (no changes needed).
+  * Remove support for old debug symbol package migration.
+  * Add a Build-Depends-Package field to the symbols file.
+
+ -- Guillem Jover <guillem@debian.org>  Mon, 25 Feb 2019 01:33:03 +0100
+
+libbsd (0.9.1-1) unstable; urgency=medium
+
+  * New upstream release.
+    - Fix ABI break coming from NetBSD vis/unvis module import. The OpenBSD
+      interface is now again the default, but it will emit warning, and users
+      should switch to the new NetBSD interface which will be the default in
+      0.10.0. Thanks to Sven Joachim <svenjoac@gmx.de> for the report.
+      Closes: #899282
+    - Fix COPYING file to adhere to the specified format.
+
+ -- Guillem Jover <guillem@debian.org>  Tue, 22 May 2018 16:31:10 +0200
+
+libbsd (0.9.0-1) unstable; urgency=medium
+
+  * New upstream release.
+    - Portability fixes for Sparc, OpenRISC, musl, uClibc, non-glibc in
+      general and Windows.
+    - Add __arraycount() macro.
+    - Add flopenat() function.
+    - Add strtoi() and strtou() functions.
+    - Add several new vis and unvis functions.
+    - Add pidfile_fileno() function, and struct pidfh is now opaque.
+    - The humanize_number() now understands HN_IEC_PREFIXES.
+    - The fmtcheck() function supports all standard printf(3) conversions.
+    - The getentropy(), and thus arc4random() functions will not block
+      anymore on Linux on boot when there's not enough entropy available.
+      Closes: #898088
+    - The arc4random() function handles direct clone() calls better.
+    - The fgetwln() function has now been marked as deprecated.
+  * Now using Standards-Version 4.1.4 (no changes needed).
+
+ -- Guillem Jover <guillem@debian.org>  Mon, 21 May 2018 05:37:20 +0200
+
+libbsd (0.8.7-1) unstable; urgency=medium
+
+  * New upstream release.
+    - Handle several functions now being provided by glibc.
+    - Fix nlist(3) unit test on IA64. Closes: #881611
+  * Now using Standards-Version 4.1.3 (no changes needed).
+  * Switch to debhelper compatibility level 11.
+
+ -- Guillem Jover <guillem@debian.org>  Sat, 13 Jan 2018 17:32:01 +0100
+
+libbsd (0.8.6-3) unstable; urgency=medium
+
+  * Line-wrap remaining Conflicts field.
+  * Now using Standards-Version 4.1.1 (no changes needed).
+  * Switch to debian/watch format version 4.
+  * Set Rules-Requires-Root to no.
+
+ -- Guillem Jover <guillem@debian.org>  Sun, 05 Nov 2017 16:45:39 +0100
+
+libbsd (0.8.6-2) unstable; urgency=medium
+
+  * Line-wrap dependency fields.
+  * Now using Standards-Version 4.1.0 (no changes needed).
+  * Replace dh_autotools-dev_* commands with dh_update_autotools_config,
+    and remove explicit Build-Depends on autotools-dev.
+  * Remove ancient versioned dpkg-dev Build-Depends, satisfied in oldstable.
+
+ -- Guillem Jover <guillem@debian.org>  Sat, 02 Sep 2017 19:25:54 +0200
+
+libbsd (0.8.6-1) unstable; urgency=medium
+
+  * New upstream release.
+    - Fix nlist() unit tests to work on IA64 and PowerPC 64-bit ELFv1.
+    - Fix setproctitle() to work on systems with non-contiguous
+      argv + envp memory areas, such as current GNU/Hurd.
+
+ -- Guillem Jover <guillem@debian.org>  Mon, 17 Jul 2017 01:19:18 +0200
+
+libbsd (0.8.5-1) unstable; urgency=medium
+
+  * New upstream release.
+    - Handle libtool executable names in getprogname() unit test.
+      Closes: #865090
+    - Fix ELF definitions for PowerPC and MIPS in local-elf.h.
+      Thanks to James Cowgill <jcowgill@debian.org>. Closes: #865091
+    - Ship and install libbsd(7).
+
+ -- Guillem Jover <guillem@debian.org>  Sat, 24 Jun 2017 17:01:03 +0200
+
+libbsd (0.8.4-1) unstable; urgency=medium
+
+  * New upstream release.
+    - Add support for TileGX. Closes: #847560
+    - Add support for RISC-V.
+    - Gracefully handle lack of system <sys/cdefs.h>. Closes: #810589
+    - Do not provide funopen() on musl.
+    - Do not use legacy BSD u_* types.
+    - Move all man pages to section 3bsd.
+    - Add missing man page aliases.
+    - Add missing man pages for byteorder(3), errc(3) and fpurge(3).
+    - Add new libbsd(7) library overview man page.
+    - Improve test suite.
+    - Remove a.out support from nlist(). Closes: #818246
+    - Fix broken mmap() usage in nlist() by switching to pread().
+    - Add <sys/time.h> for some of its macros.
+  * Switch to debhelper compatibility level 10.
+  * Now using Standards-Version 4.0.0 (no changes needed).
+
+ -- Guillem Jover <guillem@debian.org>  Mon, 19 Jun 2017 04:30:28 +0200
+
 libbsd (0.8.3-1pexip1) pexip; urgency=medium
 
   * Migrate to Stretch

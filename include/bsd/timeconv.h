@@ -38,10 +38,14 @@
  * $FreeBSD$
  */
 
-#ifndef _TIMECONV_H_
-#define _TIMECONV_H_
+#ifndef LIBBSD_TIMECONV_H
+#define LIBBSD_TIMECONV_H
 
+#ifdef LIBBSD_OVERLAY
 #include <sys/cdefs.h>
+#else
+#include <bsd/sys/cdefs.h>
+#endif
 #include <stdint.h>
 #include <time.h>
 
@@ -54,4 +58,4 @@ time_t _long_to_time(long tlong);
 int _time_to_int(time_t t);
 time_t _int_to_time(int tint);
 
-#endif /* _TIMECONV_H_ */
+#endif /* LIBBSD_TIMECONV_H */

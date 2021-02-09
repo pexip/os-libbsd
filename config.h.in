@@ -30,6 +30,9 @@
 /* Define to 1 if you have the `getline' function. */
 #undef HAVE_GETLINE
 
+/* Define to 1 if you have the <grp.h> header file. */
+#undef HAVE_GRP_H
+
 /* Define to 1 if you have the <inttypes.h> header file. */
 #undef HAVE_INTTYPES_H
 
@@ -44,6 +47,9 @@
 
 /* Define to 1 if you have the `pstat_getproc' function. */
 #undef HAVE_PSTAT_GETPROC
+
+/* Define to 1 if you have the <pwd.h> header file. */
+#undef HAVE_PWD_H
 
 /* Define to 1 if you have the <stdint.h> header file. */
 #undef HAVE_STDINT_H
@@ -83,6 +89,9 @@
 
 /* Define to 1 if you have __progname */
 #undef HAVE___PROGNAME
+
+/* Define to 1 if you have __register_atfork */
+#undef HAVE___REGISTER_ATFORK
 
 /* Define to the sub-directory where libtool stores uninstalled libraries. */
 #undef LT_OBJDIR

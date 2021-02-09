@@ -1,5 +1,5 @@
 /*
- * Copyright © 2011, 2013, 2017 Guillem Jover
+ * Copyright © 2011, 2013, 2017, 2020 Guillem Jover
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -87,10 +87,10 @@ funopen_close(void *cookie)
 	struct funopen_cookie *cookiewrap = cookie;
 	int rc;
 
-	if (cookiewrap->closefn == NULL)
-		return 0;
-
-	rc = cookiewrap->closefn(cookiewrap->orig_cookie);
+	if (cookiewrap->closefn)
+		rc = cookiewrap->closefn(cookiewrap->orig_cookie);
+	else
+		rc = 0;
 
 	free(cookiewrap);
 

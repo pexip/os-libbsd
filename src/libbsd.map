@@ -35,6 +35,8 @@ LIBBSD_0.0 {
     strunvis;
     strunvisx;
 
+    /* The following functions are provided via the system libc or libmd
+     * implementations. */
     MD5Init;
     MD5Update;
     MD5Pad;
@@ -168,3 +170,28 @@ LIBBSD_0.9.1 {
     strnvis_netbsd;
     strnunvis_netbsd;
 } LIBBSD_0.9;
+
+LIBBSD_0.10.0 {
+    /* These BSD extensions are available on GNU systems, but not on other
+     * systems such as Windows or musl libc based ones. */
+    vwarn;
+    vwarnx;
+    warn;
+    warnx;
+    verr;
+    verrx;
+    err;
+    errx;
+} LIBBSD_0.9.1;
+
+LIBBSD_0.11.0 {
+    strnvisx;
+
+    recallocarray;
+    freezero;
+
+    gid_from_group;
+    group_from_gid;
+    uid_from_user;
+    user_from_uid;
+} LIBBSD_0.10.0;

@@ -38,6 +38,7 @@
 .Nd formatted error messages
 .Sh LIBRARY
 .ds str-Lb-libbsd Utility functions from BSD systems (libbsd, \-lbsd)
+.ds doc-str-Lb-libbsd \*[str-Lb-libbsd]
 .Lb libbsd
 .Sh SYNOPSIS
 .In err.h
@@ -144,6 +145,7 @@ if ((fd = open(block_device, O_RDONLY, 0)) == -1)
 .Xr printf 3 ,
 .Xr strerror 3
 .Sh HISTORY
+.ds doc-operating-system-NetBSD-7.0 7.0
 The functions
 .Fn errc ,
 .Fn verrc ,

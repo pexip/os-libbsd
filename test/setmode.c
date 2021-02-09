@@ -1,5 +1,5 @@
 /*
- * Copyright © 2017 Guillem Jover <guillem@hadrons.org>
+ * Copyright © 2017, 2020 Guillem Jover <guillem@hadrons.org>
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -25,19 +25,31 @@
  */
 
 #include <assert.h>
+#include <stdlib.h>
 #include <unistd.h>
 
 int
 main(int argc, char **argv)
 {
+	void *set;
+
 	umask(0);
 
-	assert(getmode(setmode("0"), 0) == 0);
+	set = setmode("0");
+	assert(getmode(set, 0) == 0);
+	free(set);
 
-	assert(getmode(setmode("7777"), 0) == 07777);
-	assert(getmode(setmode("1555"), 0) == 01555);
+	set = setmode("7777");
+	assert(getmode(set, 0) == 07777);
+	free(set);
 
-	assert(getmode(setmode("ugo=rwx"), 0) == 0777);
+	set = setmode("1555");
+	assert(getmode(set, 0) == 01555);
+	free(set);
+
+	set = setmode("ugo=rwx");
+	assert(getmode(set, 0) == 0777);
+	free(set);
 
 	/* FIXME: Complete unit tests. */
 

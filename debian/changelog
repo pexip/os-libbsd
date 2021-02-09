@@ -1,3 +1,77 @@
+libbsd (0.11.3-1) unstable; urgency=medium
+
+  * New upstream release.
+    - Rework of the libmd wrapping code to not require users to explicitly
+      link against libmd.
+    - Various build system fixes.
+    - Various portability fixes.
+  * Version libmd-dev Build-Depends for first release providing a udeb.
+    Closes: #982273
+
+ -- Guillem Jover <guillem@debian.org>  Tue, 09 Feb 2021 06:36:23 +0100
+
+libbsd (0.11.2-1) unstable; urgency=medium
+
+  * New upstream release.
+    - Update <sys/queue.h> from FreeBSD.
+    - Import some closefrom() changes from sudo.
+    - Make closefrom() use close_range() syscall on Linux when available.
+    - Update libbsd(7) man page with updates in 0.11.0.
+  * When running the autopkgtest test suite, first build the local library
+    so that we get the expected .la dependencies in place, before we build
+    the unit tests against the system library.
+
+ -- Guillem Jover <guillem@debian.org>  Mon, 08 Feb 2021 04:11:00 +0100
+
+libbsd (0.11.1-1) unstable; urgency=medium
+
+  * New upstream release.
+    - Export provided function strnvisx(). Closes: #935772
+    - New recallocarray() and freezero() from OpenBSD.
+    - New pwcache module from OpenBSD. Closes: #944083
+    - New timespec(3bsd) man page alias to timeval(3bsd).
+    - New progname implementation for Windows.
+    - New LIBBSD_VIS_OPENBSD selection macro.
+    - Switch from embedded hashing function implementations to use libmd.
+      Add libmd-dev to Build-Depends and libbsd-dev Depends.
+    - Various man pages cleanups.
+    - Various portability fixes.
+    - Various memory leak fixes.
+  * Switch to Standards-Version 4.5.1 (no changes needed).
+  * Switch to debhelper compatibility level 13.
+    - Stop passing --add-udeb to dh_makeshlibs, now handled automatically.
+    - Stop passing ChangeLog to dh_installchangelogs, now handled
+      automatically.
+  * Remove unused libdev variable from debian/rules.
+  * Export dpkg-buildflags variables so that they can take effect.
+  * Add new debian/upstream/metadata file.
+  * Refresh debian/upstream/signing-key.asc.
+    Thanks to Daniel Kahn Gillmor <dkg@fifthhorseman.net>.
+  * Switch to the dh sequencer.
+  * List all symbols explicitly in the symbols file.
+  * Add autopkgtests.
+
+ -- Guillem Jover <guillem@debian.org>  Sun, 07 Feb 2021 02:36:56 +0100
+
+libbsd (0.10.0-1) unstable; urgency=medium
+
+  * New upstream release.
+    - Several security related fixes for nlist() reported by Daniel Hodson
+      and one by Coverity Scan.
+    - Fix for a leak in the vis family of functions.
+    - Fix for a configure check to not unnecessarily link against librt.
+    - General portability fixes for musl, uClibc, macOS and GNU/kFreeBSD.
+    - New architectures support for nlist().
+    - Switch the <err.h> *c() functions to be standalone and add err(),
+      warn(), errx() and warnx() familiy of functions in case the system
+      lacks them.
+    - Several man page fixes.
+  * Switch to debhelper compatibility level 12.
+  * Switch from debian/compat to debhelper-commpat in Build-Depends.
+  * Switch to Standards-Version 4.4.0 (no changes needed).
+
+ -- Guillem Jover <guillem@debian.org>  Thu, 08 Aug 2019 21:57:41 +0200
+
 libbsd (0.9.1-2) unstable; urgency=medium
 
   * Perform a proper and correct /usr-merge transition by moving the package

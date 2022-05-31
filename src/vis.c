@@ -57,7 +57,6 @@
 
 #include <sys/cdefs.h>
 #include <sys/types.h>
-#include <sys/param.h>
 
 #include <assert.h>
 #pragma GCC diagnostic push
@@ -77,6 +76,8 @@ __weak_alias(strvisx,_strvisx)
 #include <limits.h>
 #include <stdio.h>
 #include <string.h>
+
+#include "local-link.h"
 
 #define _DIAGASSERT(x)
 
@@ -117,7 +118,8 @@ iscgraph(int c) {
 #define ISGRAPH(flags, c) \
     (((flags) & VIS_NOLOCALE) ? iscgraph(c) : iswgraph(c))
 
-#define iswoctal(c)	(((u_char)(c)) >= L'0' && ((u_char)(c)) <= L'7')
+#define iswoctal(c)	\
+	(((unsigned char)(c)) >= L'0' && ((unsigned char)(c)) <= L'7')
 #define iswwhite(c)	(c == L' ' || c == L'\t' || c == L'\n')
 #define iswsafe(c)	(c == L'\b' || c == BELL || c == L'\r')
 #define xtoa(c)		L"0123456789abcdef"[c]
@@ -253,9 +255,11 @@ do_mbyte(wchar_t *dst, wint_t c, int flags, wint_t nextc, int iswextra)
 	}
 	if (iswextra || ((c & 0177) == L' ') || (flags & VIS_OCTAL)) {
 		*dst++ = L'\\';
-		*dst++ = (u_char)(((u_int32_t)(u_char)c >> 6) & 03) + L'0';
-		*dst++ = (u_char)(((u_int32_t)(u_char)c >> 3) & 07) + L'0';
-		*dst++ =			     (c	      & 07) + L'0';
+		*dst++ =
+			(unsigned char)(((uint32_t)(unsigned char)c >> 6) & 03) + L'0';
+		*dst++ =
+			(unsigned char)(((uint32_t)(unsigned char)c >> 3) & 07) + L'0';
+		*dst++ = (c & 07) + L'0';
 	} else {
 		if ((flags & VIS_NOSLASH) == 0)
 			*dst++ = L'\\';
@@ -305,7 +309,7 @@ do_svis(wchar_t *dst, wint_t c, int flags, wint_t nextc, const wchar_t *extra)
 	/* See comment in istrsenvisx() output loop, below. */
 	wmsk = 0;
 	for (i = sizeof(wmsk) - 1; i >= 0; i--) {
-		shft = i * NBBY;
+		shft = i * CHAR_BIT;
 		bmsk = (uint64_t)0xffLL << shft;
 		wmsk |= bmsk;
 		if ((c & wmsk) || i == 0)
@@ -349,7 +353,7 @@ makeextralist(int flags, const char *src)
 	if ((flags & VIS_NOLOCALE) || mbstowcs(dst, src, len) == (size_t)-1) {
 		size_t i;
 		for (i = 0; i < len; i++)
-			dst[i] = (wchar_t)(u_char)src[i];
+			dst[i] = (wchar_t)(unsigned char)src[i];
 		d = dst + len;
 	} else
 		d = dst + wcslen(dst);
@@ -452,7 +456,7 @@ istrsenvisx(char **mbdstp, size_t *dlen, const char *mbsrc, size_t mblength,
 			clen = mbtowc(src, mbsrc, MB_LEN_MAX);
 		if (cerr || clen < 0) {
 			/* Conversion error, process as a byte instead. */
-			*src = (wint_t)(u_char)*mbsrc;
+			*src = (wint_t)(unsigned char)*mbsrc;
 			clen = 1;
 			cerr = 1;
 		}
@@ -503,7 +507,7 @@ istrsenvisx(char **mbdstp, size_t *dlen, const char *mbsrc, size_t mblength,
 	 */
 	for (start = dst; len > 0; len--) {
 		c = *src++;
-		dst = (*f)(dst, c, flags, len >= 1 ? *src : L'\0', extra);
+		dst = (*f)(dst, c, flags, *src, extra);
 		if (dst == NULL) {
 			errno = ENOSPC;
 			goto out;
@@ -536,7 +540,7 @@ istrsenvisx(char **mbdstp, size_t *dlen, const char *mbsrc, size_t mblength,
 			clen = 0;
 			wmsk = 0;
 			for (i = sizeof(wmsk) - 1; i >= 0; i--) {
-				shft = i * NBBY;
+				shft = i * CHAR_BIT;
 				bmsk = (uint64_t)0xffLL << shft;
 				wmsk |= bmsk;
 				if ((*dst & wmsk) || i == 0)
@@ -580,10 +584,20 @@ out:
 }
 
 static int
-istrsenvisxl(char **mbdstp, size_t *dlen, const char *mbsrc,
+istrsenvisxna(char *mbdst, size_t *dlen, const char *mbsrc, size_t mblength,
     int flags, const char *mbextra, int *cerr_ptr)
 {
-	return istrsenvisx(mbdstp, dlen, mbsrc,
+	assert(mbdst != NULL);
+
+	return istrsenvisx(&mbdst, dlen, mbsrc, mblength,
+	    flags, mbextra, cerr_ptr);
+}
+
+static int
+istrsenvisxl(char *mbdst, size_t *dlen, const char *mbsrc,
+    int flags, const char *mbextra, int *cerr_ptr)
+{
+	return istrsenvisxna(mbdst, dlen, mbsrc,
 	    mbsrc != NULL ? strlen(mbsrc) : 0, flags, mbextra, cerr_ptr);
 }
 
@@ -628,33 +642,33 @@ snvis(char *mbdst, size_t dlen, int c, int flags, int nextc, const char *mbextra
 int
 strsvis(char *mbdst, const char *mbsrc, int flags, const char *mbextra)
 {
-	return istrsenvisxl(&mbdst, NULL, mbsrc, flags, mbextra, NULL);
+	return istrsenvisxl(mbdst, NULL, mbsrc, flags, mbextra, NULL);
 }
 
 int
 strsnvis(char *mbdst, size_t dlen, const char *mbsrc, int flags, const char *mbextra)
 {
-	return istrsenvisxl(&mbdst, &dlen, mbsrc, flags, mbextra, NULL);
+	return istrsenvisxl(mbdst, &dlen, mbsrc, flags, mbextra, NULL);
 }
 
 int
 strsvisx(char *mbdst, const char *mbsrc, size_t len, int flags, const char *mbextra)
 {
-	return istrsenvisx(&mbdst, NULL, mbsrc, len, flags, mbextra, NULL);
+	return istrsenvisxna(mbdst, NULL, mbsrc, len, flags, mbextra, NULL);
 }
 
 int
 strsnvisx(char *mbdst, size_t dlen, const char *mbsrc, size_t len, int flags,
     const char *mbextra)
 {
-	return istrsenvisx(&mbdst, &dlen, mbsrc, len, flags, mbextra, NULL);
+	return istrsenvisxna(mbdst, &dlen, mbsrc, len, flags, mbextra, NULL);
 }
 
 int
 strsenvisx(char *mbdst, size_t dlen, const char *mbsrc, size_t len, int flags,
     const char *mbextra, int *cerr_ptr)
 {
-	return istrsenvisx(&mbdst, &dlen, mbsrc, len, flags, mbextra, cerr_ptr);
+	return istrsenvisxna(mbdst, &dlen, mbsrc, len, flags, mbextra, cerr_ptr);
 }
 
 /*
@@ -701,7 +715,7 @@ nvis(char *mbdst, size_t dlen, int c, int flags, int nextc)
 int
 strvis(char *mbdst, const char *mbsrc, int flags)
 {
-	return istrsenvisxl(&mbdst, NULL, mbsrc, flags, "", NULL);
+	return istrsenvisxl(mbdst, NULL, mbsrc, flags, "", NULL);
 }
 
 /*
@@ -721,22 +735,23 @@ strvis(char *mbdst, const char *mbsrc, int flags)
 int
 strnvis_openbsd(char *mbdst, const char *mbsrc, size_t dlen, int flags)
 {
-	return istrsenvisxl(&mbdst, &dlen, mbsrc, flags, "", NULL);
+	return istrsenvisxl(mbdst, &dlen, mbsrc, flags, "", NULL);
 }
-__asm__(".symver strnvis_openbsd,strnvis@@LIBBSD_0.2");
+libbsd_symver_default(strnvis, strnvis_openbsd, LIBBSD_0.2);
 
 int
 strnvis_netbsd(char *mbdst, size_t dlen, const char *mbsrc, int flags)
 {
-	return istrsenvisxl(&mbdst, &dlen, mbsrc, flags, "", NULL);
+	return istrsenvisxl(mbdst, &dlen, mbsrc, flags, "", NULL);
 }
-__asm__(".symver strnvis_netbsd,strnvis@LIBBSD_0.9.1");
+libbsd_symver_variant(strnvis, strnvis_netbsd, LIBBSD_0.9.1);
 
 int
 stravis(char **mbdstp, const char *mbsrc, int flags)
 {
 	*mbdstp = NULL;
-	return istrsenvisxl(mbdstp, NULL, mbsrc, flags, "", NULL);
+	return istrsenvisx(mbdstp, NULL, mbsrc,
+	    mbsrc != NULL ? strlen(mbsrc) : 0, flags, "", NULL);
 }
 
 /*
@@ -753,18 +768,18 @@ stravis(char **mbdstp, const char *mbsrc, int flags)
 int
 strvisx(char *mbdst, const char *mbsrc, size_t len, int flags)
 {
-	return istrsenvisx(&mbdst, NULL, mbsrc, len, flags, "", NULL);
+	return istrsenvisxna(mbdst, NULL, mbsrc, len, flags, "", NULL);
 }
 
 int
 strnvisx(char *mbdst, size_t dlen, const char *mbsrc, size_t len, int flags)
 {
-	return istrsenvisx(&mbdst, &dlen, mbsrc, len, flags, "", NULL);
+	return istrsenvisxna(mbdst, &dlen, mbsrc, len, flags, "", NULL);
 }
 
 int
 strenvisx(char *mbdst, size_t dlen, const char *mbsrc, size_t len, int flags,
     int *cerr_ptr)
 {
-	return istrsenvisx(&mbdst, &dlen, mbsrc, len, flags, "", cerr_ptr);
+	return istrsenvisxna(mbdst, &dlen, mbsrc, len, flags, "", cerr_ptr);
 }

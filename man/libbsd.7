@@ -1,6 +1,6 @@
 .\" libbsd man page
 .\"
-.\" Copyright © 2017-2018 Gullem Jover <guillem@hadrons.org>
+.\" Copyright © 2017-2018 Guillem Jover <guillem@hadrons.org>
 .\"
 .\" Redistribution and use in source and binary forms, with or without
 .\" modification, are permitted provided that the following conditions
@@ -24,7 +24,7 @@
 .\" OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 .\" ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 .\"
-.Dd May 21 2018
+.Dd May 21, 2018
 .Dt LIBBSD 7
 .Os
 .Sh NAME
@@ -33,7 +33,7 @@
 .Sh DESCRIPTION
 The
 .Nm libbsd
-library provides a set if compatibility macros and functions commonly found
+library provides a set of compatibility macros and functions commonly found
 on BSD-based systems.
 Its purpose is to make those available on non-BSD based systems to ease
 portability.
@@ -76,7 +76,7 @@ The package also provides a
 .Pa bsd-ctor
 static library that can be used to inject automatic constructors into a
 program so that the
-.Fn setproctitle
+.Fn setproctitle_init 3
 function gets invoked automatically at startup time.
 This can be done with the
 .Xr pkg-config 3
@@ -94,11 +94,13 @@ be prefixed with
 .It In bitstring.h
 .It In err.h
 .It In getopt.h
+.It In grp.h
 .It In inttypes.h
 .It In libutil.h
 .It In md5.h
 .It In netinet/ip_icmp.h
 .It In nlist.h
+.It In pwd.h
 .It In readpassphrase.h
 .It In stdio.h
 .It In stdlib.h
@@ -107,6 +109,7 @@ be prefixed with
 .It In sys/bitstring.h
 .It In sys/cdefs.h
 .It In sys/endian.h
+.It In sys/param.h
 .It In sys/poll.h
 .It In sys/queue.h
 .It In sys/time.h
@@ -125,6 +128,45 @@ It only works in non-overlay mode.
 .Bl -tag -width 4m -compact
 .It In bsd/bsd.h
 .El
+.Sh ALTERNATIVES
+Some functions have different prototypes depending on the BSD where they
+originated from, and these various implementations provided are selectable
+at build-time.
+.Pp
+This is the list of functions that provide multiple implementations:
+.Bl -tag -width 4m
+.It Fn strnvis 3
+.It Fn strnunvis 3
+.Nx
+added
+.Fn strnvis 3
+and
+.Fn strnunvis 3
+but unfortunately made it incompatible with the existing one in
+.Ox
+and Freedesktop's libbsd (the former having existed for over ten years).
+Despite this incompatibility being reported during development (see
+http://gnats.netbsd.org/44977) they still shipped it.
+Even more unfortunately
+.Fx
+and later MacOS picked up this incompatible implementation.
+.Pp
+Provide both implementations and default for now to the historical one to
+avoid breakage, but we will switch to the
+.Nx
+one in a later release, which is internally consistent with the other
+.Xr vis 3
+functions and is now more widespread.
+Define
+.Dv LIBBSD_NETBSD_VIS
+to switch to the
+.Nx one now.
+Define
+.Dv LIBBSD_OPENBSD_VIS
+to keep using the
+.Ox
+one.
+.El
 .Sh DEPRECATED
 Some functions have been deprecated, they will emit warnings at compile time
 and possibly while being linked at run-time.
@@ -134,7 +176,7 @@ or non-buggy way; or because there are better more portable replacements now.
 .Pp
 This is the list of currently deprecated macros and functions:
 .Bl -tag -width 4m
-.It Fn fgetln
+.It Fn fgetln 3
 Unportable, requires assistance from the stdio layer.
 An implementation has to choose between leaking buffers or being reentrant
 for a limited amount of streams (this implementation chose the latter with
@@ -143,7 +185,7 @@ Use
 .Fn getline 3
 instead, which is available in many systems and required by
 .St -p1003.1-2008 .
-.It Fn fgetwln
+.It Fn fgetwln 3
 Unportable, requires assistance from the stdio layer.
 An implementation has to choose between leaking buffers or being reentrant
 for a limited amount of streams (this implementation chose the latter with
@@ -154,10 +196,10 @@ instead, which is available in many systems and required by
 .St -isoC-99
 and
 .St -p1003.1-2001 .
-.It Fn funopen
+.It Fn funopen 3
 Unportable, requires assistance from the stdio layer or some hook framework.
 On GNU systems the
-.Fn fopencookie
+.Fn fopencookie 3
 function can be used.
 Otherwise the code needs to be prepared for neither of these functions being
 available.
@@ -171,23 +213,24 @@ are present in all major
 for example.
 .Pp
 .Bl -tag -width 4m -compact
-.It Fn MD5Init
-.It Fn MD5Update
-.It Fn MD5Pad
-.It Fn MD5Final
-.It Fn MD5Transform
-.It Fn MD5End
-.It Fn MD5File
-.It Fn MD5FileChunk
-.It Fn MD5Data
-The set of MD5 digest functions are now provided by the
+.It Fn MD5Init 3
+.It Fn MD5Update 3
+.It Fn MD5Pad 3
+.It Fn MD5Final 3
+.It Fn MD5Transform 3
+.It Fn MD5End 3
+.It Fn MD5File 3
+.It Fn MD5FileChunk 3
+.It Fn MD5Data 3
+The set of MD5 digest functions are now proxies for the implementations
+provided by the
 .Nm libmd
-companion library, so it is advised to use that instead.
-.It Fn explicit_bzero
+companion library, so it is advised to switch to use that directly instead.
+.It Fn explicit_bzero 3
 This function is provided by
 .Nm glibc
 2.25.
-.It Fn reallocarray
+.It Fn reallocarray 3
 This function is provided by
 .Nm glibc
 2.26.
@@ -215,6 +258,7 @@ This function is provided by
 .Xr md5 3bsd ,
 .Xr nlist 3bsd ,
 .Xr pidfile 3bsd ,
+.Xr pwcache 3bsd ,
 .Xr queue 3bsd ,
 .Xr radixsort 3bsd ,
 .Xr readpassphrase 3bsd ,

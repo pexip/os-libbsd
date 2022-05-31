@@ -1,6 +1,8 @@
 /*
- * Copyright (c) 2004-2005, 2007, 2010, 2012-2014
- *	Todd C. Miller <Todd.Miller@courtesan.com>
+ * SPDX-License-Identifier: ISC
+ *
+ * Copyright (c) 2004-2005, 2007, 2010, 2012-2015, 2017-2018
+ *	Todd C. Miller <Todd.Miller@sudo.ws>
  *
  * Permission to use, copy, modify, and distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
@@ -17,19 +19,17 @@
 
 #include <config.h>
 
-#include <sys/types.h>
-#include <unistd.h>
-#include <stdio.h>
-#ifdef STDC_HEADERS
-# include <stdlib.h>
-# include <stddef.h>
-#else
-# ifdef HAVE_STDLIB_H
-#  include <stdlib.h>
+#ifdef __linux__
+# include <sys/syscall.h>
+# if defined(__NR_close_range) && !defined(SYS_close_range)
+#  define SYS_close_range __NR_close_range
 # endif
-#endif /* STDC_HEADERS */
+#endif
+#include <errno.h>
 #include <fcntl.h>
 #include <limits.h>
+#include <stdlib.h>
+#include <unistd.h>
 #ifdef HAVE_PSTAT_GETPROC
 # include <sys/param.h>
 # include <sys/pstat.h>
@@ -56,10 +56,6 @@
 # define OPEN_MAX 256
 #endif
 
-#if defined(HAVE_FCNTL_CLOSEM) && !defined(HAVE_DIRFD)
-# define closefrom	closefrom_fallback
-#endif
-
 static inline void
 closefrom_close(int fd)
 {
@@ -71,6 +67,14 @@ closefrom_close(int fd)
 #endif
 }
 
+#if defined(__linux__) && defined(SYS_close_range)
+static inline int
+sys_close_range(unsigned int fd, unsigned int max_fd, unsigned int flags)
+{
+	return syscall(SYS_close_range, fd, max_fd, flags);
+}
+#endif
+
 /*
  * Close all file descriptors greater than or equal to lowfd.
  * This is the expensive (fallback) method.
@@ -81,46 +85,46 @@ closefrom_fallback(int lowfd)
 	long fd, maxfd;
 
 	/*
-	 * Fall back on sysconf() or getdtablesize().  We avoid checking
-	 * resource limits since it is possible to open a file descriptor
-	 * and then drop the rlimit such that it is below the open fd.
+	 * Fall back on sysconf(_SC_OPEN_MAX) or getdtablesize(). This is
+	 * equivalent to checking the RLIMIT_NOFILE soft limit. It is
+	 * possible for there to be open file descriptors past this limit
+	 * but there is not much we can do about that since the hard limit
+	 * may be RLIM_INFINITY (LLONG_MAX or ULLONG_MAX on modern systems).
 	 */
 #ifdef HAVE_SYSCONF
 	maxfd = sysconf(_SC_OPEN_MAX);
 #else
 	maxfd = getdtablesize();
 #endif /* HAVE_SYSCONF */
-	if (maxfd < 0)
+	if (maxfd < OPEN_MAX)
 		maxfd = OPEN_MAX;
+
+	/* Make sure we did not get RLIM_INFINITY as the upper limit. */
+	if (maxfd > INT_MAX)
+		maxfd = INT_MAX;
 
 	for (fd = lowfd; fd < maxfd; fd++)
 		closefrom_close(fd);
 }
 
-/*
- * Close all file descriptors greater than or equal to lowfd.
- * We try the fast way first, falling back on the slow method.
- */
-#if defined(HAVE_FCNTL_CLOSEM)
-void
-closefrom(int lowfd)
+#if defined(HAVE_PSTAT_GETPROC)
+static int
+closefrom_pstat(int lowfd)
 {
-	if (fcntl(lowfd, F_CLOSEM, 0) == -1)
-		closefrom_fallback(lowfd);
-}
-#elif defined(HAVE_PSTAT_GETPROC)
-void
-closefrom(int lowfd)
-{
-	struct pst_status pstat;
+	struct pst_status pst;
 	int fd;
 
-	if (pstat_getproc(&pstat, sizeof(pstat), 0, getpid()) != -1) {
-		for (fd = lowfd; fd <= pstat.pst_highestfd; fd++)
+	/*
+	 * EOVERFLOW is not a fatal error for the fields we use.
+	 * See the "EOVERFLOW Error" section of pstat_getvminfo(3).
+	 */
+	if (pstat_getproc(&pst, sizeof(pst), 0, getpid()) != -1 ||
+	    errno == EOVERFLOW) {
+		for (fd = lowfd; fd <= pst.pst_highestfd; fd++)
 			(void)close(fd);
-	} else {
-		closefrom_fallback(lowfd);
+		return 0;
 	}
+	return -1;
 }
 #elif defined(HAVE_DIRFD)
 static int
@@ -135,8 +139,8 @@ closefrom_procfs(int lowfd)
 	int ret = 0;
 	int i;
 
-	/* Use /proc/self/fd (or /dev/fd on FreeBSD) if it exists. */
-# if defined(__FreeBSD__) || defined(__FreeBSD_kernel__) || defined(__APPLE__)
+	/* Use /proc/self/fd (or /dev/fd on macOS) if it exists. */
+# ifdef __APPLE__
 	path = "/dev/fd";
 # else
 	path = "/proc/self/fd";
@@ -180,13 +184,36 @@ closefrom_procfs(int lowfd)
 
 	return ret;
 }
+#endif
 
+/*
+ * Close all file descriptors greater than or equal to lowfd.
+ * We try the fast way first, falling back on the slow method.
+ */
 void
 closefrom(int lowfd)
 {
-	if (closefrom_procfs(lowfd) == 0)
-		return;
+	if (lowfd < 0)
+		lowfd = 0;
 
+	/* Try the fast methods first, if possible. */
+#if defined(HAVE_FCNTL_CLOSEM)
+	if (fcntl(lowfd, F_CLOSEM, 0) != -1)
+		return;
+#endif /* HAVE_FCNTL_CLOSEM */
+#if defined(__linux__) && defined(SYS_close_range)
+	if (sys_close_range(lowfd, UINT_MAX, 0) == 0)
+		return;
+#endif
+
+#if defined(HAVE_PSTAT_GETPROC)
+	if (closefrom_pstat(lowfd) != -1)
+		return;
+#elif defined(HAVE_DIRFD)
+	if (closefrom_procfs(lowfd) != -1)
+		return;
+#endif /* HAVE_DIRFD */
+
+	/* Do things the slow way. */
 	closefrom_fallback(lowfd);
 }
-#endif /* HAVE_FCNTL_CLOSEM */

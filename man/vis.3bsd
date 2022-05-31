@@ -51,6 +51,7 @@
 .Nd visually encode characters
 .Sh LIBRARY
 .ds str-Lb-libbsd Utility functions from BSD systems (libbsd, \-lbsd)
+.ds doc-str-Lb-libbsd \*[str-Lb-libbsd]
 .Lb libbsd
 .Sh SYNOPSIS
 .In vis.h
@@ -528,6 +529,7 @@ The destination buffer size is not large enough to perform the conversion.
 .%O "RFC 2045"
 .Re
 .Sh HISTORY
+.ds doc-operating-system-NetBSD-7.0 7.0
 The
 .Fn vis ,
 .Fn strvis ,

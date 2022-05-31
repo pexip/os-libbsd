@@ -12,7 +12,7 @@ Build-Depends:
  debhelper (>= 11),
 # Consider readding the following once and if it moves out of non-free.
 # libtestu01-0-dev <!nocheck>,
-XS-Pexip-Upstream: http://ftp.debian.org/debian/ buster
+XS-Pexip-Upstream: http://deb.debian.org/debian/ bullseye
 
 Package: libbsd-dev
 Section: libdevel

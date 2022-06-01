@@ -14,6 +14,8 @@ md5.3bsd: $(srcdir)/mdX.3bsd
 	$(AM_V_GEN) sed $(SED_MD5_SUBST) $< > $@
 
 dist_man_MANS = \
+	LIST_CLASS_ENTRY.3bsd \
+	LIST_CLASS_HEAD.3bsd \
 	LIST_EMPTY.3bsd \
 	LIST_ENTRY.3bsd \
 	LIST_FIRST.3bsd \
@@ -54,6 +56,8 @@ dist_man_MANS = \
 	RB_REMOVE.3bsd \
 	RB_RIGHT.3bsd \
 	RB_ROOT.3bsd \
+	SLIST_CLASS_ENTRY.3bsd \
+	SLIST_CLASS_HEAD.3bsd \
 	SLIST_EMPTY.3bsd \
 	SLIST_ENTRY.3bsd \
 	SLIST_FIRST.3bsd \
@@ -70,6 +74,7 @@ dist_man_MANS = \
 	SLIST_REMOVE.3bsd \
 	SLIST_REMOVE_AFTER.3bsd \
 	SLIST_REMOVE_HEAD.3bsd \
+	SLIST_REMOVE_PREVPTR.3bsd \
 	SLIST_SWAP.3bsd \
 	SPLAY_EMPTY.3bsd \
 	SPLAY_ENTRY.3bsd \
@@ -88,6 +93,8 @@ dist_man_MANS = \
 	SPLAY_REMOVE.3bsd \
 	SPLAY_RIGHT.3bsd \
 	SPLAY_ROOT.3bsd \
+	STAILQ_CLASS_ENTRY.3bsd \
+	STAILQ_CLASS_HEAD.3bsd \
 	STAILQ_CONCAT.3bsd \
 	STAILQ_EMPTY.3bsd \
 	STAILQ_ENTRY.3bsd \
@@ -108,6 +115,8 @@ dist_man_MANS = \
 	STAILQ_REMOVE_AFTER.3bsd \
 	STAILQ_REMOVE_HEAD.3bsd \
 	STAILQ_SWAP.3bsd \
+	TAILQ_CLASS_ENTRY.3bsd \
+	TAILQ_CLASS_HEAD.3bsd \
 	TAILQ_CONCAT.3bsd \
 	TAILQ_EMPTY.3bsd \
 	TAILQ_ENTRY.3bsd \
@@ -165,6 +174,7 @@ dist_man_MANS = \
 	fgetln.3bsd \
 	fgetwln.3bsd \
 	flopen.3bsd \
+	freezero.3bsd \
 	fmtcheck.3bsd \
 	fparseln.3bsd \
 	fpurge.3bsd \
@@ -173,6 +183,8 @@ dist_man_MANS = \
 	getmode.3bsd \
 	getpeereid.3bsd \
 	getprogname.3bsd \
+	gid_from_group.3bsd \
+	group_from_gid.3bsd \
 	heapsort.3bsd \
 	humanize_number.3bsd \
 	le16dec.3bsd \
@@ -190,11 +202,13 @@ dist_man_MANS = \
 	pidfile_open.3bsd \
 	pidfile_remove.3bsd \
 	pidfile_write.3bsd \
+	pwcache.3bsd \
 	queue.3bsd \
 	radixsort.3bsd \
 	readpassphrase.3bsd \
 	reallocarray.3bsd \
 	reallocf.3bsd \
+	recallocarray.3bsd \
 	setmode.3bsd \
 	setproctitle.3bsd \
 	setproctitle_init.3bsd \
@@ -223,6 +237,7 @@ dist_man_MANS = \
 	timercmp.3bsd \
 	timerisset.3bsd \
 	timersub.3bsd \
+	timespec.3bsd \
 	timespecadd.3bsd \
 	timespecclear.3bsd \
 	timespeccmp.3bsd \
@@ -230,7 +245,9 @@ dist_man_MANS = \
 	timespecsub.3bsd \
 	timeval.3bsd \
 	tree.3bsd \
+	uid_from_user.3bsd \
 	unvis.3bsd \
+	user_from_uid.3bsd \
 	vis.3bsd \
 	wcslcat.3bsd \
 	wcslcpy.3bsd \

@@ -28,6 +28,7 @@
 .Nd set process title
 .Sh LIBRARY
 .ds str-Lb-libbsd Utility functions from BSD systems (libbsd, \-lbsd)
+.ds doc-str-Lb-libbsd \*[str-Lb-libbsd]
 .Lb libbsd
 .Sh SYNOPSIS
 .In sys/types.h
@@ -118,7 +119,7 @@ similar functions.
 .Pp
 The
 .Fn setproctitle_init
-function is a libbsd extension not present on the BSDs, avoid using it
+function is a libbsd extension not present on the BSDs; avoid using it
 in portable code.
 .Sh AUTHORS
 .An -nosplit

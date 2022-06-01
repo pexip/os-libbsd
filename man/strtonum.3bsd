@@ -23,6 +23,7 @@
 .Nd reliably convert string value to an integer
 .Sh LIBRARY
 .ds str-Lb-libbsd Utility functions from BSD systems (libbsd, \-lbsd)
+.ds doc-str-Lb-libbsd \*[str-Lb-libbsd]
 .Lb libbsd
 .Sh SYNOPSIS
 .In limits.h
@@ -144,13 +145,14 @@ is an
 .Ox
 extension.
 .Sh HISTORY
+.ds doc-operating-system-NetBSD-8.0 8.0
 The
 .Fn strtonum
 function first appeared in
 .Ox 3.6 .
 .Fn strtonum
 was redesigned in
-.Nx 8
+.Nx 8.0
 as
 .Fn strtoi 3bsd
 and

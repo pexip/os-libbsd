@@ -42,6 +42,8 @@
 #include <vis.h>
 #pragma GCC diagnostic pop
 
+#include "local-link.h"
+
 #ifdef __weak_alias
 __weak_alias(strnunvisx,_strnunvisx)
 #endif
@@ -68,7 +70,8 @@ __weak_alias(strnunvisx,_strnunvisx)
 #define	S_NUMBER	14	/* collecting number */
 #define	S_STRING	15	/* collecting string */
 
-#define	isoctal(c)	(((u_char)(c)) >= '0' && ((u_char)(c)) <= '7')
+#define	isoctal(c) \
+	(((unsigned char)(c)) >= '0' && ((unsigned char)(c)) <= '7')
 #define	xtod(c)		(isdigit(c) ? (c - '0') : ((tolower(c) - 'a') + 10))
 #define	XTOD(c)		(isdigit(c) ? (c - '0') : ((c - 'A') + 10))
 
@@ -565,11 +568,11 @@ strnunvis_openbsd(char *dst, const char *src, size_t dlen)
 {
 	return strnunvisx(dst, dlen, src, 0);
 }
-__asm__(".symver strnunvis_openbsd,strnunvis@@LIBBSD_0.2");
+libbsd_symver_default(strnunvis, strnunvis_openbsd, LIBBSD_0.2);
 
 int
 strnunvis_netbsd(char *dst, size_t dlen, const char *src)
 {
 	return strnunvisx(dst, dlen, src, 0);
 }
-__asm__(".symver strnunvis_netbsd,strnunvis@LIBBSD_0.9.1");
+libbsd_symver_variant(strnunvis, strnunvis_netbsd, LIBBSD_0.9.1);

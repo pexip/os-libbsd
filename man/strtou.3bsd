@@ -44,6 +44,7 @@
 .Nd convert a string to an uintmax_t integer
 .Sh LIBRARY
 .ds str-Lb-libbsd Utility functions from BSD systems (libbsd, \-lbsd)
+.ds doc-str-Lb-libbsd \*[str-Lb-libbsd]
 .Lb libbsd
 .Sh SYNOPSIS
 .In inttypes.h
@@ -219,6 +220,7 @@ the range given was invalid, i.e.
 .Xr strtoull 3 ,
 .Xr strtoumax 3
 .Sh STANDARDS
+.ds doc-operating-system-NetBSD-7.0 7.0
 The
 .Fn strtou
 function is a
@@ -228,7 +230,7 @@ extension.
 The
 .Fn strtou
 function first appeared in
-.Nx 7 .
+.Nx 7.0 .
 .Ox
 introduced the
 .Fn strtonum 3bsd

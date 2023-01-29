@@ -13,7 +13,7 @@ m4_ifdef([AM_SILENT_RULES], [AM_SILENT_RULES([yes])],
 
 LIBBSD_ABI_MAJOR=0
 LIBBSD_ABI_MINOR=11
-LIBBSD_ABI_PATCH=3
+LIBBSD_ABI_PATCH=7
 
 LIBBSD_ABI="$LIBBSD_ABI_MAJOR:$LIBBSD_ABI_MINOR:$LIBBSD_ABI_PATCH"
 AC_SUBST([LIBBSD_ABI])
@@ -47,14 +47,52 @@ AM_CONDITIONAL([HAVE_LINKER_VERSION_SCRIPT],
   [test "x$libbsd_cv_version_script" = "xyes"])
 
 # Checks for programs.
+AC_CHECK_TOOL([OBJDUMP], [objdump])
 AC_PROG_CC
+AC_PROG_SED
 AC_PROG_INSTALL
 AC_PROG_LN_S
 
 # Set default compiler variables
-if test "$user_CFLAGS" = unset && test "$GCC" = yes; then
-  CFLAGS="$CFLAGS -Wall -Wextra -Wno-unused-variable -Wno-unused-parameter"
-fi
+AS_IF([test "$user_CFLAGS" = unset], [
+  LIBBSD_CHECK_COMPILER_FLAG([-Wall])
+  LIBBSD_CHECK_COMPILER_FLAG([-Wextra])
+
+  LIBBSD_CHECK_COMPILER_FLAG([-Wbad-function-cast])
+  LIBBSD_CHECK_COMPILER_FLAG([-Wc99-c11-compat])
+  LIBBSD_CHECK_COMPILER_FLAG([-Wcast-align])
+  LIBBSD_CHECK_COMPILER_FLAG([-Wdeclaration-after-statement])
+  LIBBSD_CHECK_COMPILER_FLAG([-Wdocumentation])
+  LIBBSD_CHECK_COMPILER_FLAG([-Wduplicated-branches])
+  LIBBSD_CHECK_COMPILER_FLAG([-Wduplicated-cond])
+  LIBBSD_CHECK_COMPILER_FLAG([-Wformat -Wformat-security])
+  LIBBSD_CHECK_COMPILER_FLAG([-Wformat=2])
+  LIBBSD_CHECK_COMPILER_FLAG([-Winit-self])
+  LIBBSD_CHECK_COMPILER_FLAG([-Wlogical-not-parentheses])
+  LIBBSD_CHECK_COMPILER_FLAG([-Wlogical-op])
+  LIBBSD_CHECK_COMPILER_FLAG([-Wmissing-declarations])
+  LIBBSD_CHECK_COMPILER_FLAG([-Wmissing-format-attribute])
+  LIBBSD_CHECK_COMPILER_FLAG([-Wmissing-prototypes])
+  LIBBSD_CHECK_COMPILER_FLAG([-Wnested-externs])
+  LIBBSD_CHECK_COMPILER_FLAG([-Wno-missing-field-initializers])
+  LIBBSD_CHECK_COMPILER_FLAG([-Wno-nonnull-compare])
+  LIBBSD_CHECK_COMPILER_FLAG([-Wno-tautological-constant-out-of-range-compare])
+  LIBBSD_CHECK_COMPILER_FLAG([-Wno-unused-parameter])
+  LIBBSD_CHECK_COMPILER_FLAG([-Wnull-dereference])
+  LIBBSD_CHECK_COMPILER_FLAG([-Wold-style-definition])
+  LIBBSD_CHECK_COMPILER_FLAG([-Wpointer-arith])
+  LIBBSD_CHECK_COMPILER_FLAG([-Wregister])
+  LIBBSD_CHECK_COMPILER_FLAG([-Wrestrict])
+  LIBBSD_CHECK_COMPILER_FLAG([-Wshadow])
+  LIBBSD_CHECK_COMPILER_FLAG([-Wshift-negative-value])
+  LIBBSD_CHECK_COMPILER_FLAG([-Wsizeof-array-argument])
+  LIBBSD_CHECK_COMPILER_FLAG([-Wstrict-prototypes])
+  LIBBSD_CHECK_COMPILER_FLAG([-Wswitch-bool])
+  LIBBSD_CHECK_COMPILER_FLAG([-Wvla])
+  LIBBSD_CHECK_COMPILER_FLAG([-Wwrite-strings])
+
+  CFLAGS="$CFLAGS $LIBBSD_COMPILER_FLAGS"
+])
 
 # Checks for libraries.
 AC_CHECK_LIB([testu01], [unif01_CreateExternGenBits],
@@ -64,16 +102,10 @@ AM_CONDITIONAL([HAVE_LIBTESTU01],
                [test "x$ac_cv_lib_testu01_unif01_CreateExternGenBits" = "xyes"])
 
 saved_LIBS="$LIBS"
-AC_SEARCH_LIBS([dlsym], [dl], [
-  AS_IF([test "x$ac_cv_search_dlsym" != "xnone required"], [
-    LIBBSD_LIBS="$LIBBSD_LIBS $ac_cv_search_dlsym"
-  ])
-], [
-  AC_MSG_ERROR([cannot find required dlsym function])
-])
 AC_SEARCH_LIBS([MD5Update], [md], [
   AS_IF([test "x$ac_cv_search_MD5Update" != "xnone required"], [
-    LIBBSD_LIBS="$LIBBSD_LIBS $ac_cv_search_MD5Update"
+    MD5_LIBS="$MD5_LIBS $ac_cv_search_MD5Update"
+    need_transparent_libmd=yes
   ])
 ], [
   AC_MSG_ERROR([cannot find required MD5 functions in libc or libmd])
@@ -86,6 +118,9 @@ AC_SEARCH_LIBS([SHA512Update], [md], [
   AC_MSG_ERROR([cannot find required SHA-2 functions in libc or libmd])
 ])
 LIBS="$saved_LIBS"
+
+AM_CONDITIONAL([NEED_TRANSPARENT_LIBMD],
+               [test "x$need_transparent_libmd" = "xyes"])
 
 is_windows=no
 AS_CASE([$host_os],
@@ -138,7 +173,7 @@ AC_CACHE_CHECK(
 [[
 static int rc = 1;
 static void init(int argc) { if (argc == 1) rc = 0; }
-void (*init_func)(int argc) __attribute__((__section__(".init_array"))) = init;
+void (*init_func)(int argc) __attribute__((__section__(".init_array"), __used__)) = init;
 int main() { return rc; }
 ]]
 		)],
@@ -213,6 +248,7 @@ AC_CHECK_FUNCS([clearenv dirfd fopencookie __fpurge \
                 pstat_getproc sysconf])
 AM_CONDITIONAL([HAVE_GETENTROPY], [test "x$ac_cv_func_getentropy" = "xtrue"])
 
+AC_SUBST([MD5_LIBS])
 AC_SUBST([LIBBSD_LIBS])
 
 AC_CONFIG_FILES([

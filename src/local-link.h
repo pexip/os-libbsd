@@ -27,21 +27,44 @@
 #ifndef LIBBSD_LOCAL_LINK_H
 #define LIBBSD_LOCAL_LINK_H
 
+#include <sys/cdefs.h>
+
 #define libbsd_link_warning(symbol, msg) \
 	static const char libbsd_emit_link_warning_##symbol[] \
-		__attribute__((__used__,__section__(".gnu.warning." #symbol))) = msg;
+		__attribute__((__used__,__section__(".gnu.warning." #symbol))) = msg
 
 #ifdef __ELF__
+#  if __has_attribute(symver)
+/* The symver attribute is supported since gcc 10.x. */
+#define libbsd_symver_default(alias, symbol, version) \
+	extern __typeof__(symbol) symbol \
+		__attribute__((__symver__(#alias "@@" #version)))
+#define libbsd_symver_variant(alias, symbol, version) \
+	extern __typeof__(symbol) symbol \
+		__attribute__((__symver__(#alias "@" #version)))
+
+#define libbsd_symver_weak(alias, symbol, version) \
+	extern __typeof__(symbol) symbol \
+		__attribute__((__symver__(#alias "@" #version), __weak__))
+#  else
 #define libbsd_symver_default(alias, symbol, version) \
 	__asm__(".symver " #symbol "," #alias "@@" #version)
 
 #define libbsd_symver_variant(alias, symbol, version) \
 	__asm__(".symver " #symbol "," #alias "@" #version)
+
+#define libbsd_symver_weak(alias, symbol, version) \
+	libbsd_symver_variant(alias, symbol, version); \
+	extern __typeof__(symbol) alias \
+		__attribute__((__weak__))
+#  endif
 #else
 #define libbsd_symver_default(alias, symbol, version) \
-	extern __typeof(symbol) alias __attribute__((__alias__(#symbol)))
+	extern __typeof__(symbol) alias __attribute__((__alias__(#symbol)))
 
 #define libbsd_symver_variant(alias, symbol, version)
+
+#define libbsd_symver_weak(alias, symbol, version)
 #endif
 
 #endif

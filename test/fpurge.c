@@ -25,17 +25,17 @@
  */
 
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 int
-main()
+main(int argc, char *argv[])
 {
-	static FILE fp_bad;
 	FILE *fp;
+	char *buf = NULL;
+	size_t bufsz = 0;
 
 	if (fpurge(NULL) == 0)
-		return 1;
-
-	if (fpurge(&fp_bad) == 0)
 		return 1;
 
 	fp = fopen("/dev/zero", "r");
@@ -43,6 +43,15 @@ main()
 		return 1;
 
 	fclose(fp);
+
+	fp = open_memstream(&buf, &bufsz);
+	fputs("World", fp);
+	if (fpurge(fp) < 0)
+		return 1;
+	fflush(fp);
+	if (bufsz != 0)
+		return 1;
+	free(buf);
 
 	return 0;
 }

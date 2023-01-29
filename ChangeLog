@@ -1,3 +1,972 @@
+commit 084911ce875f444a5739fae6255770b6a575aba4
+Author: Guillem Jover <guillem@hadrons.org>
+Date:   Thu Oct 6 04:07:52 2022 +0200
+
+    Release libbsd 0.11.7
+
+ configure.ac | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 3538d38fe7062c35d4f405fee2ce40588c0d8205
+Author: Guillem Jover <guillem@hadrons.org>
+Date:   Thu Oct 6 03:59:33 2022 +0200
+
+    man: Discourage using the library in non-overlay mode
+    
+    This makes code using it non-portable, and requires the namespeced
+    headers from libbsd, instead of any generic system headers. It also
+    requires more code changes than the overlay mode.
+
+ man/libbsd.7 | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 03fccd150512ad22c9e27e5d597bf02190ee93cf
+Author: Guillem Jover <guillem@hadrons.org>
+Date:   Wed Oct 5 12:08:31 2022 +0200
+
+    include: Adjust reallocarray() per glibc adoption
+    
+    On glibc 2.29 reallocarray() was moved to _DEFAULT_SOURCE.
+    
+    Closes: !20
+    Based-on-patch-by: Callum Farmer <gmbr3@opensuse.org>
+    Signed-off-by: Guillem Jover <guillem@hadrons.org>
+
+ include/bsd/stdlib.h | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+commit 6b6e686b23214ef37c30d5e1568156ba18e76f29
+Author: Callum Farmer <gmbr3@opensuse.org>
+Date:   Wed Oct 5 12:08:31 2022 +0200
+
+    include: Adjust arc4random() per glibc adoption
+    
+    Some arc4random functions were added in glibc 2.36.
+    
+    Signed-off-by: Callum Farmer <gmbr3@opensuse.org>
+    Signed-off-by: Guillem Jover <guillem@hadrons.org>
+
+ include/bsd/stdlib.h | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
+
+commit da1f45ac71ac0db7f2ad48fd3dbf24e719723ee1
+Author: Callum Farmer <gmbr3@opensuse.org>
+Date:   Mon Oct 3 16:09:18 2022 +0100
+
+    include: explicit_bzero() requires _DEFAULT_SOURCE
+    
+    Signed-off-by: Callum Farmer <gmbr3@opensuse.org>
+    Signed-off-by: Guillem Jover <guillem@hadrons.org>
+
+ include/bsd/string.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 2f9eddc277187e25167331ae3bde4a491fd87fa2
+Author: Guillem Jover <guillem@hadrons.org>
+Date:   Wed Oct 5 02:05:46 2022 +0200
+
+    include: Simplify glibc version dependent macro handling
+    
+    We test once whether __GLIBC__ is not defined, so we do not need to test
+    whether it is on the OR branch afterwards. We decouple the glibc version
+    restriction check from the _*_SOURCE variable, as that contains an
+    implicit opposite version check.
+
+ include/bsd/stdlib.h | 3 ++-
+ include/bsd/string.h | 3 ++-
+ 2 files changed, 4 insertions(+), 2 deletions(-)
+
+commit 28298ac0372f320174eb591e0e2879abcc568521
+Author: Guillem Jover <guillem@hadrons.org>
+Date:   Wed Oct 5 01:35:08 2022 +0200
+
+    doc: Switch references from pkg-config to pkgconf
+    
+    The former used to be the reference implementation, but it has been
+    stagnant to the point of not showing much signs of life. Switch to
+    the currently active and more complete implementation for references.
+
+ man/libbsd.7            | 6 +++---
+ man/setproctitle.3bsd   | 2 +-
+ src/setproctitle_ctor.c | 2 +-
+ 3 files changed, 5 insertions(+), 5 deletions(-)
+
+commit ef981f930b0e7ab64eef1985d5e812bada3a6332
+Author: Guillem Jover <guillem@hadrons.org>
+Date:   Tue Oct 4 04:28:05 2022 +0200
+
+    doc: Add missing empty line to separate README sections
+
+ README | 3 +++
+ 1 file changed, 3 insertions(+)
+
+commit 6928d7895edfe8a62d3c73d8938713c5ddb29774
+Author: Guillem Jover <guillem@hadrons.org>
+Date:   Tue Oct 4 04:27:44 2022 +0200
+
+    doc: Refer to the main git repository as primary
+
+ README | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit d5865759f8698f1c75339451a26fa3ae00276a51
+Author: Guillem Jover <guillem@hadrons.org>
+Date:   Thu Aug 25 00:52:43 2022 +0200
+
+    test: Fix explicit_bzero() test on the Hurd
+    
+    On the Hurd a small read(3) might end up (indirectly) copying the data
+    on the stack, which we will end up finding even when we have cleared
+    the buffer.
+    
+    To avoid these side effects, we add a new function, that we force not
+    to be inlined, so that we can reuse the same stack space, that will
+    blank any possible stack side effects. This should be portable
+    regardless of stack growing up or down.
+    
+    Diagnosis-by: Samuel Thibault <sthibault@debian.org>
+
+ COPYING               |  2 +-
+ test/explicit_bzero.c | 15 +++++++++++++++
+ 2 files changed, 16 insertions(+), 1 deletion(-)
+
+commit be327c6ebe408ae144e9c93aab9cb65fce116f33
+Author: Guillem Jover <guillem@hadrons.org>
+Date:   Wed Aug 24 01:58:58 2022 +0200
+
+    fgetwln: Add comment about lack of getwline(3) for recommendation
+    
+    Ideally we'd recommend getwline(3), but unfortunately even though it
+    was part of the ISO/IEC TR 24731-2:2010 draft, it did not make it into
+    C11 and is not widely implemented.
+
+ src/fgetwln.c | 3 +++
+ 1 file changed, 3 insertions(+)
+
+commit a14612d96819d5e0561bff2da89a6fdea990223c
+Author: Guillem Jover <guillem@hadrons.org>
+Date:   Tue Aug 23 23:49:34 2022 +0200
+
+    setmode: Dot not use saveset after free
+    
+    While we are only doing a pointer difference and not dereferencing it,
+    it's easier and more correct to do the pointer difference before passing
+    it to reallocarray().
+    
+    Warned-by: gcc
+
+ src/setmode.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+commit f4baceb82c1de18eed363930632284455ddfec4b
+Author: Guillem Jover <guillem@hadrons.org>
+Date:   Wed Aug 3 03:05:52 2022 +0200
+
+    man: Rewrite gerprogname(3bsd) from scratch
+    
+    This gets rid of one of the last man pages with a BSD-4-clause license.
+
+ COPYING              |  33 ----------------
+ man/getprogname.3bsd | 104 ++++++++++++++++++++++-----------------------------
+ 2 files changed, 44 insertions(+), 93 deletions(-)
+
+commit f35c5458477ba5c60b00ab1f4b5199296fae3826
+Author: Guillem Jover <guillem@hadrons.org>
+Date:   Wed Aug 3 02:21:16 2022 +0200
+
+    man: Lowercase man page title
+    
+    While using fully uppercase man page titles has been the usual
+    convention for a very long time, it is rather ugly and something that
+    some other projects are switching away from.
+
+ man/arc4random.3bsd      | 2 +-
+ man/bitstring.3bsd       | 2 +-
+ man/byteorder.3bsd       | 2 +-
+ man/closefrom.3bsd       | 2 +-
+ man/errc.3bsd            | 2 +-
+ man/expand_number.3bsd   | 2 +-
+ man/explicit_bzero.3bsd  | 2 +-
+ man/fgetln.3bsd          | 2 +-
+ man/fgetwln.3bsd         | 2 +-
+ man/flopen.3bsd          | 2 +-
+ man/fmtcheck.3bsd        | 2 +-
+ man/fparseln.3bsd        | 2 +-
+ man/fpurge.3bsd          | 2 +-
+ man/funopen.3bsd         | 2 +-
+ man/getbsize.3bsd        | 2 +-
+ man/getpeereid.3bsd      | 2 +-
+ man/getprogname.3bsd     | 2 +-
+ man/heapsort.3bsd        | 2 +-
+ man/humanize_number.3bsd | 2 +-
+ man/libbsd.7             | 2 +-
+ man/nlist.3bsd           | 2 +-
+ man/pidfile.3bsd         | 2 +-
+ man/pwcache.3bsd         | 2 +-
+ man/queue.3bsd           | 2 +-
+ man/radixsort.3bsd       | 2 +-
+ man/readpassphrase.3bsd  | 2 +-
+ man/reallocarray.3bsd    | 2 +-
+ man/reallocf.3bsd        | 2 +-
+ man/setmode.3bsd         | 2 +-
+ man/setproctitle.3bsd    | 2 +-
+ man/stringlist.3bsd      | 2 +-
+ man/strlcpy.3bsd         | 2 +-
+ man/strmode.3bsd         | 2 +-
+ man/strnstr.3bsd         | 2 +-
+ man/strtoi.3bsd          | 2 +-
+ man/strtonum.3bsd        | 2 +-
+ man/strtou.3bsd          | 2 +-
+ man/timeradd.3bsd        | 2 +-
+ man/timeval.3bsd         | 2 +-
+ man/tree.3bsd            | 2 +-
+ man/unvis.3bsd           | 2 +-
+ man/vis.3bsd             | 2 +-
+ man/wcslcpy.3bsd         | 2 +-
+ 43 files changed, 43 insertions(+), 43 deletions(-)
+
+commit b466b14afb7645d06823982e7695f63cfa1e075c
+Author: Guillem Jover <guillem@hadrons.org>
+Date:   Wed Aug 3 01:23:09 2022 +0200
+
+    man: Document that some arc4random(3) functions are now in glibc 2.36
+
+ man/libbsd.7 | 13 ++++++++++++-
+ 1 file changed, 12 insertions(+), 1 deletion(-)
+
+commit 1f6a48b209d9d494070bb1446b6b5c49bfaa31ba
+Author: Guillem Jover <guillem@hadrons.org>
+Date:   Wed Aug 3 02:03:05 2022 +0200
+
+    Sync arc4random(3) implementation from OpenBSD
+    
+    Closes: #12
+
+ man/arc4random.3bsd  |  6 +++---
+ src/arc4random.c     | 14 ++++++++++----
+ src/chacha_private.h |  4 ++--
+ 3 files changed, 15 insertions(+), 9 deletions(-)
+
+commit 873639ebb5bc3688e5e78d71e5c0c49469498f46
+Author: Fabrice Fontaine <fontaine.fabrice@gmail.com>
+Date:   Tue Jun 7 19:27:13 2022 +0200
+
+    Fix ELF support for big endian SH
+    
+    Fix the following build failure with big endian SH (e.g. sh4aeb):
+    
+      ,---
+      In file included from nlist.c:44:
+      nlist.c: In function '__elf_is_okay__':
+      local-elf.h:223:25: error: 'ELFDATA2LMSB' undeclared (first use in this function); did you mean 'ELFDATA2LSB'?
+        223 | #define ELF_TARG_DATA   ELFDATA2LMSB
+            |                         ^~~~~~~~~~~~
+      `---
+    
+    Fixes: http://autobuild.buildroot.org/results/2980fb79c208454195d77383f1ece9afbd7f981b
+    Closes: !19
+    Signed-off-by: Fabrice Fontaine <fontaine.fabrice@gmail.com>
+    Signed-off-by: Guillem Jover <guillem@hadrons.org>
+
+ src/local-elf.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit c9c78fdfd0f8551dceec4f26a007ae14bec0e5b7
+Author: Guillem Jover <guillem@hadrons.org>
+Date:   Mon Apr 4 11:49:52 2022 +0200
+
+    man: Use -compact also for alternative functions in libbsd(7)
+    
+    The other function lists use the compact mode, let's be uniform about
+    this.
+
+ man/libbsd.7 | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+commit 5f21307570dff129c2e982a3ab8640d09302b2bf
+Author: Guillem Jover <guillem@hadrons.org>
+Date:   Thu Mar 31 20:46:56 2022 +0200
+
+    getentropy: Fix function cast for getauxval()
+    
+    Fix also the Hurd implementation, missed in the original fix.
+    
+    Extends: commit 72a82ee262795c9162e712885381a111fcf988bc
+    Warned-by: gcc
+
+ src/getentropy_hurd.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+commit 84acf21568e32488a73bf20d5d2ccce643a2d18f
+Author: Guillem Jover <guillem@hadrons.org>
+Date:   Wed Mar 30 23:09:35 2022 +0200
+
+    Release libbsd 0.11.6
+
+ configure.ac | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 15200ec7ac97e3f169b6c2f378f0ec2f94663c9f
+Author: WANG Xuerui <git@xen0n.name>
+Date:   Sat Sep 11 12:54:28 2021 +0800
+
+    Add LoongArch support to nlist()
+    
+    Closes: !13
+    Signed-off-by: WANG Xuerui <git@xen0n.name>
+    Signed-off-by: Guillem Jover <guillem@hadrons.org>
+
+ src/local-elf.h | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
+
+commit f7465b93ec9fcb473df04e997067476ed2e7fd14
+Author: Guillem Jover <guillem@hadrons.org>
+Date:   Wed Mar 30 22:56:43 2022 +0200
+
+    man: Document when functions were added to musl in libbsd(7)
+    
+    The explicit_bzero(3) and reallocarray(3) functions are also present on
+    musl libc, mention it in the superseded section.
+
+ COPYING      |  2 +-
+ man/libbsd.7 | 12 ++++++++----
+ 2 files changed, 9 insertions(+), 5 deletions(-)
+
+commit e5ed5fdd62aeec980dfeb596b191f7deeb364030
+Author: Guilherme Janczak <guilherme.janczak@yandex.com>
+Date:   Fri Dec 31 08:25:08 2021 +0000
+
+    Remove arc4random() OpenBSD support
+    
+    The arc4random() support for OpenBSD does not build. The intention was
+    to include any portability code so that the library could be easily
+    ported to such systems, but it makes little sense to build it on OpenBSD
+    where most of the functionality will be already present, or the software
+    would have been ported anyway.
+    
+    [guillem@hadrons.org: Reword commit message to add rationale. ]
+    
+    Closes: !15
+    Signed-off-by: Guillem Jover <guillem@hadrons.org>
+
+ COPYING                  |  1 -
+ src/Makefile.am          |  1 -
+ src/arc4random.h         |  4 +---
+ src/arc4random_openbsd.h | 61 ------------------------------------------------
+ 4 files changed, 1 insertion(+), 66 deletions(-)
+
+commit abb1a6b1a74cb6ae8cf4ef2a27fea34c2cd0e4f5
+Author: Duncan Overbruck <mail@duncano.de>
+Date:   Mon Jan 24 15:11:38 2022 +0100
+
+    build: Add alpine to CI for tests with musl libc
+    
+    Closes: !18
+    Signed-off-by: Guillem Jover <guillem@hadrons.org>
+
+ .gitlab-ci.yml | 40 +++++++++++++++++++++++++++++-----------
+ 1 file changed, 29 insertions(+), 11 deletions(-)
+
+commit c9ff83687c3d100551d8cff967eb1541b187333d
+Author: Guillem Jover <guillem@hadrons.org>
+Date:   Sat Jan 29 14:48:22 2022 +0100
+
+    test: Import explicit_bzero and strtonum test cases from OpenBSD
+    
+    - Remove trailing spaces.
+    - Declare file-scope functions and variables static.
+    - Declare functions with a proper prototype.
+    - Do not mix declarations and code for C90 conformance.
+    - Do not compare size_t and ssize_t variables.
+
+ COPYING               |   4 +
+ test/.gitignore       |   2 +
+ test/Makefile.am      |   2 +
+ test/explicit_bzero.c | 214 ++++++++++++++++++++++++++++++++++++++++++++++++++
+ test/strtonum.c       |  64 +++++++++++++++
+ 5 files changed, 286 insertions(+)
+
+commit 62e67bb49e569d5b5116400c1f970349acc244b3
+Author: Guillem Jover <guillem@hadrons.org>
+Date:   Sat Jan 29 14:52:08 2022 +0100
+
+    build: Sort test programs in .gitignore
+
+ test/.gitignore | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+commit 87b13070409f54360a7e658a425770265075f25e
+Author: Duncan Overbruck <mail@duncano.de>
+Date:   Tue Jan 25 20:34:39 2022 +0100
+
+    test: Add fpurge() test case using open_memstream(3) FILE
+    
+    Signed-off-by: Guillem Jover <guillem@hadrons.org>
+
+ test/fpurge.c | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
+
+commit ba3c46b30fd45c8d2df310d89fd560c55a74eb4a
+Author: Duncan Overbruck <mail@duncano.de>
+Date:   Tue Jan 25 20:32:30 2022 +0100
+
+    fpurge: Make it work with non fd based FILEs
+    
+    Streams opened with for example open_memstream(3) will have no associated
+    file descriptor, and fileno(3) will fail.
+    
+    Signed-off-by: Guillem Jover <guillem@hadrons.org>
+
+ src/fpurge.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 091097e0626e5cd3ba5f83da47438c88977e88bc
+Author: Duncan Overbruck <mail@duncano.de>
+Date:   Mon Jan 24 16:47:00 2022 +0100
+
+    test: Remove static FILE declaration from fpurge test
+    
+    This does not work with libcs that do not declare the structure
+    in a header file, like musl. And gets in the way of supporting
+    non-fd based streams.
+    
+    Signed-off-by: Guillem Jover <guillem@hadrons.org>
+
+ test/fpurge.c | 4 ----
+ 1 file changed, 4 deletions(-)
+
+commit 5f9608c77561324cfe4b57e2767d0d8386f3d370
+Author: Guillem Jover <guillem@hadrons.org>
+Date:   Tue Jan 25 01:48:29 2022 +0100
+
+    Release libbsd 0.11.5
+
+ configure.ac | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit eef07993c9e88d79b59a63fb71bec03337bd9c06
+Author: Guillem Jover <guillem@hadrons.org>
+Date:   Tue Jan 25 01:41:14 2022 +0100
+
+    Revert "build: Add missing proctitle unit test program"
+    
+    This reverts commit beafad2657c7a57109c28f8bad9cb028c84c7dd5.
+    
+    This test was already handled later on as part of the BUILD_LIBBSD_CTOR
+    conditional. Adding it to the unconditional set made the build fail when
+    the system does not have GNU .init_array section support.
+    
+    Closes: #9
+    Analysis-by: Duncan Overbruck <mail@duncano.de>
+
+ test/Makefile.am | 1 -
+ 1 file changed, 1 deletion(-)
+
+commit c6d589bc71d48e48912c401d276b3eb6da9b1d8d
+Author: Guillem Jover <guillem@hadrons.org>
+Date:   Sun Jan 23 21:07:45 2022 +0100
+
+    Document how to build from git and from a tarball release
+    
+    Closes: #8
+
+ README | 32 ++++++++++++++++++++++++++++++++
+ 1 file changed, 32 insertions(+)
+
+commit 2975d809a016301420e7cbfdc7ea3b7d22a40969
+Author: Guillem Jover <guillem@hadrons.org>
+Date:   Sun Jan 23 18:54:33 2022 +0100
+
+    build: Check for objdump explicitly
+    
+    We should not assume that something will implicitly check for this tool,
+    as we need it ourselves, and this is an internal implementation detail
+    of right now libtool.
+    
+    Fixes: commit f11ab6722367f1cf62704ed3c827b9b68dcb5397
+
+ configure.ac | 1 +
+ 1 file changed, 1 insertion(+)
+
+commit f11ab6722367f1cf62704ed3c827b9b68dcb5397
+Author: Sam James <sam@gentoo.org>
+Date:   Sun Jan 23 15:36:55 2022 +0000
+
+    build: Respect $(OBJDUMP)
+    
+    We already search for it in `./configure` so let's respect
+    the result of that search.
+    
+    This helps with cross-compilation and any other cases
+    where one might want to choose a different toolchain.
+    
+    Closes: !16
+    Bug: https://bugs.gentoo.org/831863
+    Signed-off-by: Sam James <sam@gentoo.org>
+    Signed-off-by: Guillem Jover <guillem@hadrons.org>
+
+ src/Makefile.am | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 54796231c7eea5e2a404fd0e08773f68d7f2eead
+Author: Guillem Jover <guillem@hadrons.org>
+Date:   Sat Jan 22 22:41:51 2022 +0100
+
+    Release libbsd 0.11.4
+
+ configure.ac | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 7aed0edf73ad71e9224c4ff6c74bbeb9547f8fb6
+Author: Guillem Jover <guillem@hadrons.org>
+Date:   Thu Dec 2 00:35:05 2021 +0100
+
+    man: Add missing comma in .Dd for tree(3)
+    
+    Reported-by: Thorsten Glaser <tg@mirbsd.de>
+
+ man/tree.3bsd | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit fafcc397accedf1b8c3ef451cafa5f008bdb071d
+Author: Guillem Jover <guillem@hadrons.org>
+Date:   Tue Nov 30 04:00:54 2021 +0100
+
+    man: Update tree(3) man page from OpenBSD
+    
+    This man page has a BSD-3-clause-author license instead of the old
+    BSD-4-clause license.
+
+ COPYING       |   2 +-
+ man/tree.3bsd | 391 +++++++++++++++++++++++++++++++++++-----------------------
+ 2 files changed, 236 insertions(+), 157 deletions(-)
+
+commit 48107fc8c4aa6dd6bff7e209003677d5ec3e49ea
+Author: Guillem Jover <guillem@hadrons.org>
+Date:   Sun Nov 28 23:19:16 2021 +0100
+
+    build: Clarify link-time warnings
+    
+    Mention the involved function instead of stating an implicit "this
+    function". Mention libbsd when proposing using an alternative libmd
+    to make the context clear.
+
+ src/fgetln.c  |  2 +-
+ src/fgetwln.c |  2 +-
+ src/md5.c     | 27 ++++++++++++++++++---------
+ 3 files changed, 20 insertions(+), 11 deletions(-)
+
+commit e7cf8c5785b14fc8fbd37bb665a5f9a4f28c7888
+Author: Guillem Jover <guillem@hadrons.org>
+Date:   Sun Nov 28 22:44:08 2021 +0100
+
+    Switch md5 compatibility logic back to direct linking
+    
+    When using the recent dlsym() based wrapper, we are not requiring any
+    symbol from libmd, as we resolve those dynamically at run-time. We were
+    ending up linking against libmd because in another part of the code we
+    require (depending on the architecture) the SHA512 functions for the
+    getentropy() local implementation. But that function might be provided
+    by the system libc on some systems, which means we end up not linking
+    against libmd at all.
+    
+    To solve this we go back to the previous simpler solution of linking
+    directly, which had the main drawback of then making programs fail to
+    link when not specifying -lmd (on platforms that need it). And then
+    switch the .so link point from a symlink to a linker script, so that we
+    can inject the -lmd library as-needed. This is similar to what glibc is
+    doing.
+    
+    Fixes: commit 31f034e3862debda8615a449b1c11c4d6920dcc7
+
+ .gitignore       |  1 +
+ configure.ac     | 11 +++-----
+ src/Makefile.am  | 32 ++++++++++++++++++++-
+ src/md5.c        | 85 ++++++++++++++++++--------------------------------------
+ test/Makefile.am |  5 ++++
+ 5 files changed, 68 insertions(+), 66 deletions(-)
+
+commit 25d35625ebd8e41756751cbb069dd607fc9fc49f
+Author: Guillem Jover <guillem@hadrons.org>
+Date:   Sun Nov 28 22:40:58 2021 +0100
+
+    build: Split libmd dependency due to MD5 functions from SHA requirements
+    
+    To be able to rework the md5 deprecation logic, we need to detangle when
+    we depend on libmd due to requiring MD5 functions, which might be
+    otherwise provided by libc, or when we require SHA functions for the
+    internal getentropy() implementation.
+
+ configure.ac             | 3 ++-
+ src/Makefile.am          | 1 +
+ src/libbsd-overlay.pc.in | 2 +-
+ src/libbsd.pc.in         | 2 +-
+ 4 files changed, 5 insertions(+), 3 deletions(-)
+
+commit 500b3080a2fd27dcd14113235e05ca003ce23190
+Author: Guillem Jover <guillem@hadrons.org>
+Date:   Sun Nov 28 22:34:59 2021 +0100
+
+    build: Add new libbsd_symver_weak() macro
+    
+    We will use it for the reworked md5 deprecation logic.
+
+ src/local-link.h | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
+
+commit 1eba40602175e9ee231cba7577c3eee975680dcb
+Author: Guillem Jover <guillem@hadrons.org>
+Date:   Sat Nov 27 21:09:18 2021 +0100
+
+    test: Check that strdup() does not fail
+    
+    Warned-by: gcc
+
+ test/fgetln.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+commit 8ad7570c20d2381a5e1962d9b1b813d44c080837
+Author: Guillem Jover <guillem@hadrons.org>
+Date:   Sat Nov 27 21:07:00 2021 +0100
+
+    getentropy: Add missing prototype for BSD variant
+    
+    Warned-by: gcc
+
+ src/getentropy_bsd.c | 2 ++
+ 1 file changed, 2 insertions(+)
+
+commit 43a827031779650e63a5f787fc1959d146355153
+Author: Guillem Jover <guillem@hadrons.org>
+Date:   Sat Nov 27 20:26:05 2021 +0100
+
+    nlist: Remove condition which is always true
+    
+    The nlist() function is limited to handle ELF binaries of the same class
+    as size as the size_t of the architecture built.
+    
+    In addition the SIZE_T_MAX macro is BSD specific, and was falling back
+    to the wrong constant on most 64-bit non-BSD systems.
+    
+    Warned-by: gcc
+
+ src/nlist.c | 8 ++------
+ 1 file changed, 2 insertions(+), 6 deletions(-)
+
+commit 6a71b24b63ba403e6c49dbed2d31d9a73cab4890
+Author: Guillem Jover <guillem@hadrons.org>
+Date:   Sat Nov 27 22:52:28 2021 +0100
+
+    build: Append __ after __attribute and __typeof keywords
+    
+    Be consistent with other usages in the code base.
+
+ src/local-link.h | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
+
+commit 7389fe8d243989f40900a4bbba4e493c8bd114f7
+Author: Guillem Jover <guillem@hadrons.org>
+Date:   Sat Nov 27 06:54:49 2021 +0100
+
+    build: Ignore backup files
+
+ .gitignore | 1 +
+ 1 file changed, 1 insertion(+)
+
+commit 2716dfd0b7d570b6a6cbba8a4a7bc9e538d0520c
+Author: Victor Westerhuis <victor@westerhu.is>
+Date:   Fri Nov 26 20:24:20 2021 +0100
+
+    test: Explicitly mark symbols as used
+    
+    Because some of the symbols are not otherwise referenced, GCC would like
+    to remove them.
+    
+    Closes: !14
+    Signed-off-by: Guillem Jover <guillem@hadrons.org>
+
+ test/nlist.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+commit 54f874565716766d6453ff050d78c70ea326d89a
+Author: Victor Westerhuis <victor@westerhu.is>
+Date:   Fri Nov 26 20:01:18 2021 +0100
+
+    build: Enable .init_array support when building with LTO
+    
+    Because these symbols are not otherwise referenced, GCC would like
+    to remove them.
+    
+    Signed-off-by: Guillem Jover <guillem@hadrons.org>
+
+ configure.ac            | 2 +-
+ src/setproctitle_ctor.c | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+commit 428be9e0302915525513bb757e10103dbff60d4e
+Author: Guillem Jover <guillem@hadrons.org>
+Date:   Thu Oct 7 23:08:42 2021 +0200
+
+    man: Fix .Nx macro usage
+    
+    Its arguments are used as version numbers, so we need continue the
+    content on the next line.
+
+ man/libbsd.7 | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+commit c7a5d780ae58b6f7ae7d814fd5bc53cf1f58ee5f
+Author: Alexander Miller <alex.miller@gmx.de>
+Date:   Thu Sep 30 03:39:57 2021 +0200
+
+    build: Allow building with -flto on gcc-10 and newer
+    
+    Global asm statements (like .symver directives) do not work reliably
+    in gcc with link time optimization. Use the symver attribute introduced
+    with gcc-10 to set symbol versions instead, if available.
+    
+    [guillem@hadrons.org:
+     - Simplify by using __has_attribute fallback from <sys/cdefs.h>.
+     - Coding style changes. ]
+    
+    Signed-off-by: Guillem Jover <guillem@hadrons.org>
+
+ src/local-link.h | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
+
+commit 1808d64b772cf03bac159210f8692125c9a84606
+Author: Guillem Jover <guillem@hadrons.org>
+Date:   Mon Mar 1 05:14:10 2021 +0100
+
+    test: Fix pipe_feed() to allow checking fprintf format strings
+    
+    Warned-by: gcc -W
+
+ test/fgetln.c      | 8 ++++----
+ test/fparseln.c    | 2 +-
+ test/test-stream.c | 8 ++++++--
+ test/test-stream.h | 7 ++++++-
+ 4 files changed, 17 insertions(+), 8 deletions(-)
+
+commit beafad2657c7a57109c28f8bad9cb028c84c7dd5
+Author: Guillem Jover <guillem@hadrons.org>
+Date:   Sun Mar 7 00:22:59 2021 +0100
+
+    build: Add missing proctitle unit test program
+
+ test/Makefile.am | 1 +
+ 1 file changed, 1 insertion(+)
+
+commit 6145b561784467bc6a483f48468ba4f6a742e2fe
+Author: Guillem Jover <guillem@hadrons.org>
+Date:   Tue Aug 17 03:14:57 2021 +0200
+
+    test: Do not pass NULL as the first funopen() argument
+    
+    Warned-by: gcc -W
+
+ test/funopen.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 731b0a773903a5e631071d6070d98563a7c3cb3e
+Author: Guillem Jover <guillem@hadrons.org>
+Date:   Tue Aug 17 02:59:59 2021 +0200
+
+    build: Detect sed at configure time
+    
+    Check whether sed is available and use the implementation matching the
+    requirements via the SED variable.
+
+ configure.ac    | 1 +
+ man/Makefile.am | 2 +-
+ src/Makefile.am | 2 +-
+ 3 files changed, 3 insertions(+), 2 deletions(-)
+
+commit 50b50a4330e54b701d4a7b887deb864af26cd638
+Author: Guillem Jover <guillem@hadrons.org>
+Date:   Tue Mar 2 05:18:04 2021 +0100
+
+    vis: Add prototypes for strnvis() and strnunvis() variants
+    
+    Warned-by: gcc
+
+ src/unvis.c | 4 ++++
+ src/vis.c   | 4 ++++
+ 2 files changed, 8 insertions(+)
+
+commit 25e88f6479466f2164c5dcf4a0798002e43f342e
+Author: Guillem Jover <guillem@hadrons.org>
+Date:   Tue Mar 2 00:48:31 2021 +0100
+
+    test: Cast literal strings to (char *) on n_name assignment
+    
+    The member is declared as n_name so we cannot directly assign a literal
+    string constant.
+    
+    Warned-by: gcc
+
+ test/nlist.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
+
+commit 04a8fb2469439ef3397062b4b1792d45bc95f469
+Author: Guillem Jover <guillem@hadrons.org>
+Date:   Tue Mar 2 00:48:02 2021 +0100
+
+    Add missing prototypes to functions
+    
+    Warned-by: gcc
+
+ src/explicit_bzero.c | 5 ++++-
+ src/setproctitle.c   | 4 ++++
+ 2 files changed, 8 insertions(+), 1 deletion(-)
+
+commit 4f68a88f5519e1bbc8b339dd48882f7f8c613edf
+Author: Guillem Jover <guillem@hadrons.org>
+Date:   Fri Feb 19 06:55:17 2021 +0100
+
+    build: Add compiler warnings support
+    
+    Detect as many warnings as possible during configure and enable them
+    if the user did not supply any, so that any such problem can be spotted
+    and fixed.
+
+ .gitignore            |  1 -
+ configure.ac          | 42 +++++++++++++++++++++++++++++++++++++++---
+ m4/.gitignore         |  2 ++
+ m4/libbsd-compiler.m4 | 24 ++++++++++++++++++++++++
+ 4 files changed, 65 insertions(+), 4 deletions(-)
+
+commit 8f59221c4f0383153a7c7b499fbd1344cd9ad0f1
+Author: Guillem Jover <guillem@hadrons.org>
+Date:   Fri Feb 19 06:51:18 2021 +0100
+
+    nlist: Remove repeated shadowing variable declaration
+    
+    Warned-by: gcc
+
+ src/nlist.c | 1 -
+ 1 file changed, 1 deletion(-)
+
+commit 72a82ee262795c9162e712885381a111fcf988bc
+Author: Guillem Jover <guillem@hadrons.org>
+Date:   Sat Feb 20 22:22:54 2021 +0100
+
+    getentropy: Fix function cast for getauxval()
+    
+    Warned-by: gcc
+
+ src/getentropy_linux.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+commit 3c305f2873580322823af53d9b9202b8ce658c32
+Author: Guillem Jover <guillem@hadrons.org>
+Date:   Fri Feb 19 06:49:53 2021 +0100
+
+    test: Add proper prototypes for main() function
+    
+    Warned-by: gcc
+
+ test/bzero.c     | 2 +-
+ test/closefrom.c | 2 +-
+ test/endian.c    | 2 +-
+ test/fpurge.c    | 2 +-
+ test/md5.c       | 2 +-
+ test/overlay.c   | 2 +-
+ 6 files changed, 6 insertions(+), 6 deletions(-)
+
+commit 25278891d8b0c5af378ff548881cd3558426ba3d
+Author: Guillem Jover <guillem@hadrons.org>
+Date:   Fri Feb 19 06:49:24 2021 +0100
+
+    Mark local functions as static
+    
+    Warned-by: gcc
+
+ src/closefrom.c | 2 +-
+ test/funopen.c  | 8 ++++----
+ test/md5.c      | 2 +-
+ 3 files changed, 6 insertions(+), 6 deletions(-)
+
+commit e35d9141dcff06931287e392706f70c92c239e2e
+Author: Guillem Jover <guillem@hadrons.org>
+Date:   Thu Feb 11 04:41:46 2021 +0100
+
+    Add link-time warnings to MD5 wrapper functions
+    
+    Let's get the word out that these functions are deprecated and should be
+    switched away from.
+
+ src/md5.c | 19 +++++++++++++++++++
+ 1 file changed, 19 insertions(+)
+
+commit 4feda8704972a1eac88b5ba9ff7add92c25245ab
+Author: Guillem Jover <guillem@hadrons.org>
+Date:   Thu Feb 11 04:40:48 2021 +0100
+
+    Require a semicolon for libbsd_link_warning() macro
+    
+    Remove the semicolon in the macro definition to force adding one on the
+    call sites, to make the code look like an actual function.
+
+ src/fgetln.c     | 2 +-
+ src/fgetwln.c    | 2 +-
+ src/local-link.h | 2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
+
+commit d563a17430845d043d667892c4457a14998dd4c3
+Author: Guillem Jover <guillem@hadrons.org>
+Date:   Thu Feb 18 23:38:30 2021 +0100
+
+    man: Call the libbsd-ctor library by its name instead of bsd-ctor
+
+ man/libbsd.7 | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 785cf9d1e97220483857dda9fe75728cd51e0d84
+Author: Guillem Jover <guillem@hadrons.org>
+Date:   Thu Feb 18 23:38:30 2021 +0100
+
+    man: Fix pkg-config(1) references in libbsd(7) man page
+
+ man/libbsd.7 | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
+
+commit 15bd284b29411638b9434bf7c4c4b1feae32033a
+Author: Guillem Jover <guillem@hadrons.org>
+Date:   Sun Feb 28 05:16:01 2021 +0100
+
+    build: Add code coverage support in the GitLab CI
+
+ .gitignore     |  2 ++
+ .gitlab-ci.yml | 19 ++++++++++++++-----
+ 2 files changed, 16 insertions(+), 5 deletions(-)
+
+commit a9fc285988c010eaf1deb682c5d6335abf87ccab
+Author: Guillem Jover <guillem@hadrons.org>
+Date:   Sun Feb 28 05:14:54 2021 +0100
+
+    build: Use apt-get instead of apt in the GitLab CI
+    
+    The former is to be used programmatically, while the latter is intended
+    for interactive use.
+
+ .gitlab-ci.yml | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
+
+commit c0d86a641269cab5bd4583afce82f171a6215aa9
+Author: Guillem Jover <guillem@hadrons.org>
+Date:   Tue Feb 9 08:35:36 2021 +0100
+
+    build: Add a Libs.private field to overlay pkg-config file
+    
+    We need to list all internal libraries there so that we can statically
+    link.
+    
+    Fixes: commit 2374f409defb380d0c5c07f28b9c166ef8bdc742
+
+ src/libbsd-overlay.pc.in | 1 +
+ 1 file changed, 1 insertion(+)
+
 commit 1fb25b7dcad8f40ee8944208224ea0c625af8d82
 Author: Guillem Jover <guillem@hadrons.org>
 Date:   Tue Feb 9 06:14:25 2021 +0100

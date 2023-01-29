@@ -38,7 +38,7 @@
  *
  * To avoid any other possible fallout, the constructor is split into a
  * new static library that needs to be linked explicitly into programs
- * using setproctitle(). As an additional safety measure the pkg-config
+ * using setproctitle(). As an additional safety measure the pkgconf(1)
  * linker flags will mark the program as not allowing to be dlopen()ed
  * so that we make sure to avoid the problem described above.
  */
@@ -49,4 +49,4 @@
  * move them from .ctors to .init_array.
  */
 void (*libbsd_init_func)(int argc, char *argv[], char *envp[])
-	__attribute__((__section__(".init_array"))) = setproctitle_init;
+	__attribute__((__section__(".init_array"), __used__)) = setproctitle_init;

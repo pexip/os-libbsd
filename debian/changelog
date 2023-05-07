@@ -1,3 +1,11 @@
+libbsd (0.11.3-1+deb11u1) bullseye; urgency=medium
+
+  * Fix infinite loop when using MD5File() symbol due to missing symbol
+    redirection. Thanks to Guillaume Morin <guillaume@morinfr.org>.
+    Closes: #1033671
+
+ -- Guillem Jover <guillem@debian.org>  Sun, 07 May 2023 19:13:23 +0200
+
 libbsd (0.11.3-1) unstable; urgency=medium
 
   * New upstream release.

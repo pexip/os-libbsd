@@ -1,0 +1,22 @@
+Author: Guillem Jover <guillem@hadrons.org>
+Description: The MD5File() symbol is calling itself causing an infinite loop.
+ This was caused by an omission when switching to use the symbol redirects,
+ which was not applied for this symbol, but was subsequently fixed w/o notice
+ when the redirection method was changed, so this was not spotted as a stable
+ candidate fix.
+Origin: upstream, commit:e7cf8c5785b14fc8fbd37bb665a5f9a4f28c7888
+Bug-Debian: https://bugs.debian.org/1033671
+Forwarded: not-needed
+Last-Update: 2023-05-07
+
+--- a/src/md5.c
++++ b/src/md5.c
+@@ -105,7 +105,7 @@
+ MD5File(const char *filename, char *buf)
+ {
+ 	libmd_wrapper(MD5File);
+-	return MD5File(filename, buf);
++	return libmd_MD5File(filename, buf);
+ }
+ 
+ char *

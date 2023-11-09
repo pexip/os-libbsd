@@ -13,7 +13,7 @@ Build-Depends:
  libmd-dev (>= 1.0.3-2),
 # Consider readding the following once and if it moves out of non-free.
 # libtestu01-0-dev <!nocheck>,
-XS-Pexip-Upstream: http://deb.debian.org/debian/ bullseye
+XS-Pexip-Upstream: http://deb.debian.org/debian/ bookworm
 
 Package: libbsd-dev
 Section: libdevel

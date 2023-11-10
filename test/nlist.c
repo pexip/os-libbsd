@@ -39,11 +39,11 @@ extern int data_pub_uninit[2048];
 extern int *data_pub_ptr;
 
 int *data_pub_ptr = &data_prv_init;
-int data_pub_init = 10;
-int data_pub_uninit[2048];
+int data_pub_init __attribute__((__used__)) = 10;
+int data_pub_uninit[2048] __attribute__((__used__));
 
 extern int
-func_pub(void);
+func_pub(void) __attribute__((__used__)) ;
 
 int
 func_pub(void)
@@ -55,11 +55,11 @@ int
 main(int argc, char **argv)
 {
 	struct nlist nl[] = {
-		{ .n_un.n_name = "main" },
-		{ .n_un.n_name = "func_pub" },
-		{ .n_un.n_name = "data_pub_uninit" },
-		{ .n_un.n_name = "data_pub_init" },
-		{ .n_un.n_name = "data_prv_init" },
+		{ .n_un.n_name = (char *)"main" },
+		{ .n_un.n_name = (char *)"func_pub" },
+		{ .n_un.n_name = (char *)"data_pub_uninit" },
+		{ .n_un.n_name = (char *)"data_pub_init" },
+		{ .n_un.n_name = (char *)"data_prv_init" },
 		{ .n_un.n_name = NULL },
 	};
 	int rc;

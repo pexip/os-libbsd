@@ -1,16 +1,70 @@
+libbsd (0.11.7-2) unstable; urgency=medium
+
+  * Change License name to match newly introduced SPDX name.
+  * Switch to Standards-Version 4.6.2 (no changes needed).
+  * Do not trim debian/changelog.
+  * Make globs in debhelper fragment files more specific.
+  * Switch from hardening=+bindnow to hardening=+all.
+  * Remove unused spelling-error-in-binary lintian override for shared library.
+
+ -- Guillem Jover <guillem@debian.org>  Sun, 29 Jan 2023 19:26:48 +0100
+
+libbsd (0.11.7-1) unstable; urgency=medium
+
+  * New upstream release.
+    - Portability fixes for the Hurd.
+    - Fix ELF support for big endian SH.
+    - Sync the arc4random(3) implementation from OpenBSD.
+    - Adjust declaration shadowing to match new glibc additions.
+    - Manual pages and documentation cleanups.
+    - Manual page rewrite to get rid of a BSD-4-Clause license.
+    - Document non-overlay mode as discouraged, future releases might emit
+      warnings when using it.
+  * Remove debian/copyright pattern for «src/arc4random_openbsd.h», removed
+    upstream.
+  * Switch to Standards-Version 4.6.1 (no changes needed).
+  * Override exit-in-shared-library lintian tag.
+  * Override lacks-unversioned-link-to-shared-library and
+    spelling-error-in-binary lintian tag false positives.
+
+ -- Guillem Jover <guillem@debian.org>  Thu, 06 Oct 2022 04:44:16 +0200
+
+libbsd (0.11.6-1) unstable; urgency=medium
+
+  * New upstream release.
+    - Build system and test suite fixes for musl.
+    - Removal of unused OpenBSD support for arc4random().
+    - LoongArch support for nlist().
+  * Add support for the noudeb build profile.
+
+ -- Guillem Jover <guillem@debian.org>  Wed, 30 Mar 2022 23:30:30 +0200
+
+libbsd (0.11.5-1) unstable; urgency=medium
+
+  * New upstream release.
+    - Build system and test suite regression fixes.
+    - Documentation on how to build the project.
+
+ -- Guillem Jover <guillem@debian.org>  Tue, 25 Jan 2022 01:58:33 +0100
+
+libbsd (0.11.4-1) unstable; urgency=medium
+
+  * New upstream release.
+    - Fix build on GNU/kFreeBSD due to missing linking against libmd.
+      Closes: #992861
+    - Fix build with LTO.
+    - Various build system fixes.
+    - Various portability fixes.
+    - Various documentation fixes.
+  * Switch to Standards-Version 4.6.0 (no changes needed).
+
+ -- Guillem Jover <guillem@debian.org>  Sat, 22 Jan 2022 23:14:28 +0100
+
 libbsd (0.11.3-1+deb11u1pexip1) pexip; urgency=medium
 
   * New upstream release
 
  -- Steve McIntyre <steve.mcintyre@pexip.com>  Mon, 09 Oct 2023 14:44:52 +0100
-
-libbsd (0.11.3-1+deb11u1) bullseye; urgency=medium
-
-  * Fix infinite loop when using MD5File() symbol due to missing symbol
-    redirection. Thanks to Guillaume Morin <guillaume@morinfr.org>.
-    Closes: #1033671
-
- -- Guillem Jover <guillem@debian.org>  Sun, 07 May 2023 19:13:23 +0200
 
 libbsd (0.11.3-1pexip3) pexip-bullseye; urgency=medium
 

@@ -6,10 +6,11 @@ XSBC-Pexip-Original-Maintainer: Guillem Jover <guillem@debian.org>
 Vcs-Browser: https://git.hadrons.org/cgit/debian/pkgs/libbsd.git
 Vcs-Git: https://git.hadrons.org/git/debian/pkgs/libbsd.git
 Homepage: https://libbsd.freedesktop.org/
-Standards-Version: 4.5.1
+Standards-Version: 4.6.2
 Rules-Requires-Root: no
 Build-Depends:
  debhelper-compat (= 13),
+ debhelper (>= 13.10),
  libmd-dev (>= 1.0.3-2),
 # Consider readding the following once and if it moves out of non-free.
 # libtestu01-0-dev <!nocheck>,
@@ -97,6 +98,7 @@ Package: libbsd0-udeb
 Package-Type: udeb
 Section: debian-installer
 Architecture: any
+Build-Profiles: <!noudeb>
 Depends:
  ${shlibs:Depends},
  ${misc:Depends},

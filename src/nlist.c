@@ -43,10 +43,6 @@
 
 #include "local-elf.h"
 
-#ifndef SIZE_T_MAX
-#define SIZE_T_MAX 0xffffffffU
-#endif
-
 /* Note: This function is used by libkvm0, so we need to export it.
  * It is not declared in the include files though. */
 int __fdnlist(int, struct nlist *);
@@ -153,7 +149,7 @@ __fdnlist(int fd, struct nlist *list)
 	shdr_size = ehdr.e_shentsize * ehdr.e_shnum;
 
 	/* Make sure it's not too big to mmap */
-	if (shdr_size > SIZE_T_MAX || shdr_size > st.st_size) {
+	if (shdr_size > st.st_size) {
 		errno = EFBIG;
 		return (-1);
 	}
@@ -186,7 +182,7 @@ __fdnlist(int fd, struct nlist *list)
 	}
 
 	/* Check for files too large to mmap. */
-	if (symstrsize > SIZE_T_MAX || symstrsize > st.st_size) {
+	if (symstrsize > st.st_size) {
 		errno = EFBIG;
 		goto done;
 	}
@@ -239,7 +235,6 @@ __fdnlist(int fd, struct nlist *list)
 		for (s = sbuf; cc > 0 && nent > 0; ++s, cc -= sizeof(*s)) {
 			char *name;
 			Elf_Word size;
-			struct nlist *p;
 
 			name = strtab + s->st_name;
 			if (name[0] == '\0')

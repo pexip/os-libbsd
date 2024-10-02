@@ -1,5 +1,4 @@
-usr/lib/*/libbsd-ctor.a
-usr/lib/*/libbsd.a
+usr/lib/*/libbsd*.a
 usr/lib/*/libbsd.so
 usr/lib/*/pkgconfig/*.pc
 usr/include

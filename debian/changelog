@@ -1,3 +1,76 @@
+libbsd (0.12.2-2) unstable; urgency=medium
+
+  * Use a glob to install static libraries, so that we do not fail on
+    musl systems where libbsd-ctor.a is not built due to limitations
+    from its libc. Closes: #1032159
+  * Remove obsolete Replaces and Conflicts for ancient GNU/kFreeBSD packages.
+
+ -- Guillem Jover <guillem@debian.org>  Wed, 02 Oct 2024 10:12:26 +0200
+
+libbsd (0.12.2-1) unstable; urgency=medium
+
+  * New upstream release.
+    - Fix build on GNU/Hurd.
+    - Fix build on musl libc.
+    - Stop installing manual pages for system types.
+    - Add missing manual page links for errc module. Closes: #1065833
+    - Fix build system and test issues.
+
+ -- Guillem Jover <guillem@debian.org>  Mon, 18 Mar 2024 03:59:39 +0100
+
+libbsd (0.12.1-1) unstable; urgency=medium
+
+  * New upstream release.
+    - Fix missing installation of err.h. Closes: #1064909
+  * Install the headers under a multiarch-qualified directory,
+    as they now diverge per arch.
+
+ -- Guillem Jover <guillem@debian.org>  Wed, 28 Feb 2024 05:49:40 +0100
+
+libbsd (0.12.0-1) unstable; urgency=medium
+
+  * New upstream release.
+    - Support for Solaris, macOS and AIX (now build and pass tests).
+    - Improve ABI selection handling for a more controlled ports ABI.
+    - Sync strtoi()/strtou() implementations from NetBSD to get the new
+      error handling behavior.
+    - Add explicit time32 and time64 support.
+    - Manual pages, documentation and build system cleanups.
+
+ -- Guillem Jover <guillem@debian.org>  Tue, 27 Feb 2024 06:40:22 +0100
+
+libbsd (0.11.8-1) unstable; urgency=medium
+
+  * New upstream release.
+    - Portability fixes for Solaris, macOS and AIX.
+    - Build fixes for the modern C effort.
+    - Adjust declaration shadowing to match new glibc additions.
+    - Manual page sync to get rid of the last BSD-4-Clause license.
+    - Manual pages, documentation and build system cleanups.
+  * Update copyright file, all BSD-4-Clause manual pages have been replaced.
+  * Remove upstream patches.
+  * Switch autopkgtest dependency from pkg-config to pkgconf.
+  * Wrap fields in debian/tests/control.
+
+ -- Guillem Jover <guillem@debian.org>  Mon, 08 Jan 2024 03:49:23 +0100
+
+libbsd (0.11.7-4) unstable; urgency=medium
+
+  * Add missing autoconf and automake to autopkgtests needed due to the
+    cherry-picked patches from upstream.
+
+ -- Guillem Jover <guillem@debian.org>  Sun, 05 Mar 2023 17:38:42 +0100
+
+libbsd (0.11.7-3) unstable; urgency=medium
+
+  * Cherry-pick patches from upstream:
+    - build: Use «yes» instead of «true» for AC_CHECK_FUNCS cache value.
+    - funopen: Replace off64_t with off_t in funopen_seek().
+    - include: Adjust closefrom() per glibc adoption.
+    - man: Update STANDARDS and HISTORY sections.
+
+ -- Guillem Jover <guillem@debian.org>  Fri, 03 Mar 2023 01:10:10 +0100
+
 libbsd (0.11.7-2) unstable; urgency=medium
 
   * Change License name to match newly introduced SPDX name.

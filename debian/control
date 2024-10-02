@@ -5,7 +5,7 @@ Maintainer: Guillem Jover <guillem@debian.org>
 Vcs-Browser: https://git.hadrons.org/cgit/debian/pkgs/libbsd.git
 Vcs-Git: https://git.hadrons.org/git/debian/pkgs/libbsd.git
 Homepage: https://libbsd.freedesktop.org/
-Standards-Version: 4.6.2
+Standards-Version: 4.7.0
 Rules-Requires-Root: no
 Build-Depends:
  debhelper-compat (= 13),
@@ -22,8 +22,6 @@ Depends:
  libbsd0 (= ${binary:Version}),
  libmd-dev,
  ${misc:Depends},
-Replaces:
- libfreebsd-dev (<< 0.0-8),
 Description: utility functions from BSD systems - development files
  This library provides some functions commonly available on BSD systems but
  not on others like GNU systems.
@@ -83,8 +81,6 @@ Pre-Depends:
 Depends:
  ${shlibs:Depends},
  ${misc:Depends},
-Conflicts:
- net-tools (<< 7.0-2) [kfreebsd-any],
 Description: utility functions from BSD systems - shared library
  This library provides some C functions such as strlcpy() that are commonly
  available on BSD systems but not on others like GNU systems.

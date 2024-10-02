@@ -1,6 +1,5 @@
 /*
- * Copyright © 2006 Robert Millan
- * Copyright © 2011, 2019 Guillem Jover <guillem@hadrons.org>
+ * Copyright © 2019 Guillem Jover <guillem@hadrons.org>
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -26,58 +25,12 @@
  */
 
 #include <err.h>
-#ifdef LIBBSD_NEED_ERR_H_FUNCS
 #include <errno.h>
-#endif
 #include <string.h>
 #include <stdarg.h>
 #include <stdlib.h>
 #include <stdio.h>
 
-void
-vwarnc(int code, const char *format, va_list ap)
-{
-	fprintf(stderr, "%s: ", getprogname());
-	if (format) {
-		vfprintf(stderr, format, ap);
-		fprintf(stderr, ": ");
-	}
-	fprintf(stderr, "%s\n", strerror(code));
-}
-
-void
-warnc(int code, const char *format, ...)
-{
-	va_list ap;
-
-	va_start(ap, format);
-	vwarnc(code, format, ap);
-	va_end(ap);
-}
-
-void
-verrc(int status, int code, const char *format, va_list ap)
-{
-	fprintf(stderr, "%s: ", getprogname());
-	if (format) {
-		vfprintf(stderr, format, ap);
-		fprintf(stderr, ": ");
-	}
-	fprintf(stderr, "%s\n", strerror(code));
-	exit(status);
-}
-
-void
-errc(int status, int code, const char *format, ...)
-{
-	va_list ap;
-
-	va_start(ap, format);
-	verrc(status, code, format, ap);
-	va_end(ap);
-}
-
-#ifdef LIBBSD_NEED_ERR_H_FUNCS
 void
 vwarn(const char *format, va_list ap)
 {
@@ -148,4 +101,3 @@ errx(int eval, const char *format, ...)
 	verrx(eval, format, ap);
 	va_end(ap);
 }
-#endif

@@ -554,7 +554,7 @@ strunvis(char *dst, const char *src)
  * existing one in OpenBSD and Freedesktop's libbsd (the former having existed
  * for over ten years). Despite this incompatibility being reported during
  * development (see http://gnats.netbsd.org/44977) they still shipped it.
- * Even more unfortunately FreeBSD and later MacOS picked up this incompatible
+ * Even more unfortunately FreeBSD and later macOS picked up this incompatible
  * implementation.
  *
  * Provide both implementations and default for now on the historical one to
@@ -570,7 +570,7 @@ strnunvis_openbsd(char *dst, const char *src, size_t dlen)
 {
 	return strnunvisx(dst, dlen, src, 0);
 }
-libbsd_symver_default(strnunvis, strnunvis_openbsd, LIBBSD_0.2);
+libbsd_symver_default(strnunvis_openbsd, strnunvis, LIBBSD_0.2);
 
 int
 strnunvis_netbsd(char *, size_t, const char *);
@@ -579,4 +579,4 @@ strnunvis_netbsd(char *dst, size_t dlen, const char *src)
 {
 	return strnunvisx(dst, dlen, src, 0);
 }
-libbsd_symver_variant(strnunvis, strnunvis_netbsd, LIBBSD_0.9.1);
+libbsd_symver_variant(strnunvis_netbsd, strnunvis, LIBBSD_0.9.1);

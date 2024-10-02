@@ -87,12 +87,197 @@ PRE_UNINSTALL = :
 POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
+@API_TIME_MACROS_TRUE@am__append_1 = \
+@API_TIME_MACROS_TRUE@	TIMESPEC_TO_TIMEVAL.3bsd \
+@API_TIME_MACROS_TRUE@	TIMEVAL_TO_TIMESPEC.3bsd \
+@API_TIME_MACROS_TRUE@	# EOL
+
+@ABI_ACCMODE_TRUE@am__append_2 = \
+@ABI_ACCMODE_TRUE@	getmode.3bsd \
+@ABI_ACCMODE_TRUE@	setmode.3bsd \
+@ABI_ACCMODE_TRUE@	# EOL
+
+@ABI_ARC4RANDOM_TRUE@am__append_3 = \
+@ABI_ARC4RANDOM_TRUE@	arc4random.3bsd \
+@ABI_ARC4RANDOM_TRUE@	arc4random_addrandom.3bsd \
+@ABI_ARC4RANDOM_TRUE@	arc4random_buf.3bsd \
+@ABI_ARC4RANDOM_TRUE@	arc4random_stir.3bsd \
+@ABI_ARC4RANDOM_TRUE@	arc4random_uniform.3bsd \
+@ABI_ARC4RANDOM_TRUE@	# EOL
+
+@ABI_CLOSEFROM_TRUE@am__append_4 = \
+@ABI_CLOSEFROM_TRUE@	closefrom.3bsd \
+@ABI_CLOSEFROM_TRUE@	# EOL
+
+@ABI_ERRC_TRUE@am__append_5 = \
+@ABI_ERRC_TRUE@	errc.3bsd \
+@ABI_ERRC_TRUE@	verrc.3bsd \
+@ABI_ERRC_TRUE@	vwarnc.3bsd \
+@ABI_ERRC_TRUE@	warnc.3bsd \
+@ABI_ERRC_TRUE@	# EOL
+
+@ABI_EXPAND_NUMBER_TRUE@am__append_6 = \
+@ABI_EXPAND_NUMBER_TRUE@	expand_number.3bsd \
+@ABI_EXPAND_NUMBER_TRUE@	# EOL
+
+@ABI_EXPLICIT_BZERO_TRUE@am__append_7 = \
+@ABI_EXPLICIT_BZERO_TRUE@	explicit_bzero.3bsd \
+@ABI_EXPLICIT_BZERO_TRUE@	# EOL
+
+@ABI_FGETLN_TRUE@am__append_8 = \
+@ABI_FGETLN_TRUE@	fgetln.3bsd \
+@ABI_FGETLN_TRUE@	fgetwln.3bsd \
+@ABI_FGETLN_TRUE@	fparseln.3bsd \
+@ABI_FGETLN_TRUE@	# EOL
+
+@ABI_FLOPEN_TRUE@am__append_9 = \
+@ABI_FLOPEN_TRUE@	flopen.3bsd \
+@ABI_FLOPEN_TRUE@	# EOL
+
+@ABI_FMTCHECK_TRUE@am__append_10 = \
+@ABI_FMTCHECK_TRUE@	fmtcheck.3bsd \
+@ABI_FMTCHECK_TRUE@	# EOL
+
+@ABI_FPURGE_TRUE@am__append_11 = \
+@ABI_FPURGE_TRUE@	fpurge.3bsd \
+@ABI_FPURGE_TRUE@	# EOL
+
+@ABI_FREEZERO_TRUE@am__append_12 = \
+@ABI_FREEZERO_TRUE@	freezero.3bsd \
+@ABI_FREEZERO_TRUE@	# EOL
+
+@ABI_FUNOPEN_TRUE@am__append_13 = \
+@ABI_FUNOPEN_TRUE@	funopen.3bsd \
+@ABI_FUNOPEN_TRUE@	# EOL
+
+@ABI_GETBSIZE_TRUE@am__append_14 = \
+@ABI_GETBSIZE_TRUE@	getbsize.3bsd \
+@ABI_GETBSIZE_TRUE@	# EOL
+
+@ABI_GETPEEREID_TRUE@am__append_15 = \
+@ABI_GETPEEREID_TRUE@	getpeereid.3bsd \
+@ABI_GETPEEREID_TRUE@	# EOL
+
+@ABI_HUMANIZE_NUMBER_TRUE@am__append_16 = \
+@ABI_HUMANIZE_NUMBER_TRUE@	dehumanize_number.3bsd \
+@ABI_HUMANIZE_NUMBER_TRUE@	humanize_number.3bsd \
+@ABI_HUMANIZE_NUMBER_TRUE@	# EOL
+
+@ABI_MD5_TRUE@am__append_17 = \
+@ABI_MD5_TRUE@	md5.3bsd \
+@ABI_MD5_TRUE@	# EOL
+
+@ABI_NLIST_TRUE@am__append_18 = \
+@ABI_NLIST_TRUE@	nlist.3bsd \
+@ABI_NLIST_TRUE@	# EOL
+
+@ABI_PIDFILE_TRUE@am__append_19 = \
+@ABI_PIDFILE_TRUE@	pidfile.3bsd \
+@ABI_PIDFILE_TRUE@	pidfile_close.3bsd \
+@ABI_PIDFILE_TRUE@	pidfile_open.3bsd \
+@ABI_PIDFILE_TRUE@	pidfile_remove.3bsd \
+@ABI_PIDFILE_TRUE@	pidfile_write.3bsd \
+@ABI_PIDFILE_TRUE@	# EOL
+
+@ABI_PROCTITLE_TRUE@am__append_20 = \
+@ABI_PROCTITLE_TRUE@	setproctitle.3bsd \
+@ABI_PROCTITLE_TRUE@	setproctitle_init.3bsd \
+@ABI_PROCTITLE_TRUE@	# EOL
+
+@ABI_PROGNAME_TRUE@am__append_21 = \
+@ABI_PROGNAME_TRUE@	getprogname.3bsd \
+@ABI_PROGNAME_TRUE@	setprogname.3bsd \
+@ABI_PROGNAME_TRUE@	# EOL
+
+@ABI_PWCACHE_TRUE@am__append_22 = \
+@ABI_PWCACHE_TRUE@	pwcache.3bsd \
+@ABI_PWCACHE_TRUE@	gid_from_group.3bsd \
+@ABI_PWCACHE_TRUE@	uid_from_user.3bsd \
+@ABI_PWCACHE_TRUE@	# EOL
+
+@ABI_NAME_FROM_ID_TRUE@@ABI_PWCACHE_TRUE@am__append_23 = \
+@ABI_NAME_FROM_ID_TRUE@@ABI_PWCACHE_TRUE@	group_from_gid.3bsd \
+@ABI_NAME_FROM_ID_TRUE@@ABI_PWCACHE_TRUE@	user_from_uid.3bsd \
+@ABI_NAME_FROM_ID_TRUE@@ABI_PWCACHE_TRUE@	# EOL
+
+@ABI_READPASSPHRASE_TRUE@am__append_24 = \
+@ABI_READPASSPHRASE_TRUE@	readpassphrase.3bsd \
+@ABI_READPASSPHRASE_TRUE@	# EOL
+
+@ABI_REALLOCARRAY_TRUE@am__append_25 = \
+@ABI_REALLOCARRAY_TRUE@	reallocarray.3bsd \
+@ABI_REALLOCARRAY_TRUE@	# EOL
+
+@ABI_REALLOCF_TRUE@am__append_26 = \
+@ABI_REALLOCF_TRUE@	reallocf.3bsd \
+@ABI_REALLOCF_TRUE@	# EOL
+
+@ABI_RECALLOCARRAY_TRUE@am__append_27 = \
+@ABI_RECALLOCARRAY_TRUE@	recallocarray.3bsd \
+@ABI_RECALLOCARRAY_TRUE@	# EOL
+
+@ABI_SORT_TRUE@am__append_28 = \
+@ABI_SORT_TRUE@	heapsort.3bsd \
+@ABI_SORT_TRUE@	mergesort.3bsd \
+@ABI_SORT_TRUE@	radixsort.3bsd \
+@ABI_SORT_TRUE@	sradixsort.3bsd \
+@ABI_SORT_TRUE@	# EOL
+
+@ABI_STRINGLIST_TRUE@am__append_29 = \
+@ABI_STRINGLIST_TRUE@	sl_add.3bsd \
+@ABI_STRINGLIST_TRUE@	sl_delete.3bsd \
+@ABI_STRINGLIST_TRUE@	sl_find.3bsd \
+@ABI_STRINGLIST_TRUE@	sl_free.3bsd \
+@ABI_STRINGLIST_TRUE@	sl_init.3bsd \
+@ABI_STRINGLIST_TRUE@	stringlist.3bsd \
+@ABI_STRINGLIST_TRUE@	# EOL
+
+@ABI_STRL_TRUE@am__append_30 = \
+@ABI_STRL_TRUE@	strlcat.3bsd \
+@ABI_STRL_TRUE@	strlcpy.3bsd \
+@ABI_STRL_TRUE@	# EOL
+
+@ABI_STRMODE_TRUE@am__append_31 = \
+@ABI_STRMODE_TRUE@	strmode.3bsd \
+@ABI_STRMODE_TRUE@	# EOL
+
+@ABI_STRNSTR_TRUE@am__append_32 = \
+@ABI_STRNSTR_TRUE@	strnstr.3bsd \
+@ABI_STRNSTR_TRUE@	# EOL
+
+@ABI_STRTOX_TRUE@am__append_33 = \
+@ABI_STRTOX_TRUE@	strtoi.3bsd \
+@ABI_STRTOX_TRUE@	strtou.3bsd \
+@ABI_STRTOX_TRUE@	# EOL
+
+@ABI_STRTONUM_TRUE@am__append_34 = \
+@ABI_STRTONUM_TRUE@	strtonum.3bsd \
+@ABI_STRTONUM_TRUE@	# EOL
+
+@ABI_VIS_TRUE@am__append_35 = \
+@ABI_VIS_TRUE@	strnunvis.3bsd \
+@ABI_VIS_TRUE@	strnvis.3bsd \
+@ABI_VIS_TRUE@	strunvis.3bsd \
+@ABI_VIS_TRUE@	strvis.3bsd \
+@ABI_VIS_TRUE@	strvisx.3bsd \
+@ABI_VIS_TRUE@	unvis.3bsd \
+@ABI_VIS_TRUE@	vis.3bsd \
+@ABI_VIS_TRUE@	# EOL
+
+@ABI_WCSL_TRUE@am__append_36 = \
+@ABI_WCSL_TRUE@	wcslcat.3bsd \
+@ABI_WCSL_TRUE@	wcslcpy.3bsd \
+@ABI_WCSL_TRUE@	# EOL
+
 subdir = man
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/m4/libbsd-compiler.m4 \
-	$(top_srcdir)/m4/libtool.m4 $(top_srcdir)/m4/ltoptions.m4 \
-	$(top_srcdir)/m4/ltsugar.m4 $(top_srcdir)/m4/ltversion.m4 \
-	$(top_srcdir)/m4/lt~obsolete.m4 $(top_srcdir)/configure.ac
+	$(top_srcdir)/m4/libbsd-funcs.m4 \
+	$(top_srcdir)/m4/libbsd-large.m4 \
+	$(top_srcdir)/m4/libbsd-linker.m4 $(top_srcdir)/m4/libtool.m4 \
+	$(top_srcdir)/m4/ltoptions.m4 $(top_srcdir)/m4/ltsugar.m4 \
+	$(top_srcdir)/m4/ltversion.m4 $(top_srcdir)/m4/lt~obsolete.m4 \
+	$(top_srcdir)/configure.ac
 am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 	$(ACLOCAL_M4)
 DIST_COMMON = $(srcdir)/Makefile.am $(am__DIST_COMMON)
@@ -191,8 +376,9 @@ INSTALL_SCRIPT = @INSTALL_SCRIPT@
 INSTALL_STRIP_PROGRAM = @INSTALL_STRIP_PROGRAM@
 LD = @LD@
 LDFLAGS = @LDFLAGS@
-LIBBSD_ABI = @LIBBSD_ABI@
 LIBBSD_LIBS = @LIBBSD_LIBS@
+LIBBSD_SYS_HAS_TIME64 = @LIBBSD_SYS_HAS_TIME64@
+LIBBSD_SYS_TIME_BITS = @LIBBSD_SYS_TIME_BITS@
 LIBOBJS = @LIBOBJS@
 LIBS = @LIBS@
 LIBTOOL = @LIBTOOL@
@@ -222,6 +408,7 @@ RANLIB = @RANLIB@
 SED = @SED@
 SET_MAKE = @SET_MAKE@
 SHELL = @SHELL@
+SOVERSION = @SOVERSION@
 STRIP = @STRIP@
 TESTU01_LIBS = @TESTU01_LIBS@
 VERSION = @VERSION@
@@ -280,253 +467,83 @@ top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 EXTRA_DIST = \
 	mdX.3bsd \
-	$(nil)
+	# EOL
 
 CLEANFILES = \
 	md5.3bsd \
-	$(nil)
+	# EOL
 
 SED_MD5_SUBST = -e 's/mdX/md5/g' -e 's/mdY/md4/g' -e 's/MDX/MD5/g'
-dist_man_MANS = \
-	LIST_CLASS_ENTRY.3bsd \
-	LIST_CLASS_HEAD.3bsd \
-	LIST_EMPTY.3bsd \
-	LIST_ENTRY.3bsd \
-	LIST_FIRST.3bsd \
-	LIST_FOREACH.3bsd \
-	LIST_FOREACH_FROM.3bsd \
-	LIST_FOREACH_FROM_SAFE.3bsd \
-	LIST_FOREACH_SAFE.3bsd \
-	LIST_HEAD.3bsd \
-	LIST_HEAD_INITIALIZER.3bsd \
-	LIST_INIT.3bsd \
-	LIST_INSERT_AFTER.3bsd \
-	LIST_INSERT_BEFORE.3bsd \
-	LIST_INSERT_HEAD.3bsd \
-	LIST_NEXT.3bsd \
-	LIST_PREV.3bsd \
-	LIST_REMOVE.3bsd \
-	LIST_SWAP.3bsd \
-	RB_EMPTY.3bsd \
-	RB_ENTRY.3bsd \
-	RB_FIND.3bsd \
-	RB_FOREACH.3bsd \
-	RB_FOREACH_REVERSE.3bsd \
-	RB_GENERATE.3bsd \
-	RB_GENERATE_STATIC.3bsd \
-	RB_HEAD.3bsd \
-	RB_INIT.3bsd \
-	RB_INITIALIZER.3bsd \
-	RB_INSERT.3bsd \
-	RB_LEFT.3bsd \
-	RB_MAX.3bsd \
-	RB_MIN.3bsd \
-	RB_NEXT.3bsd \
-	RB_NFIND.3bsd \
-	RB_PARENT.3bsd \
-	RB_PREV.3bsd \
-	RB_PROTOTYPE.3bsd \
-	RB_PROTOTYPE_STATIC.3bsd \
-	RB_REMOVE.3bsd \
-	RB_RIGHT.3bsd \
-	RB_ROOT.3bsd \
-	SLIST_CLASS_ENTRY.3bsd \
-	SLIST_CLASS_HEAD.3bsd \
-	SLIST_EMPTY.3bsd \
-	SLIST_ENTRY.3bsd \
-	SLIST_FIRST.3bsd \
-	SLIST_FOREACH.3bsd \
-	SLIST_FOREACH_FROM.3bsd \
-	SLIST_FOREACH_FROM_SAFE.3bsd \
-	SLIST_FOREACH_SAFE.3bsd \
-	SLIST_HEAD.3bsd \
-	SLIST_HEAD_INITIALIZER.3bsd \
-	SLIST_INIT.3bsd \
-	SLIST_INSERT_AFTER.3bsd \
-	SLIST_INSERT_HEAD.3bsd \
-	SLIST_NEXT.3bsd \
-	SLIST_REMOVE.3bsd \
-	SLIST_REMOVE_AFTER.3bsd \
-	SLIST_REMOVE_HEAD.3bsd \
-	SLIST_REMOVE_PREVPTR.3bsd \
-	SLIST_SWAP.3bsd \
-	SPLAY_EMPTY.3bsd \
-	SPLAY_ENTRY.3bsd \
-	SPLAY_FIND.3bsd \
-	SPLAY_FOREACH.3bsd \
-	SPLAY_GENERATE.3bsd \
-	SPLAY_HEAD.3bsd \
-	SPLAY_INIT.3bsd \
-	SPLAY_INITIALIZER.3bsd \
-	SPLAY_INSERT.3bsd \
-	SPLAY_LEFT.3bsd \
-	SPLAY_MAX.3bsd \
-	SPLAY_MIN.3bsd \
-	SPLAY_NEXT.3bsd \
-	SPLAY_PROTOTYPE.3bsd \
-	SPLAY_REMOVE.3bsd \
-	SPLAY_RIGHT.3bsd \
-	SPLAY_ROOT.3bsd \
-	STAILQ_CLASS_ENTRY.3bsd \
-	STAILQ_CLASS_HEAD.3bsd \
-	STAILQ_CONCAT.3bsd \
-	STAILQ_EMPTY.3bsd \
-	STAILQ_ENTRY.3bsd \
-	STAILQ_FIRST.3bsd \
-	STAILQ_FOREACH.3bsd \
-	STAILQ_FOREACH_FROM.3bsd \
-	STAILQ_FOREACH_FROM_SAFE.3bsd \
-	STAILQ_FOREACH_SAFE.3bsd \
-	STAILQ_HEAD.3bsd \
-	STAILQ_HEAD_INITIALIZER.3bsd \
-	STAILQ_INIT.3bsd \
-	STAILQ_INSERT_AFTER.3bsd \
-	STAILQ_INSERT_HEAD.3bsd \
-	STAILQ_INSERT_TAIL.3bsd \
-	STAILQ_LAST.3bsd \
-	STAILQ_NEXT.3bsd \
-	STAILQ_REMOVE.3bsd \
-	STAILQ_REMOVE_AFTER.3bsd \
-	STAILQ_REMOVE_HEAD.3bsd \
-	STAILQ_SWAP.3bsd \
-	TAILQ_CLASS_ENTRY.3bsd \
-	TAILQ_CLASS_HEAD.3bsd \
-	TAILQ_CONCAT.3bsd \
-	TAILQ_EMPTY.3bsd \
-	TAILQ_ENTRY.3bsd \
-	TAILQ_FIRST.3bsd \
-	TAILQ_FOREACH.3bsd \
-	TAILQ_FOREACH_FROM.3bsd \
-	TAILQ_FOREACH_FROM_SAFE.3bsd \
-	TAILQ_FOREACH_REVERSE.3bsd \
+dist_man_MANS = LIST_CLASS_ENTRY.3bsd LIST_CLASS_HEAD.3bsd \
+	LIST_EMPTY.3bsd LIST_ENTRY.3bsd LIST_FIRST.3bsd \
+	LIST_FOREACH.3bsd LIST_FOREACH_FROM.3bsd \
+	LIST_FOREACH_FROM_SAFE.3bsd LIST_FOREACH_SAFE.3bsd \
+	LIST_HEAD.3bsd LIST_HEAD_INITIALIZER.3bsd LIST_INIT.3bsd \
+	LIST_INSERT_AFTER.3bsd LIST_INSERT_BEFORE.3bsd \
+	LIST_INSERT_HEAD.3bsd LIST_NEXT.3bsd LIST_PREV.3bsd \
+	LIST_REMOVE.3bsd LIST_SWAP.3bsd RB_EMPTY.3bsd RB_ENTRY.3bsd \
+	RB_FIND.3bsd RB_FOREACH.3bsd RB_FOREACH_REVERSE.3bsd \
+	RB_GENERATE.3bsd RB_GENERATE_STATIC.3bsd RB_HEAD.3bsd \
+	RB_INIT.3bsd RB_INITIALIZER.3bsd RB_INSERT.3bsd RB_LEFT.3bsd \
+	RB_MAX.3bsd RB_MIN.3bsd RB_NEXT.3bsd RB_NFIND.3bsd \
+	RB_PARENT.3bsd RB_PREV.3bsd RB_PROTOTYPE.3bsd \
+	RB_PROTOTYPE_STATIC.3bsd RB_REMOVE.3bsd RB_RIGHT.3bsd \
+	RB_ROOT.3bsd SLIST_CLASS_ENTRY.3bsd SLIST_CLASS_HEAD.3bsd \
+	SLIST_EMPTY.3bsd SLIST_ENTRY.3bsd SLIST_FIRST.3bsd \
+	SLIST_FOREACH.3bsd SLIST_FOREACH_FROM.3bsd \
+	SLIST_FOREACH_FROM_SAFE.3bsd SLIST_FOREACH_SAFE.3bsd \
+	SLIST_HEAD.3bsd SLIST_HEAD_INITIALIZER.3bsd SLIST_INIT.3bsd \
+	SLIST_INSERT_AFTER.3bsd SLIST_INSERT_HEAD.3bsd SLIST_NEXT.3bsd \
+	SLIST_REMOVE.3bsd SLIST_REMOVE_AFTER.3bsd \
+	SLIST_REMOVE_HEAD.3bsd SLIST_REMOVE_PREVPTR.3bsd \
+	SLIST_SWAP.3bsd SPLAY_EMPTY.3bsd SPLAY_ENTRY.3bsd \
+	SPLAY_FIND.3bsd SPLAY_FOREACH.3bsd SPLAY_GENERATE.3bsd \
+	SPLAY_HEAD.3bsd SPLAY_INIT.3bsd SPLAY_INITIALIZER.3bsd \
+	SPLAY_INSERT.3bsd SPLAY_LEFT.3bsd SPLAY_MAX.3bsd \
+	SPLAY_MIN.3bsd SPLAY_NEXT.3bsd SPLAY_PROTOTYPE.3bsd \
+	SPLAY_REMOVE.3bsd SPLAY_RIGHT.3bsd SPLAY_ROOT.3bsd \
+	STAILQ_CLASS_ENTRY.3bsd STAILQ_CLASS_HEAD.3bsd \
+	STAILQ_CONCAT.3bsd STAILQ_EMPTY.3bsd STAILQ_ENTRY.3bsd \
+	STAILQ_FIRST.3bsd STAILQ_FOREACH.3bsd STAILQ_FOREACH_FROM.3bsd \
+	STAILQ_FOREACH_FROM_SAFE.3bsd STAILQ_FOREACH_SAFE.3bsd \
+	STAILQ_HEAD.3bsd STAILQ_HEAD_INITIALIZER.3bsd STAILQ_INIT.3bsd \
+	STAILQ_INSERT_AFTER.3bsd STAILQ_INSERT_HEAD.3bsd \
+	STAILQ_INSERT_TAIL.3bsd STAILQ_LAST.3bsd STAILQ_NEXT.3bsd \
+	STAILQ_REMOVE.3bsd STAILQ_REMOVE_AFTER.3bsd \
+	STAILQ_REMOVE_HEAD.3bsd STAILQ_SWAP.3bsd \
+	TAILQ_CLASS_ENTRY.3bsd TAILQ_CLASS_HEAD.3bsd TAILQ_CONCAT.3bsd \
+	TAILQ_EMPTY.3bsd TAILQ_ENTRY.3bsd TAILQ_FIRST.3bsd \
+	TAILQ_FOREACH.3bsd TAILQ_FOREACH_FROM.3bsd \
+	TAILQ_FOREACH_FROM_SAFE.3bsd TAILQ_FOREACH_REVERSE.3bsd \
 	TAILQ_FOREACH_REVERSE_FROM.3bsd \
 	TAILQ_FOREACH_REVERSE_FROM_SAFE.3bsd \
-	TAILQ_FOREACH_REVERSE_SAFE.3bsd \
-	TAILQ_FOREACH_SAFE.3bsd \
-	TAILQ_HEAD.3bsd \
-	TAILQ_HEAD_INITIALIZER.3bsd \
-	TAILQ_INIT.3bsd \
-	TAILQ_INSERT_AFTER.3bsd \
-	TAILQ_INSERT_BEFORE.3bsd \
-	TAILQ_INSERT_HEAD.3bsd \
-	TAILQ_INSERT_TAIL.3bsd \
-	TAILQ_LAST.3bsd \
-	TAILQ_NEXT.3bsd \
-	TAILQ_PREV.3bsd \
-	TAILQ_REMOVE.3bsd \
-	TAILQ_SWAP.3bsd \
-	TIMESPEC_TO_TIMEVAL.3bsd \
-	TIMEVAL_TO_TIMESPEC.3bsd \
-	arc4random.3bsd \
-	arc4random_addrandom.3bsd \
-	arc4random_buf.3bsd \
-	arc4random_stir.3bsd \
-	arc4random_uniform.3bsd \
-	be16dec.3bsd \
-	be16enc.3bsd \
-	be32dec.3bsd \
-	be32enc.3bsd \
-	be64dec.3bsd \
-	be64enc.3bsd \
-	bit_alloc.3bsd \
-	bit_clear.3bsd \
-	bit_decl.3bsd \
-	bit_ffc.3bsd \
-	bit_ffs.3bsd \
-	bit_nclear.3bsd \
-	bit_nset.3bsd \
-	bit_set.3bsd \
-	bit_test.3bsd \
-	bitstr_size.3bsd \
-	bitstring.3bsd \
-	byteorder.3bsd \
-	closefrom.3bsd \
-	dehumanize_number.3bsd \
-	errc.3bsd \
-	expand_number.3bsd \
-	explicit_bzero.3bsd \
-	fgetln.3bsd \
-	fgetwln.3bsd \
-	flopen.3bsd \
-	freezero.3bsd \
-	fmtcheck.3bsd \
-	fparseln.3bsd \
-	fpurge.3bsd \
-	funopen.3bsd \
-	getbsize.3bsd \
-	getmode.3bsd \
-	getpeereid.3bsd \
-	getprogname.3bsd \
-	gid_from_group.3bsd \
-	group_from_gid.3bsd \
-	heapsort.3bsd \
-	humanize_number.3bsd \
-	le16dec.3bsd \
-	le16enc.3bsd \
-	le32dec.3bsd \
-	le32enc.3bsd \
-	le64dec.3bsd \
-	le64enc.3bsd \
-	libbsd.7 \
-	md5.3bsd \
-	mergesort.3bsd \
-	nlist.3bsd \
-	pidfile.3bsd \
-	pidfile_close.3bsd \
-	pidfile_open.3bsd \
-	pidfile_remove.3bsd \
-	pidfile_write.3bsd \
-	pwcache.3bsd \
-	queue.3bsd \
-	radixsort.3bsd \
-	readpassphrase.3bsd \
-	reallocarray.3bsd \
-	reallocf.3bsd \
-	recallocarray.3bsd \
-	setmode.3bsd \
-	setproctitle.3bsd \
-	setproctitle_init.3bsd \
-	setprogname.3bsd \
-	sl_add.3bsd \
-	sl_delete.3bsd \
-	sl_find.3bsd \
-	sl_free.3bsd \
-	sl_init.3bsd \
-	sradixsort.3bsd \
-	stringlist.3bsd \
-	strlcat.3bsd \
-	strlcpy.3bsd \
-	strmode.3bsd \
-	strnstr.3bsd \
-	strnunvis.3bsd \
-	strnvis.3bsd \
-	strtoi.3bsd \
-	strtonum.3bsd \
-	strtou.3bsd \
-	strunvis.3bsd \
-	strvis.3bsd \
-	strvisx.3bsd \
-	timeradd.3bsd \
-	timerclear.3bsd \
-	timercmp.3bsd \
-	timerisset.3bsd \
-	timersub.3bsd \
-	timespec.3bsd \
-	timespecadd.3bsd \
-	timespecclear.3bsd \
-	timespeccmp.3bsd \
-	timespecisset.3bsd \
-	timespecsub.3bsd \
-	timeval.3bsd \
-	tree.3bsd \
-	uid_from_user.3bsd \
-	unvis.3bsd \
-	user_from_uid.3bsd \
-	vis.3bsd \
-	wcslcat.3bsd \
-	wcslcpy.3bsd \
-	$(nil)
-
+	TAILQ_FOREACH_REVERSE_SAFE.3bsd TAILQ_FOREACH_SAFE.3bsd \
+	TAILQ_HEAD.3bsd TAILQ_HEAD_INITIALIZER.3bsd TAILQ_INIT.3bsd \
+	TAILQ_INSERT_AFTER.3bsd TAILQ_INSERT_BEFORE.3bsd \
+	TAILQ_INSERT_HEAD.3bsd TAILQ_INSERT_TAIL.3bsd TAILQ_LAST.3bsd \
+	TAILQ_NEXT.3bsd TAILQ_PREV.3bsd TAILQ_REMOVE.3bsd \
+	TAILQ_SWAP.3bsd be16dec.3bsd be16enc.3bsd be32dec.3bsd \
+	be32enc.3bsd be64dec.3bsd be64enc.3bsd bit_alloc.3bsd \
+	bit_clear.3bsd bit_decl.3bsd bit_ffc.3bsd bit_ffs.3bsd \
+	bit_nclear.3bsd bit_nset.3bsd bit_set.3bsd bit_test.3bsd \
+	bitstr_size.3bsd bitstring.3bsd byteorder.3bsd le16dec.3bsd \
+	le16enc.3bsd le32dec.3bsd le32enc.3bsd le64dec.3bsd \
+	le64enc.3bsd libbsd.7 queue.3bsd timeradd.3bsd timerclear.3bsd \
+	timercmp.3bsd timerisset.3bsd timersub.3bsd timespecadd.3bsd \
+	timespecclear.3bsd timespeccmp.3bsd timespecisset.3bsd \
+	timespecsub.3bsd tree.3bsd $(am__append_1) $(am__append_2) \
+	$(am__append_3) $(am__append_4) $(am__append_5) \
+	$(am__append_6) $(am__append_7) $(am__append_8) \
+	$(am__append_9) $(am__append_10) $(am__append_11) \
+	$(am__append_12) $(am__append_13) $(am__append_14) \
+	$(am__append_15) $(am__append_16) $(am__append_17) \
+	$(am__append_18) $(am__append_19) $(am__append_20) \
+	$(am__append_21) $(am__append_22) $(am__append_23) \
+	$(am__append_24) $(am__append_25) $(am__append_26) \
+	$(am__append_27) $(am__append_28) $(am__append_29) \
+	$(am__append_30) $(am__append_31) $(am__append_32) \
+	$(am__append_33) $(am__append_34) $(am__append_35) \
+	$(am__append_36)
 all: all-am
 
 .SUFFIXES:
@@ -815,7 +832,7 @@ uninstall-man: uninstall-man3 uninstall-man7
 
 
 md5.3bsd: $(srcdir)/mdX.3bsd
-	$(AM_V_GEN) $(SED) $(SED_MD5_SUBST) $< > $@
+	$(AM_V_GEN) $(SED) $(SED_MD5_SUBST) $< >$@
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.

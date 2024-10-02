@@ -51,6 +51,7 @@
 #include <stdint.h>
 
 __BEGIN_DECLS
+#if !defined(__APPLE__) && !defined(__sun)
 #if !defined(__GLIBC__) || \
     !__GLIBC_PREREQ(2, 36) || \
     !defined(_DEFAULT_SOURCE)
@@ -60,11 +61,14 @@ uint32_t arc4random_uniform(uint32_t upper_bound);
 #endif
 void arc4random_stir(void);
 void arc4random_addrandom(unsigned char *dat, int datlen);
+#endif
 
 int dehumanize_number(const char *str, int64_t *size);
 
+#if !defined(__APPLE__)
 const char *getprogname(void);
 void setprogname(const char *);
+#endif
 
 int heapsort(void *, size_t, size_t, int (*)(const void *, const void *));
 int mergesort(void *base, size_t nmemb, size_t size,

@@ -28,12 +28,38 @@
 #include <stdlib.h>
 #include <string.h>
 
+static int
+test_memstream(void)
+{
+	int rc = 0;
+#if HAVE_OPEN_MEMSTREAM
+	FILE *fp;
+	char *buf = NULL;
+	size_t bufsz = 0;
+
+	fp = open_memstream(&buf, &bufsz);
+	if (fp == NULL)
+		return 1;
+
+	fputs("World", fp);
+	if (fpurge(fp) < 0)
+		rc = 1;
+	fflush(fp);
+	if (bufsz != 0)
+		rc = 1;
+
+	fclose(fp);
+	free(buf);
+#endif
+
+	return rc;
+}
+
 int
 main(int argc, char *argv[])
 {
 	FILE *fp;
-	char *buf = NULL;
-	size_t bufsz = 0;
+	int rc;
 
 	if (fpurge(NULL) == 0)
 		return 1;
@@ -41,17 +67,9 @@ main(int argc, char *argv[])
 	fp = fopen("/dev/zero", "r");
 	if (fpurge(fp) < 0)
 		return 1;
-
 	fclose(fp);
 
-	fp = open_memstream(&buf, &bufsz);
-	fputs("World", fp);
-	if (fpurge(fp) < 0)
-		return 1;
-	fflush(fp);
-	if (bufsz != 0)
-		return 1;
-	free(buf);
+	rc = test_memstream();
 
-	return 0;
+	return rc;
 }

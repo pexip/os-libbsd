@@ -1,5 +1,6 @@
 /*
- * Copyright © 2021 Guillem Jover <guillem@hadrons.org>
+ * Copyright © 2006 Robert Millan
+ * Copyright © 2011, 2019 Guillem Jover <guillem@hadrons.org>
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -24,30 +25,51 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifdef LIBBSD_OVERLAY
-#include <sys/cdefs.h>
-#if __has_include_next(<pwd.h>)
-#include_next <pwd.h>
-#endif
-#else
-#include <bsd/sys/cdefs.h>
-#if __has_include(<pwd.h>)
-#include <pwd.h>
-#endif
-#endif
+#include <err.h>
+#include <string.h>
+#include <stdarg.h>
+#include <stdlib.h>
+#include <stdio.h>
 
-#ifndef LIBBSD_PWD_H
-#define LIBBSD_PWD_H
+void
+vwarnc(int code, const char *format, va_list ap)
+{
+	fprintf(stderr, "%s: ", getprogname());
+	if (format) {
+		vfprintf(stderr, format, ap);
+		fprintf(stderr, ": ");
+	}
+	fprintf(stderr, "%s\n", strerror(code));
+}
 
-#define _PW_BUF_LEN		1024	/* length of getpw*_r buffer */
+void
+warnc(int code, const char *format, ...)
+{
+	va_list ap;
 
-__BEGIN_DECLS
-int
-uid_from_user(const char *, uid_t *);
-#ifndef __APPLE__
-const char *
-user_from_uid(uid_t, int);
-#endif
-__END_DECLS
+	va_start(ap, format);
+	vwarnc(code, format, ap);
+	va_end(ap);
+}
 
-#endif
+void
+verrc(int status, int code, const char *format, va_list ap)
+{
+	fprintf(stderr, "%s: ", getprogname());
+	if (format) {
+		vfprintf(stderr, format, ap);
+		fprintf(stderr, ": ");
+	}
+	fprintf(stderr, "%s\n", strerror(code));
+	exit(status);
+}
+
+void
+errc(int status, int code, const char *format, ...)
+{
+	va_list ap;
+
+	va_start(ap, format);
+	verrc(status, code, format, ap);
+	va_end(ap);
+}

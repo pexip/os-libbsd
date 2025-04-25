@@ -27,6 +27,17 @@
 #define ASSERT_NE(a, b) assert((a) != (b))
 #define ASSERT_GE(a, b) assert((a) >= (b))
 
+#if defined(__has_feature)
+#if __has_feature(address_sanitizer)
+#define __SANITIZE_ADDRESS__
+#endif
+#endif
+#ifdef __SANITIZE_ADDRESS__
+#define ATTRIBUTE_NO_SANITIZE_ADDRESS __attribute__((no_sanitize_address))
+#else
+#define ATTRIBUTE_NO_SANITIZE_ADDRESS
+#endif
+
 /* 128 bits of random data. */
 static const char secret[16] = {
 	0xa0, 0x6c, 0x0c, 0x81, 0xba, 0xd8, 0x5b, 0x0c,
@@ -127,6 +138,7 @@ populate_secret(char *buf, ssize_t len)
 static void __attribute__((__noinline__))
 blank_stack_side_effects(char *buf, size_t len)
 {
+#if defined(__GNU__) && !defined(__SANITIZE_ADDRESS__)
 	char scratch[SECRETBYTES * 4];
 
 	/* If the read(3) in populate_secret() wrote into the stack, as it
@@ -134,6 +146,7 @@ blank_stack_side_effects(char *buf, size_t len)
 	 * detect the wrong secret on the stack. */
 	memset(scratch, 0xFF, sizeof(scratch));
 	ASSERT_EQ(NULL, memmem(scratch, sizeof(scratch), buf, len));
+#endif
 }
 
 static int
@@ -149,7 +162,7 @@ count_secrets(const char *buf)
 	return (res);
 }
 
-static char *
+ATTRIBUTE_NO_SANITIZE_ADDRESS static char *
 test_without_bzero(void)
 {
 	char buf[SECRETBYTES];
@@ -162,7 +175,7 @@ test_without_bzero(void)
 	return (res);
 }
 
-static char *
+ATTRIBUTE_NO_SANITIZE_ADDRESS static char *
 test_with_bzero(void)
 {
 	char buf[SECRETBYTES];

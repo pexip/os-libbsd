@@ -1,5 +1,5 @@
 /*
- * Copyright © 2021 Guillem Jover <guillem@hadrons.org>
+ * Copyright © 2010-2024 Guillem Jover <guillem@hadrons.org>
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -24,30 +24,41 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifdef LIBBSD_OVERLAY
-#include <sys/cdefs.h>
-#if __has_include_next(<pwd.h>)
-#include_next <pwd.h>
-#endif
-#else
-#include <bsd/sys/cdefs.h>
-#if __has_include(<pwd.h>)
-#include <pwd.h>
-#endif
-#endif
+#include <config.h>
 
-#ifndef LIBBSD_PWD_H
-#define LIBBSD_PWD_H
+#include <stdarg.h>
+#include <stdio.h>
+#include <stdlib.h>
 
-#define _PW_BUF_LEN		1024	/* length of getpw*_r buffer */
-
-__BEGIN_DECLS
 int
-uid_from_user(const char *, uid_t *);
-#ifndef __APPLE__
-const char *
-user_from_uid(uid_t, int);
-#endif
-__END_DECLS
+vasprintf(char **strp, char const *fmt, va_list args)
+{
+	va_list args_copy;
+	int needed, n;
+	char *str;
 
-#endif
+	va_copy(args_copy, args);
+	needed = vsnprintf(NULL, 0, fmt, args_copy);
+	va_end(args_copy);
+
+	if (needed < 0) {
+		*strp = NULL;
+		return -1;
+	}
+
+	str = malloc(needed + 1);
+	if (str == NULL) {
+		*strp = NULL;
+		return -1;
+	}
+
+	n = vsnprintf(str, needed + 1, fmt, args);
+	if (n < 0) {
+		free(str);
+		str = NULL;
+	}
+
+	*strp = str;
+
+	return n;
+}

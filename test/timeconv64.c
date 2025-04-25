@@ -1,5 +1,5 @@
 /*
- * Copyright © 2021 Guillem Jover <guillem@hadrons.org>
+ * Copyright © 2024 Guillem Jover <guillem@hadrons.org>
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -24,30 +24,17 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifdef LIBBSD_OVERLAY
-#include <sys/cdefs.h>
-#if __has_include_next(<pwd.h>)
-#include_next <pwd.h>
-#endif
-#else
-#include <bsd/sys/cdefs.h>
-#if __has_include(<pwd.h>)
-#include <pwd.h>
-#endif
-#endif
+#include <assert.h>
+#include <stdint.h>
+#include <timeconv.h>
 
-#ifndef LIBBSD_PWD_H
-#define LIBBSD_PWD_H
-
-#define _PW_BUF_LEN		1024	/* length of getpw*_r buffer */
-
-__BEGIN_DECLS
 int
-uid_from_user(const char *, uid_t *);
-#ifndef __APPLE__
-const char *
-user_from_uid(uid_t, int);
-#endif
-__END_DECLS
+main(int argc, char **argv)
+{
+	time_t t;
 
-#endif
+	t = _time64_to_time(INT64_MAX);
+	assert(t == INT64_MAX);
+
+	return 0;
+}

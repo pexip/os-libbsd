@@ -88,15 +88,55 @@ PRE_UNINSTALL = :
 POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
+@ABI_ERR_H_TRUE@am__append_1 = \
+@ABI_ERR_H_TRUE@	bsd/err.h \
+@ABI_ERR_H_TRUE@	# EOL
+
+@ABI_BSD_GETOPT_TRUE@am__append_2 = \
+@ABI_BSD_GETOPT_TRUE@	bsd/getopt.h \
+@ABI_BSD_GETOPT_TRUE@	# EOL
+
+@ABI_MD5_TRUE@am__append_3 = \
+@ABI_MD5_TRUE@	bsd/md5.h \
+@ABI_MD5_TRUE@	# EOL
+
+@ABI_NLIST_TRUE@am__append_4 = \
+@ABI_NLIST_TRUE@	bsd/nlist.h \
+@ABI_NLIST_TRUE@	# EOL
+
+@ABI_READPASSPHRASE_TRUE@am__append_5 = \
+@ABI_READPASSPHRASE_TRUE@	bsd/readpassphrase.h \
+@ABI_READPASSPHRASE_TRUE@	# EOL
+
+@ABI_PWCACHE_TRUE@am__append_6 = \
+@ABI_PWCACHE_TRUE@	bsd/grp.h \
+@ABI_PWCACHE_TRUE@	bsd/pwd.h \
+@ABI_PWCACHE_TRUE@	# EOL
+
+@ABI_STRINGLIST_TRUE@am__append_7 = \
+@ABI_STRINGLIST_TRUE@	bsd/stringlist.h \
+@ABI_STRINGLIST_TRUE@	# EOL
+
+@ABI_TIMECONV_TRUE@am__append_8 = \
+@ABI_TIMECONV_TRUE@	bsd/timeconv.h \
+@ABI_TIMECONV_TRUE@	# EOL
+
+@ABI_VIS_TRUE@am__append_9 = \
+@ABI_VIS_TRUE@	bsd/vis.h \
+@ABI_VIS_TRUE@	# EOL
+
 subdir = include
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/m4/libbsd-compiler.m4 \
-	$(top_srcdir)/m4/libtool.m4 $(top_srcdir)/m4/ltoptions.m4 \
-	$(top_srcdir)/m4/ltsugar.m4 $(top_srcdir)/m4/ltversion.m4 \
-	$(top_srcdir)/m4/lt~obsolete.m4 $(top_srcdir)/configure.ac
+	$(top_srcdir)/m4/libbsd-funcs.m4 \
+	$(top_srcdir)/m4/libbsd-large.m4 \
+	$(top_srcdir)/m4/libbsd-linker.m4 $(top_srcdir)/m4/libtool.m4 \
+	$(top_srcdir)/m4/ltoptions.m4 $(top_srcdir)/m4/ltsugar.m4 \
+	$(top_srcdir)/m4/ltversion.m4 $(top_srcdir)/m4/lt~obsolete.m4 \
+	$(top_srcdir)/configure.ac
 am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 	$(ACLOCAL_M4)
-DIST_COMMON = $(srcdir)/Makefile.am $(nobase_include_HEADERS) \
+DIST_COMMON = $(srcdir)/Makefile.am $(am__nobase_include_HEADERS_DIST) \
 	$(am__DIST_COMMON)
 mkinstalldirs = $(install_sh) -d
 CONFIG_HEADER = $(top_builddir)/config.h
@@ -121,6 +161,14 @@ am__can_run_installinfo = \
     n|no|NO) false;; \
     *) (install-info --version) >/dev/null 2>&1;; \
   esac
+am__nobase_include_HEADERS_DIST = bsd/sys/bitstring.h bsd/sys/cdefs.h \
+	bsd/sys/endian.h bsd/sys/param.h bsd/sys/poll.h \
+	bsd/sys/queue.h bsd/sys/time.h bsd/sys/tree.h \
+	bsd/netinet/ip_icmp.h bsd/bitstring.h bsd/bsd.h bsd/inttypes.h \
+	bsd/libutil.h bsd/stdio.h bsd/stdlib.h bsd/string.h \
+	bsd/unistd.h bsd/wchar.h bsd/err.h bsd/getopt.h bsd/md5.h \
+	bsd/nlist.h bsd/readpassphrase.h bsd/grp.h bsd/pwd.h \
+	bsd/stringlist.h bsd/timeconv.h bsd/vis.h
 am__vpath_adj_setup = srcdirstrip=`echo "$(srcdir)" | sed 's|.|.|g'`;
 am__vpath_adj = case $$p in \
     $(srcdir)/*) f=`echo "$$p" | sed "s|^$$srcdirstrip/||"`;; \
@@ -206,8 +254,9 @@ INSTALL_SCRIPT = @INSTALL_SCRIPT@
 INSTALL_STRIP_PROGRAM = @INSTALL_STRIP_PROGRAM@
 LD = @LD@
 LDFLAGS = @LDFLAGS@
-LIBBSD_ABI = @LIBBSD_ABI@
 LIBBSD_LIBS = @LIBBSD_LIBS@
+LIBBSD_SYS_HAS_TIME64 = @LIBBSD_SYS_HAS_TIME64@
+LIBBSD_SYS_TIME_BITS = @LIBBSD_SYS_TIME_BITS@
 LIBOBJS = @LIBOBJS@
 LIBS = @LIBS@
 LIBTOOL = @LIBTOOL@
@@ -237,6 +286,7 @@ RANLIB = @RANLIB@
 SED = @SED@
 SET_MAKE = @SET_MAKE@
 SHELL = @SHELL@
+SOVERSION = @SOVERSION@
 STRIP = @STRIP@
 TESTU01_LIBS = @TESTU01_LIBS@
 VERSION = @VERSION@
@@ -293,36 +343,19 @@ target_alias = @target_alias@
 top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
-nobase_include_HEADERS = \
-	bsd/sys/bitstring.h \
-	bsd/sys/cdefs.h \
-	bsd/sys/endian.h \
-	bsd/sys/param.h \
-	bsd/sys/poll.h \
-	bsd/sys/queue.h \
-	bsd/sys/time.h \
-	bsd/sys/tree.h \
-	bsd/netinet/ip_icmp.h \
-	bsd/bitstring.h \
-	bsd/bsd.h \
-	bsd/err.h \
-	bsd/getopt.h \
-	bsd/grp.h \
-	bsd/inttypes.h \
-	bsd/libutil.h \
-	bsd/md5.h \
-	bsd/nlist.h \
-	bsd/pwd.h \
-	bsd/readpassphrase.h \
-	bsd/stdio.h \
-	bsd/stdlib.h \
-	bsd/string.h \
-	bsd/stringlist.h \
-	bsd/timeconv.h \
-	bsd/unistd.h \
-	bsd/vis.h \
-	bsd/wchar.h \
-	$(nil)
+nobase_include_HEADERS = bsd/sys/bitstring.h bsd/sys/cdefs.h \
+	bsd/sys/endian.h bsd/sys/param.h bsd/sys/poll.h \
+	bsd/sys/queue.h bsd/sys/time.h bsd/sys/tree.h \
+	bsd/netinet/ip_icmp.h bsd/bitstring.h bsd/bsd.h bsd/inttypes.h \
+	bsd/libutil.h bsd/stdio.h bsd/stdlib.h bsd/string.h \
+	bsd/unistd.h bsd/wchar.h $(am__append_1) $(am__append_2) \
+	$(am__append_3) $(am__append_4) $(am__append_5) \
+	$(am__append_6) $(am__append_7) $(am__append_8) \
+	$(am__append_9)
+do_header_subst = $(AM_V_GEN) $(SED) \
+	-e 's:^//\(.define LIBBSD_SYS_TIME_BITS\).*:\1 $(LIBBSD_SYS_TIME_BITS):' \
+	-e 's:^//\(.define LIBBSD_SYS_HAS_TIME64\).*:\1 $(LIBBSD_SYS_HAS_TIME64):' \
+	# EOL
 
 all: all-am
 
@@ -529,7 +562,8 @@ info: info-am
 info-am:
 
 install-data-am: install-nobase_includeHEADERS
-
+	@$(NORMAL_INSTALL)
+	$(MAKE) $(AM_MAKEFLAGS) install-data-hook
 install-dvi: install-dvi-am
 
 install-dvi-am:
@@ -574,15 +608,15 @@ ps-am:
 
 uninstall-am: uninstall-nobase_includeHEADERS
 
-.MAKE: install-am install-strip
+.MAKE: install-am install-data-am install-strip
 
 .PHONY: CTAGS GTAGS TAGS all all-am check check-am clean clean-generic \
 	clean-libtool cscopelist-am ctags ctags-am distclean \
 	distclean-generic distclean-libtool distclean-tags distdir dvi \
 	dvi-am html html-am info info-am install install-am \
-	install-data install-data-am install-dvi install-dvi-am \
-	install-exec install-exec-am install-html install-html-am \
-	install-info install-info-am install-man \
+	install-data install-data-am install-data-hook install-dvi \
+	install-dvi-am install-exec install-exec-am install-html \
+	install-html-am install-info install-info-am install-man \
 	install-nobase_includeHEADERS install-pdf install-pdf-am \
 	install-ps install-ps-am install-strip installcheck \
 	installcheck-am installdirs maintainer-clean \
@@ -592,6 +626,12 @@ uninstall-am: uninstall-nobase_includeHEADERS
 
 .PRECIOUS: Makefile
 
+
+install-data-hook:
+	$(do_header_subst) <$(DESTDIR)$(includedir)/bsd/sys/cdefs.h \
+	                   >$(DESTDIR)$(includedir)/bsd/sys/cdefs.h.new
+	mv  $(DESTDIR)$(includedir)/bsd/sys/cdefs.h.new \
+	    $(DESTDIR)$(includedir)/bsd/sys/cdefs.h
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.

@@ -65,7 +65,7 @@ funopen_write(void *cookie, const char *buf, size_t size)
 }
 
 static int
-funopen_seek(void *cookie, off64_t *offset, int whence)
+funopen_seek(void *cookie, off_t *offset, int whence)
 {
 	struct funopen_cookie *cookiewrap = cookie;
 	off_t soff = *offset;
@@ -137,12 +137,6 @@ funopen(const void *cookie,
 
 	return fopencookie(cookiewrap, mode, funcswrap);
 }
-#elif defined(__MUSL__)
-/*
- * This is unimplementable on musl based systems, and upstream has stated
- * they will not add the needed support to implement it. Just ignore this
- * interface there, as it has never been provided anyway.
- */
 #else
-#error "Function funopen() needs to be ported or disabled."
+#error "Function funopen() needs to be ported."
 #endif

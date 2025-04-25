@@ -93,27 +93,211 @@ host_triplet = @host@
 @OS_WINDOWS_TRUE@am__append_1 = \
 @OS_WINDOWS_TRUE@	-D_CRT_SECURE_NO_WARNINGS \
 @OS_WINDOWS_TRUE@	-D_CRT_NONSTDC_NO_WARNINGS \
-@OS_WINDOWS_TRUE@	$(nil)
+@OS_WINDOWS_TRUE@	# EOL
 
 @BUILD_LIBBSD_CTOR_TRUE@am__append_2 = libbsd-ctor.pc
 @BUILD_LIBBSD_CTOR_TRUE@am__append_3 = libbsd-ctor.a
 @HAVE_LINKER_VERSION_SCRIPT_TRUE@am__append_4 = \
-@HAVE_LINKER_VERSION_SCRIPT_TRUE@	-Wl,--version-script=$(srcdir)/libbsd.map
+@HAVE_LINKER_VERSION_SCRIPT_TRUE@	-Wl,--version-script=libbsd.map \
+@HAVE_LINKER_VERSION_SCRIPT_TRUE@	# EOL
 
-@HAVE_GETENTROPY_FALSE@am__append_5 = \
-@HAVE_GETENTROPY_FALSE@	getentropy.c \
-@HAVE_GETENTROPY_FALSE@	$(nil)
+@HAVE_LINKER_VERSION_SCRIPT_FALSE@am__append_5 = \
+@HAVE_LINKER_VERSION_SCRIPT_FALSE@	-export-symbols libbsd.sym \
+@HAVE_LINKER_VERSION_SCRIPT_FALSE@	# EOL
 
-@NEED_TRANSPARENT_LIBMD_TRUE@am__append_6 = \
-@NEED_TRANSPARENT_LIBMD_TRUE@	format.ld \
-@NEED_TRANSPARENT_LIBMD_TRUE@	# EOL
+@HAVE_LINKER_VERSION_SCRIPT_FALSE@am__append_6 = \
+@HAVE_LINKER_VERSION_SCRIPT_FALSE@	libbsd.sym \
+@HAVE_LINKER_VERSION_SCRIPT_FALSE@	# EOL
+
+@ABI_ACCMODE_TRUE@am__append_7 = \
+@ABI_ACCMODE_TRUE@	setmode.c \
+@ABI_ACCMODE_TRUE@	# EOL
+
+@ABI_ARC4RANDOM_TRUE@@HAVE_GETENTROPY_FALSE@am__append_8 = \
+@ABI_ARC4RANDOM_TRUE@@HAVE_GETENTROPY_FALSE@	getentropy.c \
+@ABI_ARC4RANDOM_TRUE@@HAVE_GETENTROPY_FALSE@	# EOL
+
+@ABI_ARC4RANDOM_TRUE@am__append_9 = \
+@ABI_ARC4RANDOM_TRUE@	arc4random.c \
+@ABI_ARC4RANDOM_TRUE@	arc4random.h \
+@ABI_ARC4RANDOM_TRUE@	arc4random_linux.h \
+@ABI_ARC4RANDOM_TRUE@	arc4random_uniform.c \
+@ABI_ARC4RANDOM_TRUE@	arc4random_unix.h \
+@ABI_ARC4RANDOM_TRUE@	arc4random_win.h \
+@ABI_ARC4RANDOM_TRUE@	chacha_private.h \
+@ABI_ARC4RANDOM_TRUE@	# EOL
+
+@ABI_ASPRINTF_TRUE@am__append_10 = \
+@ABI_ASPRINTF_TRUE@	asprintf.c \
+@ABI_ASPRINTF_TRUE@	vasprintf.c \
+@ABI_ASPRINTF_TRUE@	# EOL
+
+@ABI_BSD_GETOPT_TRUE@am__append_11 = \
+@ABI_BSD_GETOPT_TRUE@	bsd_getopt.c \
+@ABI_BSD_GETOPT_TRUE@	# EOL
+
+@ABI_CLOSEFROM_TRUE@am__append_12 = \
+@ABI_CLOSEFROM_TRUE@	closefrom.c \
+@ABI_CLOSEFROM_TRUE@	# EOL
+
+@ABI_ERR_TRUE@am__append_13 = \
+@ABI_ERR_TRUE@	err.c \
+@ABI_ERR_TRUE@	# EOL
+
+@ABI_ERRC_TRUE@am__append_14 = \
+@ABI_ERRC_TRUE@	errc.c \
+@ABI_ERRC_TRUE@	# EOL
+
+@ABI_EXPAND_NUMBER_TRUE@am__append_15 = \
+@ABI_EXPAND_NUMBER_TRUE@	expand_number.c \
+@ABI_EXPAND_NUMBER_TRUE@	# EOL
+
+@ABI_EXPLICIT_BZERO_TRUE@am__append_16 = \
+@ABI_EXPLICIT_BZERO_TRUE@	explicit_bzero.c \
+@ABI_EXPLICIT_BZERO_TRUE@	# EOL
+
+@ABI_FGETLN_TRUE@am__append_17 = \
+@ABI_FGETLN_TRUE@	fgetln.c \
+@ABI_FGETLN_TRUE@	fgetwln.c \
+@ABI_FGETLN_TRUE@	fparseln.c \
+@ABI_FGETLN_TRUE@	# EOL
+
+@ABI_FLOPEN_TRUE@am__append_18 = \
+@ABI_FLOPEN_TRUE@	flopen.c \
+@ABI_FLOPEN_TRUE@	# EOL
+
+@ABI_FMTCHECK_TRUE@am__append_19 = \
+@ABI_FMTCHECK_TRUE@	fmtcheck.c \
+@ABI_FMTCHECK_TRUE@	# EOL
+
+@ABI_FPURGE_TRUE@am__append_20 = \
+@ABI_FPURGE_TRUE@	fpurge.c \
+@ABI_FPURGE_TRUE@	# EOL
+
+@ABI_FREEZERO_TRUE@am__append_21 = \
+@ABI_FREEZERO_TRUE@	freezero.c \
+@ABI_FREEZERO_TRUE@	# EOL
+
+@ABI_FUNOPEN_TRUE@am__append_22 = \
+@ABI_FUNOPEN_TRUE@	funopen.c \
+@ABI_FUNOPEN_TRUE@	# EOL
+
+@ABI_GETBSIZE_TRUE@am__append_23 = \
+@ABI_GETBSIZE_TRUE@	getbsize.c \
+@ABI_GETBSIZE_TRUE@	# EOL
+
+@ABI_GETPEEREID_TRUE@am__append_24 = \
+@ABI_GETPEEREID_TRUE@	getpeereid.c \
+@ABI_GETPEEREID_TRUE@	# EOL
+
+@ABI_HUMANIZE_NUMBER_TRUE@am__append_25 = \
+@ABI_HUMANIZE_NUMBER_TRUE@	dehumanize_number.c \
+@ABI_HUMANIZE_NUMBER_TRUE@	humanize_number.c \
+@ABI_HUMANIZE_NUMBER_TRUE@	# EOL
+
+@ABI_INET_NET_PTON_TRUE@am__append_26 = \
+@ABI_INET_NET_PTON_TRUE@	inet_net_pton.c \
+@ABI_INET_NET_PTON_TRUE@	# EOL
+
+@ABI_MD5_TRUE@am__append_27 = \
+@ABI_MD5_TRUE@	md5.c \
+@ABI_MD5_TRUE@	# EOL
+
+@ABI_NLIST_TRUE@am__append_28 = \
+@ABI_NLIST_TRUE@	nlist.c \
+@ABI_NLIST_TRUE@	# EOL
+
+@ABI_PIDFILE_TRUE@am__append_29 = \
+@ABI_PIDFILE_TRUE@	pidfile.c \
+@ABI_PIDFILE_TRUE@	# EOL
+
+@ABI_PROCTITLE_TRUE@am__append_30 = \
+@ABI_PROCTITLE_TRUE@	setproctitle.c \
+@ABI_PROCTITLE_TRUE@	# EOL
+
+@ABI_PROGNAME_TRUE@am__append_31 = \
+@ABI_PROGNAME_TRUE@	progname.c \
+@ABI_PROGNAME_TRUE@	# EOL
+
+@ABI_PWCACHE_TRUE@am__append_32 = \
+@ABI_PWCACHE_TRUE@	pwcache.c \
+@ABI_PWCACHE_TRUE@	# EOL
+
+@ABI_READPASSPHRASE_TRUE@am__append_33 = \
+@ABI_READPASSPHRASE_TRUE@	readpassphrase.c \
+@ABI_READPASSPHRASE_TRUE@	# EOL
+
+@ABI_REALLOCARRAY_TRUE@am__append_34 = \
+@ABI_REALLOCARRAY_TRUE@	reallocarray.c \
+@ABI_REALLOCARRAY_TRUE@	# EOL
+
+@ABI_REALLOCF_TRUE@am__append_35 = \
+@ABI_REALLOCF_TRUE@	reallocf.c \
+@ABI_REALLOCF_TRUE@	# EOL
+
+@ABI_RECALLOCARRAY_TRUE@am__append_36 = \
+@ABI_RECALLOCARRAY_TRUE@	recallocarray.c \
+@ABI_RECALLOCARRAY_TRUE@	# EOL
+
+@ABI_SORT_TRUE@am__append_37 = \
+@ABI_SORT_TRUE@	heapsort.c \
+@ABI_SORT_TRUE@	merge.c \
+@ABI_SORT_TRUE@	radixsort.c \
+@ABI_SORT_TRUE@	# EOL
+
+@ABI_STRINGLIST_TRUE@am__append_38 = \
+@ABI_STRINGLIST_TRUE@	stringlist.c \
+@ABI_STRINGLIST_TRUE@	# EOL
+
+@ABI_STRL_TRUE@am__append_39 = \
+@ABI_STRL_TRUE@	strlcat.c \
+@ABI_STRL_TRUE@	strlcpy.c \
+@ABI_STRL_TRUE@	# EOL
+
+@ABI_STRMODE_TRUE@am__append_40 = \
+@ABI_STRMODE_TRUE@	strmode.c \
+@ABI_STRMODE_TRUE@	# EOL
+
+@ABI_STRNSTR_TRUE@am__append_41 = \
+@ABI_STRNSTR_TRUE@	strnstr.c \
+@ABI_STRNSTR_TRUE@	# EOL
+
+@ABI_STRTONUM_TRUE@am__append_42 = \
+@ABI_STRTONUM_TRUE@	strtonum.c \
+@ABI_STRTONUM_TRUE@	# EOL
+
+@ABI_STRTOX_TRUE@am__append_43 = \
+@ABI_STRTOX_TRUE@	strtoi.c \
+@ABI_STRTOX_TRUE@	strtou.c \
+@ABI_STRTOX_TRUE@	# EOL
+
+@ABI_TIMECONV_TRUE@am__append_44 = \
+@ABI_TIMECONV_TRUE@	timeconv.c \
+@ABI_TIMECONV_TRUE@	# EOL
+
+@ABI_VIS_TRUE@am__append_45 = \
+@ABI_VIS_TRUE@	unvis.c \
+@ABI_VIS_TRUE@	vis.c \
+@ABI_VIS_TRUE@	# EOL
+
+@ABI_WCSL_TRUE@am__append_46 = \
+@ABI_WCSL_TRUE@	wcslcat.c \
+@ABI_WCSL_TRUE@	wcslcpy.c \
+@ABI_WCSL_TRUE@	# EOL
+
+@ABI_TRANSPARENT_LIBMD_TRUE@am__append_47 = \
+@ABI_TRANSPARENT_LIBMD_TRUE@	format.ld \
+@ABI_TRANSPARENT_LIBMD_TRUE@	# EOL
 
 subdir = src
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/m4/libbsd-compiler.m4 \
-	$(top_srcdir)/m4/libtool.m4 $(top_srcdir)/m4/ltoptions.m4 \
-	$(top_srcdir)/m4/ltsugar.m4 $(top_srcdir)/m4/ltversion.m4 \
-	$(top_srcdir)/m4/lt~obsolete.m4 $(top_srcdir)/configure.ac
+	$(top_srcdir)/m4/libbsd-funcs.m4 \
+	$(top_srcdir)/m4/libbsd-large.m4 \
+	$(top_srcdir)/m4/libbsd-linker.m4 $(top_srcdir)/m4/libtool.m4 \
+	$(top_srcdir)/m4/ltoptions.m4 $(top_srcdir)/m4/ltsugar.m4 \
+	$(top_srcdir)/m4/ltversion.m4 $(top_srcdir)/m4/lt~obsolete.m4 \
+	$(top_srcdir)/configure.ac
 am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 	$(ACLOCAL_M4)
 DIST_COMMON = $(srcdir)/Makefile.am $(am__DIST_COMMON)
@@ -162,31 +346,77 @@ libbsd_ctor_a_LIBADD =
 am_libbsd_ctor_a_OBJECTS = setproctitle_ctor.$(OBJEXT)
 libbsd_ctor_a_OBJECTS = $(am_libbsd_ctor_a_OBJECTS)
 am__DEPENDENCIES_1 =
-am__libbsd_la_SOURCES_DIST = arc4random.c arc4random.h \
-	arc4random_linux.h arc4random_uniform.c arc4random_unix.h \
-	arc4random_win.h bsd_getopt.c chacha_private.h closefrom.c \
-	dehumanize_number.c err.c expand_number.c explicit_bzero.c \
-	fgetln.c freezero.c fgetwln.c flopen.c fmtcheck.c fparseln.c \
-	fpurge.c funopen.c getbsize.c getpeereid.c heapsort.c \
-	humanize_number.c inet_net_pton.c local-elf.h local-link.h \
-	md5.c merge.c nlist.c pidfile.c progname.c pwcache.c \
-	radixsort.c readpassphrase.c reallocarray.c reallocf.c \
-	recallocarray.c setmode.c setproctitle.c strlcat.c strlcpy.c \
-	stringlist.c strmode.c strnstr.c strtoi.c strtonum.c strtou.c \
-	timeconv.c unvis.c vis.c wcslcat.c wcslcpy.c getentropy.c
-@HAVE_GETENTROPY_FALSE@am__objects_1 = getentropy.lo
-am_libbsd_la_OBJECTS = arc4random.lo arc4random_uniform.lo \
-	bsd_getopt.lo closefrom.lo dehumanize_number.lo err.lo \
-	expand_number.lo explicit_bzero.lo fgetln.lo freezero.lo \
-	fgetwln.lo flopen.lo fmtcheck.lo fparseln.lo fpurge.lo \
-	funopen.lo getbsize.lo getpeereid.lo heapsort.lo \
-	humanize_number.lo inet_net_pton.lo md5.lo merge.lo nlist.lo \
-	pidfile.lo progname.lo pwcache.lo radixsort.lo \
-	readpassphrase.lo reallocarray.lo reallocf.lo recallocarray.lo \
-	setmode.lo setproctitle.lo strlcat.lo strlcpy.lo stringlist.lo \
-	strmode.lo strnstr.lo strtoi.lo strtonum.lo strtou.lo \
-	timeconv.lo unvis.lo vis.lo wcslcat.lo wcslcpy.lo \
-	$(am__objects_1)
+libbsd_la_DEPENDENCIES = $(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1)
+am__libbsd_la_SOURCES_DIST = local-elf.h local-link.h setmode.c \
+	getentropy.c arc4random.c arc4random.h arc4random_linux.h \
+	arc4random_uniform.c arc4random_unix.h arc4random_win.h \
+	chacha_private.h asprintf.c vasprintf.c bsd_getopt.c \
+	closefrom.c err.c errc.c expand_number.c explicit_bzero.c \
+	fgetln.c fgetwln.c fparseln.c flopen.c fmtcheck.c fpurge.c \
+	freezero.c funopen.c getbsize.c getpeereid.c \
+	dehumanize_number.c humanize_number.c inet_net_pton.c md5.c \
+	nlist.c pidfile.c setproctitle.c progname.c pwcache.c \
+	readpassphrase.c reallocarray.c reallocf.c recallocarray.c \
+	heapsort.c merge.c radixsort.c stringlist.c strlcat.c \
+	strlcpy.c strmode.c strnstr.c strtonum.c strtoi.c strtou.c \
+	timeconv.c unvis.c vis.c wcslcat.c wcslcpy.c
+@ABI_ACCMODE_TRUE@am__objects_1 = setmode.lo
+@ABI_ARC4RANDOM_TRUE@@HAVE_GETENTROPY_FALSE@am__objects_2 =  \
+@ABI_ARC4RANDOM_TRUE@@HAVE_GETENTROPY_FALSE@	getentropy.lo
+@ABI_ARC4RANDOM_TRUE@am__objects_3 = arc4random.lo \
+@ABI_ARC4RANDOM_TRUE@	arc4random_uniform.lo
+@ABI_ASPRINTF_TRUE@am__objects_4 = asprintf.lo vasprintf.lo
+@ABI_BSD_GETOPT_TRUE@am__objects_5 = bsd_getopt.lo
+@ABI_CLOSEFROM_TRUE@am__objects_6 = closefrom.lo
+@ABI_ERR_TRUE@am__objects_7 = err.lo
+@ABI_ERRC_TRUE@am__objects_8 = errc.lo
+@ABI_EXPAND_NUMBER_TRUE@am__objects_9 = expand_number.lo
+@ABI_EXPLICIT_BZERO_TRUE@am__objects_10 = explicit_bzero.lo
+@ABI_FGETLN_TRUE@am__objects_11 = fgetln.lo fgetwln.lo fparseln.lo
+@ABI_FLOPEN_TRUE@am__objects_12 = flopen.lo
+@ABI_FMTCHECK_TRUE@am__objects_13 = fmtcheck.lo
+@ABI_FPURGE_TRUE@am__objects_14 = fpurge.lo
+@ABI_FREEZERO_TRUE@am__objects_15 = freezero.lo
+@ABI_FUNOPEN_TRUE@am__objects_16 = funopen.lo
+@ABI_GETBSIZE_TRUE@am__objects_17 = getbsize.lo
+@ABI_GETPEEREID_TRUE@am__objects_18 = getpeereid.lo
+@ABI_HUMANIZE_NUMBER_TRUE@am__objects_19 = dehumanize_number.lo \
+@ABI_HUMANIZE_NUMBER_TRUE@	humanize_number.lo
+@ABI_INET_NET_PTON_TRUE@am__objects_20 = inet_net_pton.lo
+@ABI_MD5_TRUE@am__objects_21 = md5.lo
+@ABI_NLIST_TRUE@am__objects_22 = nlist.lo
+@ABI_PIDFILE_TRUE@am__objects_23 = pidfile.lo
+@ABI_PROCTITLE_TRUE@am__objects_24 = setproctitle.lo
+@ABI_PROGNAME_TRUE@am__objects_25 = progname.lo
+@ABI_PWCACHE_TRUE@am__objects_26 = pwcache.lo
+@ABI_READPASSPHRASE_TRUE@am__objects_27 = readpassphrase.lo
+@ABI_REALLOCARRAY_TRUE@am__objects_28 = reallocarray.lo
+@ABI_REALLOCF_TRUE@am__objects_29 = reallocf.lo
+@ABI_RECALLOCARRAY_TRUE@am__objects_30 = recallocarray.lo
+@ABI_SORT_TRUE@am__objects_31 = heapsort.lo merge.lo radixsort.lo
+@ABI_STRINGLIST_TRUE@am__objects_32 = stringlist.lo
+@ABI_STRL_TRUE@am__objects_33 = strlcat.lo strlcpy.lo
+@ABI_STRMODE_TRUE@am__objects_34 = strmode.lo
+@ABI_STRNSTR_TRUE@am__objects_35 = strnstr.lo
+@ABI_STRTONUM_TRUE@am__objects_36 = strtonum.lo
+@ABI_STRTOX_TRUE@am__objects_37 = strtoi.lo strtou.lo
+@ABI_TIMECONV_TRUE@am__objects_38 = timeconv.lo
+@ABI_VIS_TRUE@am__objects_39 = unvis.lo vis.lo
+@ABI_WCSL_TRUE@am__objects_40 = wcslcat.lo wcslcpy.lo
+am_libbsd_la_OBJECTS = $(am__objects_1) $(am__objects_2) \
+	$(am__objects_3) $(am__objects_4) $(am__objects_5) \
+	$(am__objects_6) $(am__objects_7) $(am__objects_8) \
+	$(am__objects_9) $(am__objects_10) $(am__objects_11) \
+	$(am__objects_12) $(am__objects_13) $(am__objects_14) \
+	$(am__objects_15) $(am__objects_16) $(am__objects_17) \
+	$(am__objects_18) $(am__objects_19) $(am__objects_20) \
+	$(am__objects_21) $(am__objects_22) $(am__objects_23) \
+	$(am__objects_24) $(am__objects_25) $(am__objects_26) \
+	$(am__objects_27) $(am__objects_28) $(am__objects_29) \
+	$(am__objects_30) $(am__objects_31) $(am__objects_32) \
+	$(am__objects_33) $(am__objects_34) $(am__objects_35) \
+	$(am__objects_36) $(am__objects_37) $(am__objects_38) \
+	$(am__objects_39) $(am__objects_40)
 libbsd_la_OBJECTS = $(am_libbsd_la_OBJECTS)
 AM_V_lt = $(am__v_lt_@AM_V@)
 am__v_lt_ = $(am__v_lt_@AM_DEFAULT_V@)
@@ -211,9 +441,10 @@ DEFAULT_INCLUDES =
 depcomp = $(SHELL) $(top_srcdir)/build-aux/depcomp
 am__maybe_remake_depfiles = depfiles
 am__depfiles_remade = ./$(DEPDIR)/arc4random.Plo \
-	./$(DEPDIR)/arc4random_uniform.Plo ./$(DEPDIR)/bsd_getopt.Plo \
-	./$(DEPDIR)/closefrom.Plo ./$(DEPDIR)/dehumanize_number.Plo \
-	./$(DEPDIR)/err.Plo ./$(DEPDIR)/expand_number.Plo \
+	./$(DEPDIR)/arc4random_uniform.Plo ./$(DEPDIR)/asprintf.Plo \
+	./$(DEPDIR)/bsd_getopt.Plo ./$(DEPDIR)/closefrom.Plo \
+	./$(DEPDIR)/dehumanize_number.Plo ./$(DEPDIR)/err.Plo \
+	./$(DEPDIR)/errc.Plo ./$(DEPDIR)/expand_number.Plo \
 	./$(DEPDIR)/explicit_bzero.Plo ./$(DEPDIR)/fgetln.Plo \
 	./$(DEPDIR)/fgetwln.Plo ./$(DEPDIR)/flopen.Plo \
 	./$(DEPDIR)/fmtcheck.Plo ./$(DEPDIR)/fparseln.Plo \
@@ -233,8 +464,9 @@ am__depfiles_remade = ./$(DEPDIR)/arc4random.Plo \
 	./$(DEPDIR)/strmode.Plo ./$(DEPDIR)/strnstr.Plo \
 	./$(DEPDIR)/strtoi.Plo ./$(DEPDIR)/strtonum.Plo \
 	./$(DEPDIR)/strtou.Plo ./$(DEPDIR)/timeconv.Plo \
-	./$(DEPDIR)/unvis.Plo ./$(DEPDIR)/vis.Plo \
-	./$(DEPDIR)/wcslcat.Plo ./$(DEPDIR)/wcslcpy.Plo
+	./$(DEPDIR)/unvis.Plo ./$(DEPDIR)/vasprintf.Plo \
+	./$(DEPDIR)/vis.Plo ./$(DEPDIR)/wcslcat.Plo \
+	./$(DEPDIR)/wcslcpy.Plo
 am__mv = mv -f
 COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
 	$(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
@@ -320,8 +552,9 @@ INSTALL_SCRIPT = @INSTALL_SCRIPT@
 INSTALL_STRIP_PROGRAM = @INSTALL_STRIP_PROGRAM@
 LD = @LD@
 LDFLAGS = @LDFLAGS@
-LIBBSD_ABI = @LIBBSD_ABI@
 LIBBSD_LIBS = @LIBBSD_LIBS@
+LIBBSD_SYS_HAS_TIME64 = @LIBBSD_SYS_HAS_TIME64@
+LIBBSD_SYS_TIME_BITS = @LIBBSD_SYS_TIME_BITS@
 LIBOBJS = @LIBOBJS@
 LIBS = @LIBS@
 LIBTOOL = @LIBTOOL@
@@ -351,6 +584,7 @@ RANLIB = @RANLIB@
 SED = @SED@
 SET_MAKE = @SET_MAKE@
 SHELL = @SHELL@
+SOVERSION = @SOVERSION@
 STRIP = @STRIP@
 TESTU01_LIBS = @TESTU01_LIBS@
 VERSION = @VERSION@
@@ -419,48 +653,54 @@ libbsd_la_included_sources = \
 	getentropy_osx.c \
 	getentropy_solaris.c \
 	getentropy_win.c \
-	$(nil)
+	# EOL
 
-CLEANFILES = $(am__append_6)
+CLEANFILES = $(am__append_47)
 EXTRA_DIST = \
-	libbsd.map \
+	libbsd.map.in \
 	libbsd.pc.in \
 	libbsd-ctor.pc.in \
 	libbsd-overlay.pc.in \
 	$(libbsd_la_included_sources) \
-	$(nil)
+	# EOL
 
 pkgconfigdir = $(libdir)/pkgconfig
-pkgconfig_DATA = libbsd.pc libbsd-overlay.pc $(nil) $(am__append_2)
+pkgconfig_DATA = libbsd.pc libbsd-overlay.pc $(am__append_2)
 lib_LTLIBRARIES = libbsd.la
 lib_LIBRARIES = $(am__append_3)
-libbsd_la_DEPENDENCIES = \
-	$(libbsd_la_included_sources) \
-	libbsd.map
-
+EXTRA_libbsd_la_DEPENDENCIES = $(libbsd_la_included_sources) \
+	libbsd.map libbsd.map.in $(am__append_6)
 libbsd_la_LIBADD = \
 	$(MD5_LIBS) \
 	$(LIBBSD_LIBS) \
-	$(nil)
+	# EOL
 
-libbsd_la_LDFLAGS = -version-number $(LIBBSD_ABI) $(am__append_4)
-libbsd_la_SOURCES = arc4random.c arc4random.h arc4random_linux.h \
-	arc4random_uniform.c arc4random_unix.h arc4random_win.h \
-	bsd_getopt.c chacha_private.h closefrom.c dehumanize_number.c \
-	err.c expand_number.c explicit_bzero.c fgetln.c freezero.c \
-	fgetwln.c flopen.c fmtcheck.c fparseln.c fpurge.c funopen.c \
-	getbsize.c getpeereid.c heapsort.c humanize_number.c \
-	inet_net_pton.c local-elf.h local-link.h md5.c merge.c nlist.c \
-	pidfile.c progname.c pwcache.c radixsort.c readpassphrase.c \
-	reallocarray.c reallocf.c recallocarray.c setmode.c \
-	setproctitle.c strlcat.c strlcpy.c stringlist.c strmode.c \
-	strnstr.c strtoi.c strtonum.c strtou.c timeconv.c unvis.c \
-	vis.c wcslcat.c wcslcpy.c $(nil) $(am__append_5)
+libbsd_la_LDFLAGS = -no-undefined -version-number $(SOVERSION) \
+	$(am__append_4) $(am__append_5)
+libbsd_la_SOURCES = local-elf.h local-link.h $(am__append_7) \
+	$(am__append_8) $(am__append_9) $(am__append_10) \
+	$(am__append_11) $(am__append_12) $(am__append_13) \
+	$(am__append_14) $(am__append_15) $(am__append_16) \
+	$(am__append_17) $(am__append_18) $(am__append_19) \
+	$(am__append_20) $(am__append_21) $(am__append_22) \
+	$(am__append_23) $(am__append_24) $(am__append_25) \
+	$(am__append_26) $(am__append_27) $(am__append_28) \
+	$(am__append_29) $(am__append_30) $(am__append_31) \
+	$(am__append_32) $(am__append_33) $(am__append_34) \
+	$(am__append_35) $(am__append_36) $(am__append_37) \
+	$(am__append_38) $(am__append_39) $(am__append_40) \
+	$(am__append_41) $(am__append_42) $(am__append_43) \
+	$(am__append_44) $(am__append_45) $(am__append_46)
+DISTCLEANFILES = \
+	libbsd.sym \
+	libbsd.map \
+	# EOL
+
 libbsd_ctor_a_SOURCES = \
 	setproctitle_ctor.c \
-	$(nil)
+	# EOL
 
-@NEED_TRANSPARENT_LIBMD_TRUE@TRANSPARENT_LIBMD_DEPENDS = format.ld
+@ABI_TRANSPARENT_LIBMD_TRUE@TRANSPARENT_LIBMD_DEPENDS = format.ld
 runtimelibdir = $(libdir)
 all: all-am
 
@@ -584,10 +824,12 @@ distclean-compile:
 
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/arc4random.Plo@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/arc4random_uniform.Plo@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/asprintf.Plo@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/bsd_getopt.Plo@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/closefrom.Plo@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/dehumanize_number.Plo@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/err.Plo@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/errc.Plo@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/expand_number.Plo@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/explicit_bzero.Plo@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/fgetln.Plo@am__quote@ # am--include-marker
@@ -628,6 +870,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/strtou.Plo@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/timeconv.Plo@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/unvis.Plo@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/vasprintf.Plo@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/vis.Plo@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/wcslcat.Plo@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/wcslcpy.Plo@am__quote@ # am--include-marker
@@ -807,6 +1050,7 @@ clean-generic:
 distclean-generic:
 	-test -z "$(CONFIG_CLEAN_FILES)" || rm -f $(CONFIG_CLEAN_FILES)
 	-test . = "$(srcdir)" || test -z "$(CONFIG_CLEAN_VPATH_FILES)" || rm -f $(CONFIG_CLEAN_VPATH_FILES)
+	-test -z "$(DISTCLEANFILES)" || rm -f $(DISTCLEANFILES)
 
 maintainer-clean-generic:
 	@echo "This command is intended for maintainers to use"
@@ -819,10 +1063,12 @@ clean-am: clean-generic clean-libLIBRARIES clean-libLTLIBRARIES \
 distclean: distclean-am
 		-rm -f ./$(DEPDIR)/arc4random.Plo
 	-rm -f ./$(DEPDIR)/arc4random_uniform.Plo
+	-rm -f ./$(DEPDIR)/asprintf.Plo
 	-rm -f ./$(DEPDIR)/bsd_getopt.Plo
 	-rm -f ./$(DEPDIR)/closefrom.Plo
 	-rm -f ./$(DEPDIR)/dehumanize_number.Plo
 	-rm -f ./$(DEPDIR)/err.Plo
+	-rm -f ./$(DEPDIR)/errc.Plo
 	-rm -f ./$(DEPDIR)/expand_number.Plo
 	-rm -f ./$(DEPDIR)/explicit_bzero.Plo
 	-rm -f ./$(DEPDIR)/fgetln.Plo
@@ -863,6 +1109,7 @@ distclean: distclean-am
 	-rm -f ./$(DEPDIR)/strtou.Plo
 	-rm -f ./$(DEPDIR)/timeconv.Plo
 	-rm -f ./$(DEPDIR)/unvis.Plo
+	-rm -f ./$(DEPDIR)/vasprintf.Plo
 	-rm -f ./$(DEPDIR)/vis.Plo
 	-rm -f ./$(DEPDIR)/wcslcat.Plo
 	-rm -f ./$(DEPDIR)/wcslcpy.Plo
@@ -914,10 +1161,12 @@ installcheck-am:
 maintainer-clean: maintainer-clean-am
 		-rm -f ./$(DEPDIR)/arc4random.Plo
 	-rm -f ./$(DEPDIR)/arc4random_uniform.Plo
+	-rm -f ./$(DEPDIR)/asprintf.Plo
 	-rm -f ./$(DEPDIR)/bsd_getopt.Plo
 	-rm -f ./$(DEPDIR)/closefrom.Plo
 	-rm -f ./$(DEPDIR)/dehumanize_number.Plo
 	-rm -f ./$(DEPDIR)/err.Plo
+	-rm -f ./$(DEPDIR)/errc.Plo
 	-rm -f ./$(DEPDIR)/expand_number.Plo
 	-rm -f ./$(DEPDIR)/explicit_bzero.Plo
 	-rm -f ./$(DEPDIR)/fgetln.Plo
@@ -958,6 +1207,7 @@ maintainer-clean: maintainer-clean-am
 	-rm -f ./$(DEPDIR)/strtou.Plo
 	-rm -f ./$(DEPDIR)/timeconv.Plo
 	-rm -f ./$(DEPDIR)/unvis.Plo
+	-rm -f ./$(DEPDIR)/vasprintf.Plo
 	-rm -f ./$(DEPDIR)/vis.Plo
 	-rm -f ./$(DEPDIR)/wcslcat.Plo
 	-rm -f ./$(DEPDIR)/wcslcpy.Plo
@@ -1003,10 +1253,20 @@ uninstall-am: uninstall-libLIBRARIES uninstall-libLTLIBRARIES \
 .PRECIOUS: Makefile
 
 
-@NEED_TRANSPARENT_LIBMD_TRUE@format.ld:
-@NEED_TRANSPARENT_LIBMD_TRUE@	$(CC) -shared -nostdlib -nostartfiles -x assembler /dev/null -o $@.so
-@NEED_TRANSPARENT_LIBMD_TRUE@	$(OBJDUMP) -f $@.so | sed -n 's/.*file format \(.*\)/OUTPUT_FORMAT(\1)/;T;p' > $@
-@NEED_TRANSPARENT_LIBMD_TRUE@	rm -f $@.so
+# Generate the library map file with the pre-processor to selectively include
+# symbols depending on the host system, otherwise some linkers might fail.
+libbsd.map: libbsd.map.in
+	$(AM_V_GEN) $(CPP) $(AM_CPPFLAGS) $(CPPFLAGS) -P - <$(srcdir)/libbsd.map.in >$@
+
+# Generate a simple libtool symbol export list to be used as a fallback if
+# there is no version script support.
+libbsd.sym: libbsd.map
+	$(AM_V_GEN) $(SED) -ne 's/^[[:space:]]\{1,\}\([A-Za-z0-9_]\{1,\}\);/\1/p' libbsd.map >$@
+
+@ABI_TRANSPARENT_LIBMD_TRUE@format.ld:
+@ABI_TRANSPARENT_LIBMD_TRUE@	$(CC) -shared -nostdlib -nostartfiles -x assembler /dev/null -o $@.so
+@ABI_TRANSPARENT_LIBMD_TRUE@	$(OBJDUMP) -f $@.so | sed -n 's/.*file format \(.*\)/OUTPUT_FORMAT(\1)/;T;p' >$@
+@ABI_TRANSPARENT_LIBMD_TRUE@	rm -f $@.so
 
 install-exec-hook: $(TRANSPARENT_LIBMD_DEPENDS)
 	if [ "$(libdir)" != "$(runtimelibdir)" ]; then \
@@ -1016,19 +1276,19 @@ install-exec-hook: $(TRANSPARENT_LIBMD_DEPENDS)
 	fi
 # The "GNU ld script" magic is required so that GNU ldconfig does not complain
 # about an unknown format file.
-@NEED_TRANSPARENT_LIBMD_TRUE@	soname=`readlink $(DESTDIR)$(libdir)/libbsd.so`; \
-@NEED_TRANSPARENT_LIBMD_TRUE@	$(RM) $(DESTDIR)$(libdir)/libbsd.so; \
-@NEED_TRANSPARENT_LIBMD_TRUE@	(echo '/* GNU ld script'; \
-@NEED_TRANSPARENT_LIBMD_TRUE@	 echo ' * The MD5 functions are provided by the libmd library. */'; \
-@NEED_TRANSPARENT_LIBMD_TRUE@	 cat format.ld; \
-@NEED_TRANSPARENT_LIBMD_TRUE@	 echo "GROUP($(runtimelibdir)/$$soname AS_NEEDED($(MD5_LIBS)))"; \
-@NEED_TRANSPARENT_LIBMD_TRUE@	)>$(DESTDIR)$(libdir)/libbsd.so
-@NEED_TRANSPARENT_LIBMD_FALSE@	if [ "$(libdir)" != "$(runtimelibdir)" ]; then \
-@NEED_TRANSPARENT_LIBMD_FALSE@		soname=`readlink $(DESTDIR)$(libdir)/libbsd.so`; \
-@NEED_TRANSPARENT_LIBMD_FALSE@		sorelprefix=`echo $(libdir) | $(SED) -r -e 's:(^/)?[^/]+:..:g'`; \
-@NEED_TRANSPARENT_LIBMD_FALSE@		ln -sf $$sorelprefix$(runtimelibdir)/$$soname \
-@NEED_TRANSPARENT_LIBMD_FALSE@		       $(DESTDIR)$(libdir)/libbsd.so; \
-@NEED_TRANSPARENT_LIBMD_FALSE@	fi
+@ABI_TRANSPARENT_LIBMD_TRUE@	soname=`readlink $(DESTDIR)$(libdir)/libbsd.so`; \
+@ABI_TRANSPARENT_LIBMD_TRUE@	$(RM) $(DESTDIR)$(libdir)/libbsd.so; \
+@ABI_TRANSPARENT_LIBMD_TRUE@	(echo '/* GNU ld script'; \
+@ABI_TRANSPARENT_LIBMD_TRUE@	 echo ' * The MD5 functions are provided by the libmd library. */'; \
+@ABI_TRANSPARENT_LIBMD_TRUE@	 cat format.ld; \
+@ABI_TRANSPARENT_LIBMD_TRUE@	 echo "GROUP($(runtimelibdir)/$$soname AS_NEEDED($(MD5_LIBS)))"; \
+@ABI_TRANSPARENT_LIBMD_TRUE@	)>$(DESTDIR)$(libdir)/libbsd.so
+@ABI_TRANSPARENT_LIBMD_FALSE@	if [ "$(libdir)" != "$(runtimelibdir)" ]; then \
+@ABI_TRANSPARENT_LIBMD_FALSE@		soname=`readlink $(DESTDIR)$(libdir)/libbsd.so`; \
+@ABI_TRANSPARENT_LIBMD_FALSE@		sorelprefix=`echo $(libdir) | $(SED) -r -e 's:(^/)?[^/]+:..:g'`; \
+@ABI_TRANSPARENT_LIBMD_FALSE@		ln -sf $$sorelprefix$(runtimelibdir)/$$soname \
+@ABI_TRANSPARENT_LIBMD_FALSE@		       $(DESTDIR)$(libdir)/libbsd.so; \
+@ABI_TRANSPARENT_LIBMD_FALSE@	fi
 
 uninstall-hook:
 	rm -f $(DESTDIR)$(runtimelibdir)/libbsd*.so*

@@ -87,23 +87,81 @@ PRE_UNINSTALL = :
 POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
-check_PROGRAMS = overlay$(EXEEXT) bzero$(EXEEXT) closefrom$(EXEEXT) \
-	endian$(EXEEXT) explicit_bzero$(EXEEXT) humanize$(EXEEXT) \
-	fgetln$(EXEEXT) funopen$(EXEEXT) fparseln$(EXEEXT) \
-	fpurge$(EXEEXT) md5$(EXEEXT) nlist$(EXEEXT) \
-	proctitle-init$(EXEEXT) progname$(EXEEXT) pwcache$(EXEEXT) \
-	setmode$(EXEEXT) strl$(EXEEXT) strmode$(EXEEXT) \
-	strnstr$(EXEEXT) strtonum$(EXEEXT) vis$(EXEEXT) \
-	vis-openbsd$(EXEEXT) $(am__EXEEXT_1) $(am__EXEEXT_2)
-@HAVE_LIBTESTU01_TRUE@am__append_1 = arc4random
-@BUILD_LIBBSD_CTOR_TRUE@am__append_2 = proctitle
-TESTS = $(am__EXEEXT_3) $(check_PROGRAMS)
+check_PROGRAMS = overlay$(EXEEXT) endian$(EXEEXT) $(am__EXEEXT_1) \
+	$(am__EXEEXT_2) $(am__EXEEXT_3) $(am__EXEEXT_4) \
+	$(am__EXEEXT_5) $(am__EXEEXT_6) $(am__EXEEXT_7) \
+	$(am__EXEEXT_8) $(am__EXEEXT_6) $(am__EXEEXT_7) \
+	$(am__EXEEXT_9) $(am__EXEEXT_10) $(am__EXEEXT_11) \
+	$(am__EXEEXT_12) $(am__EXEEXT_13) $(am__EXEEXT_14) \
+	$(am__EXEEXT_11) $(am__EXEEXT_15) $(am__EXEEXT_16) \
+	$(am__EXEEXT_17) $(am__EXEEXT_18) $(am__EXEEXT_19) \
+	$(am__EXEEXT_20) $(am__EXEEXT_21)
+@ABI_ACCMODE_TRUE@am__append_1 = \
+@ABI_ACCMODE_TRUE@	setmode \
+@ABI_ACCMODE_TRUE@	# EOL
+
+@ABI_ARC4RANDOM_TRUE@@HAVE_LIBTESTU01_TRUE@am__append_2 = arc4random
+@ABI_CLOSEFROM_TRUE@am__append_3 = \
+@ABI_CLOSEFROM_TRUE@	closefrom \
+@ABI_CLOSEFROM_TRUE@	# EOL
+
+@ABI_EXPLICIT_BZERO_TRUE@am__append_4 = \
+@ABI_EXPLICIT_BZERO_TRUE@	bzero \
+@ABI_EXPLICIT_BZERO_TRUE@	explicit_bzero \
+@ABI_EXPLICIT_BZERO_TRUE@	# EOL
+
+@ABI_FGETLN_TRUE@am__append_5 = \
+@ABI_FGETLN_TRUE@	fgetln \
+@ABI_FGETLN_TRUE@	fparseln \
+@ABI_FGETLN_TRUE@	# EOL
+
+@ABI_FPURGE_TRUE@am__append_6 = fpurge
+@ABI_FUNOPEN_TRUE@am__append_7 = funopen
+@ABI_HUMANIZE_NUMBER_TRUE@am__append_8 = \
+@ABI_HUMANIZE_NUMBER_TRUE@	humanize \
+@ABI_HUMANIZE_NUMBER_TRUE@	# EOL
+
+@ABI_FPURGE_TRUE@am__append_9 = fpurge
+@ABI_FUNOPEN_TRUE@am__append_10 = funopen
+@ABI_MD5_TRUE@am__append_11 = md5
+@ABI_NLIST_TRUE@am__append_12 = nlist
+@ABI_PROGNAME_TRUE@am__append_13 = progname
+@ABI_PROCTITLE_TRUE@am__append_14 = \
+@ABI_PROCTITLE_TRUE@	proctitle-init \
+@ABI_PROCTITLE_TRUE@	# EOL
+
+@ABI_PROCTITLE_TRUE@@BUILD_LIBBSD_CTOR_TRUE@am__append_15 = proctitle
+@ABI_PWCACHE_TRUE@am__append_16 = \
+@ABI_PWCACHE_TRUE@	pwcache \
+@ABI_PWCACHE_TRUE@	# EOL
+
+@ABI_PROGNAME_TRUE@am__append_17 = progname
+@ABI_STRL_TRUE@am__append_18 = strl
+@ABI_STRMODE_TRUE@am__append_19 = strmode
+@ABI_STRNSTR_TRUE@am__append_20 = \
+@ABI_STRNSTR_TRUE@	strnstr \
+@ABI_STRNSTR_TRUE@	# EOL
+
+@ABI_STRTONUM_TRUE@am__append_21 = \
+@ABI_STRTONUM_TRUE@	strtonum \
+@ABI_STRTONUM_TRUE@	# EOL
+
+@ABI_VIS_TRUE@am__append_22 = \
+@ABI_VIS_TRUE@	vis \
+@ABI_VIS_TRUE@	vis-openbsd \
+@ABI_VIS_TRUE@	# EOL
+
+@LIBBSD_SYS_IS_TIME32_TRUE@am__append_23 = timeconv32
+@LIBBSD_SYS_HAS_TIME64_TRUE@am__append_24 = timeconv64
 subdir = test
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/m4/libbsd-compiler.m4 \
-	$(top_srcdir)/m4/libtool.m4 $(top_srcdir)/m4/ltoptions.m4 \
-	$(top_srcdir)/m4/ltsugar.m4 $(top_srcdir)/m4/ltversion.m4 \
-	$(top_srcdir)/m4/lt~obsolete.m4 $(top_srcdir)/configure.ac
+	$(top_srcdir)/m4/libbsd-funcs.m4 \
+	$(top_srcdir)/m4/libbsd-large.m4 \
+	$(top_srcdir)/m4/libbsd-linker.m4 $(top_srcdir)/m4/libtool.m4 \
+	$(top_srcdir)/m4/ltoptions.m4 $(top_srcdir)/m4/ltsugar.m4 \
+	$(top_srcdir)/m4/ltversion.m4 $(top_srcdir)/m4/lt~obsolete.m4 \
+	$(top_srcdir)/configure.ac
 am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 	$(ACLOCAL_M4)
 DIST_COMMON = $(srcdir)/Makefile.am $(am__DIST_COMMON)
@@ -111,13 +169,34 @@ mkinstalldirs = $(install_sh) -d
 CONFIG_HEADER = $(top_builddir)/config.h
 CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
-@HAVE_LIBTESTU01_TRUE@am__EXEEXT_1 = arc4random$(EXEEXT)
-@BUILD_LIBBSD_CTOR_TRUE@am__EXEEXT_2 = proctitle$(EXEEXT)
+@ABI_ACCMODE_TRUE@am__EXEEXT_1 = setmode$(EXEEXT)
+@ABI_ARC4RANDOM_TRUE@@HAVE_LIBTESTU01_TRUE@am__EXEEXT_2 = arc4random$(EXEEXT)
+@ABI_CLOSEFROM_TRUE@am__EXEEXT_3 = closefrom$(EXEEXT)
+@ABI_EXPLICIT_BZERO_TRUE@am__EXEEXT_4 = bzero$(EXEEXT) \
+@ABI_EXPLICIT_BZERO_TRUE@	explicit_bzero$(EXEEXT)
+@ABI_FGETLN_TRUE@am__EXEEXT_5 = fgetln$(EXEEXT) fparseln$(EXEEXT)
+@ABI_FPURGE_TRUE@am__EXEEXT_6 = fpurge$(EXEEXT)
+@ABI_FUNOPEN_TRUE@am__EXEEXT_7 = funopen$(EXEEXT)
+@ABI_HUMANIZE_NUMBER_TRUE@am__EXEEXT_8 = humanize$(EXEEXT)
+@ABI_MD5_TRUE@am__EXEEXT_9 = md5$(EXEEXT)
+@ABI_NLIST_TRUE@am__EXEEXT_10 = nlist$(EXEEXT)
+@ABI_PROGNAME_TRUE@am__EXEEXT_11 = progname$(EXEEXT)
+@ABI_PROCTITLE_TRUE@am__EXEEXT_12 = proctitle-init$(EXEEXT)
+@ABI_PROCTITLE_TRUE@@BUILD_LIBBSD_CTOR_TRUE@am__EXEEXT_13 = proctitle$(EXEEXT)
+@ABI_PWCACHE_TRUE@am__EXEEXT_14 = pwcache$(EXEEXT)
+@ABI_STRL_TRUE@am__EXEEXT_15 = strl$(EXEEXT)
+@ABI_STRMODE_TRUE@am__EXEEXT_16 = strmode$(EXEEXT)
+@ABI_STRNSTR_TRUE@am__EXEEXT_17 = strnstr$(EXEEXT)
+@ABI_STRTONUM_TRUE@am__EXEEXT_18 = strtonum$(EXEEXT)
+@ABI_VIS_TRUE@am__EXEEXT_19 = vis$(EXEEXT) vis-openbsd$(EXEEXT)
+@LIBBSD_SYS_IS_TIME32_TRUE@am__EXEEXT_20 = timeconv32$(EXEEXT)
+@LIBBSD_SYS_HAS_TIME64_TRUE@am__EXEEXT_21 = timeconv64$(EXEEXT)
 arc4random_SOURCES = arc4random.c
 arc4random_OBJECTS = arc4random.$(OBJEXT)
 am__DEPENDENCIES_1 =
-@HAVE_LIBTESTU01_TRUE@arc4random_DEPENDENCIES = $(LDADD) \
-@HAVE_LIBTESTU01_TRUE@	$(am__DEPENDENCIES_1)
+@ABI_ARC4RANDOM_TRUE@@HAVE_LIBTESTU01_TRUE@arc4random_DEPENDENCIES =  \
+@ABI_ARC4RANDOM_TRUE@@HAVE_LIBTESTU01_TRUE@	$(LDADD) \
+@ABI_ARC4RANDOM_TRUE@@HAVE_LIBTESTU01_TRUE@	$(am__DEPENDENCIES_1)
 AM_V_lt = $(am__v_lt_@AM_V@)
 am__v_lt_ = $(am__v_lt_@AM_DEFAULT_V@)
 am__v_lt_0 = --silent
@@ -138,15 +217,18 @@ explicit_bzero_SOURCES = explicit_bzero.c
 explicit_bzero_OBJECTS = explicit_bzero.$(OBJEXT)
 explicit_bzero_LDADD = $(LDADD)
 explicit_bzero_DEPENDENCIES = $(top_builddir)/src/libbsd.la
-am_fgetln_OBJECTS = fgetln-test-stream.$(OBJEXT) \
-	fgetln-fgetln.$(OBJEXT)
+am__fgetln_SOURCES_DIST = test-stream.c test-stream.h fgetln.c
+@ABI_FGETLN_TRUE@am_fgetln_OBJECTS = fgetln-test-stream.$(OBJEXT) \
+@ABI_FGETLN_TRUE@	fgetln-fgetln.$(OBJEXT)
 fgetln_OBJECTS = $(am_fgetln_OBJECTS)
 fgetln_LDADD = $(LDADD)
 fgetln_DEPENDENCIES = $(top_builddir)/src/libbsd.la
 fgetln_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CCLD) $(fgetln_CFLAGS) $(CFLAGS) \
 	$(AM_LDFLAGS) $(LDFLAGS) -o $@
-am_fparseln_OBJECTS = test-stream.$(OBJEXT) fparseln.$(OBJEXT)
+am__fparseln_SOURCES_DIST = test-stream.c test-stream.h fparseln.c
+@ABI_FGETLN_TRUE@am_fparseln_OBJECTS = test-stream.$(OBJEXT) \
+@ABI_FGETLN_TRUE@	fparseln.$(OBJEXT)
 fparseln_OBJECTS = $(am_fparseln_OBJECTS)
 fparseln_LDADD = $(LDADD)
 fparseln_DEPENDENCIES = $(top_builddir)/src/libbsd.la
@@ -164,8 +246,8 @@ humanize_LDADD = $(LDADD)
 humanize_DEPENDENCIES = $(top_builddir)/src/libbsd.la
 md5_SOURCES = md5.c
 md5_OBJECTS = md5.$(OBJEXT)
-@NEED_TRANSPARENT_LIBMD_TRUE@md5_DEPENDENCIES = $(LDADD) \
-@NEED_TRANSPARENT_LIBMD_TRUE@	$(am__DEPENDENCIES_1)
+@ABI_MD5_TRUE@@ABI_TRANSPARENT_LIBMD_TRUE@md5_DEPENDENCIES = $(LDADD) \
+@ABI_MD5_TRUE@@ABI_TRANSPARENT_LIBMD_TRUE@	$(am__DEPENDENCIES_1)
 nlist_SOURCES = nlist.c
 nlist_OBJECTS = nlist.$(OBJEXT)
 nlist_LDADD = $(LDADD)
@@ -181,7 +263,9 @@ proctitle_DEPENDENCIES = $(top_builddir)/src/libbsd.la
 proctitle_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CCLD) $(AM_CFLAGS) $(CFLAGS) \
 	$(proctitle_LDFLAGS) $(LDFLAGS) -o $@
-am_proctitle_init_OBJECTS = proctitle_init-proctitle.$(OBJEXT)
+am__proctitle_init_SOURCES_DIST = proctitle.c
+@ABI_PROCTITLE_TRUE@am_proctitle_init_OBJECTS =  \
+@ABI_PROCTITLE_TRUE@	proctitle_init-proctitle.$(OBJEXT)
 proctitle_init_OBJECTS = $(am_proctitle_init_OBJECTS)
 proctitle_init_LDADD = $(LDADD)
 proctitle_init_DEPENDENCIES = $(top_builddir)/src/libbsd.la
@@ -213,6 +297,14 @@ strtonum_SOURCES = strtonum.c
 strtonum_OBJECTS = strtonum.$(OBJEXT)
 strtonum_LDADD = $(LDADD)
 strtonum_DEPENDENCIES = $(top_builddir)/src/libbsd.la
+timeconv32_SOURCES = timeconv32.c
+timeconv32_OBJECTS = timeconv32.$(OBJEXT)
+timeconv32_LDADD = $(LDADD)
+timeconv32_DEPENDENCIES = $(top_builddir)/src/libbsd.la
+timeconv64_SOURCES = timeconv64.c
+timeconv64_OBJECTS = timeconv64.$(OBJEXT)
+timeconv64_LDADD = $(LDADD)
+timeconv64_DEPENDENCIES = $(top_builddir)/src/libbsd.la
 vis_SOURCES = vis.c
 vis_OBJECTS = vis.$(OBJEXT)
 vis_LDADD = $(LDADD)
@@ -249,6 +341,7 @@ am__depfiles_remade = ./$(DEPDIR)/arc4random.Po ./$(DEPDIR)/bzero.Po \
 	./$(DEPDIR)/setmode.Po ./$(DEPDIR)/strl.Po \
 	./$(DEPDIR)/strmode.Po ./$(DEPDIR)/strnstr.Po \
 	./$(DEPDIR)/strtonum.Po ./$(DEPDIR)/test-stream.Po \
+	./$(DEPDIR)/timeconv32.Po ./$(DEPDIR)/timeconv64.Po \
 	./$(DEPDIR)/vis-openbsd.Po ./$(DEPDIR)/vis.Po
 am__mv = mv -f
 COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
@@ -273,13 +366,15 @@ SOURCES = arc4random.c bzero.c closefrom.c endian.c explicit_bzero.c \
 	$(fgetln_SOURCES) $(fparseln_SOURCES) fpurge.c funopen.c \
 	humanize.c md5.c nlist.c overlay.c proctitle.c \
 	$(proctitle_init_SOURCES) progname.c pwcache.c setmode.c \
-	strl.c strmode.c strnstr.c strtonum.c vis.c vis-openbsd.c
+	strl.c strmode.c strnstr.c strtonum.c timeconv32.c \
+	timeconv64.c vis.c vis-openbsd.c
 DIST_SOURCES = arc4random.c bzero.c closefrom.c endian.c \
-	explicit_bzero.c $(fgetln_SOURCES) $(fparseln_SOURCES) \
-	fpurge.c funopen.c humanize.c md5.c nlist.c overlay.c \
-	proctitle.c $(proctitle_init_SOURCES) progname.c pwcache.c \
-	setmode.c strl.c strmode.c strnstr.c strtonum.c vis.c \
-	vis-openbsd.c
+	explicit_bzero.c $(am__fgetln_SOURCES_DIST) \
+	$(am__fparseln_SOURCES_DIST) fpurge.c funopen.c humanize.c \
+	md5.c nlist.c overlay.c proctitle.c \
+	$(am__proctitle_init_SOURCES_DIST) progname.c pwcache.c \
+	setmode.c strl.c strmode.c strnstr.c strtonum.c timeconv32.c \
+	timeconv64.c vis.c vis-openbsd.c
 am__can_run_installinfo = \
   case $$AM_UPDATE_INFO_DIR in \
     n|no|NO) false;; \
@@ -487,7 +582,6 @@ am__set_TESTS_bases = \
 AM_TESTSUITE_SUMMARY_HEADER = ' for $(PACKAGE_STRING)'
 RECHECK_LOGS = $(TEST_LOGS)
 AM_RECURSIVE_TARGETS = check recheck
-am__EXEEXT_3 = headers-overlay.sh headers-system.sh
 TEST_SUITE_LOG = test-suite.log
 TEST_EXTENSIONS = @EXEEXT@ .test
 LOG_DRIVER = $(SHELL) $(top_srcdir)/build-aux/test-driver
@@ -549,8 +643,9 @@ INSTALL_SCRIPT = @INSTALL_SCRIPT@
 INSTALL_STRIP_PROGRAM = @INSTALL_STRIP_PROGRAM@
 LD = @LD@
 LDFLAGS = @LDFLAGS@
-LIBBSD_ABI = @LIBBSD_ABI@
 LIBBSD_LIBS = @LIBBSD_LIBS@
+LIBBSD_SYS_HAS_TIME64 = @LIBBSD_SYS_HAS_TIME64@
+LIBBSD_SYS_TIME_BITS = @LIBBSD_SYS_TIME_BITS@
 LIBOBJS = @LIBOBJS@
 LIBS = @LIBS@
 LIBTOOL = @LIBTOOL@
@@ -580,6 +675,7 @@ RANLIB = @RANLIB@
 SED = @SED@
 SET_MAKE = @SET_MAKE@
 SHELL = @SHELL@
+SOVERSION = @SOVERSION@
 STRIP = @STRIP@
 TESTU01_LIBS = @TESTU01_LIBS@
 VERSION = @VERSION@
@@ -640,45 +736,61 @@ HEADERS_CPPFLAGS = \
 	-I$(top_builddir) \
 	-include $(top_builddir)/config.h \
 	-DLIBBSD_DISABLE_DEPRECATED \
-	-D__REENTRANT
+	-D__REENTRANT \
+	# EOL
 
 AM_CPPFLAGS = \
 	-isystem $(top_srcdir)/include/bsd/ \
 	$(HEADERS_CPPFLAGS) \
-	-DLIBBSD_OVERLAY
+	-DLIBBSD_OVERLAY \
+	# EOL
 
 AM_TESTS_ENVIRONMENT = \
 	export CC="$(CC)"; \
 	export CPPFLAGS="$(HEADERS_CPPFLAGS)"; \
 	export top_srcdir="$(top_srcdir)"; \
-	$(nil)
+	# EOL
 
 LDADD = $(top_builddir)/src/libbsd.la
 EXTRA_DIST = \
 	headers-overlay.sh \
 	headers-system.sh \
-	$(nil)
+	# EOL
 
 check_SCRIPTS = \
 	headers-overlay.sh \
 	headers-system.sh \
-	$(nil)
+	# EOL
 
-@HAVE_LIBTESTU01_TRUE@arc4random_LDADD = $(LDADD) $(TESTU01_LIBS)
-@BUILD_LIBBSD_CTOR_TRUE@proctitle_LDFLAGS = \
-@BUILD_LIBBSD_CTOR_TRUE@	-Wl,-u,libbsd_init_func \
-@BUILD_LIBBSD_CTOR_TRUE@	$(top_builddir)/src/libbsd-ctor.a \
-@BUILD_LIBBSD_CTOR_TRUE@	$(top_builddir)/src/libbsd.la \
-@BUILD_LIBBSD_CTOR_TRUE@	$(nil)
+@ABI_ARC4RANDOM_TRUE@@HAVE_LIBTESTU01_TRUE@arc4random_LDADD = $(LDADD) $(TESTU01_LIBS)
+@ABI_FGETLN_TRUE@fgetln_SOURCES = \
+@ABI_FGETLN_TRUE@	test-stream.c \
+@ABI_FGETLN_TRUE@	test-stream.h \
+@ABI_FGETLN_TRUE@	fgetln.c \
+@ABI_FGETLN_TRUE@	# EOL
+
+@ABI_FGETLN_TRUE@fgetln_CFLAGS = -Wno-deprecated-declarations
+@ABI_FGETLN_TRUE@fparseln_SOURCES = \
+@ABI_FGETLN_TRUE@	test-stream.c \
+@ABI_FGETLN_TRUE@	test-stream.h \
+@ABI_FGETLN_TRUE@	fparseln.c \
+@ABI_FGETLN_TRUE@	# EOL
 
 
 # On the installed system this is handled via the ld script.
-@NEED_TRANSPARENT_LIBMD_TRUE@md5_LDADD = $(LDADD) $(MD5_LIBS)
-fgetln_SOURCES = test-stream.c test-stream.h fgetln.c
-fgetln_CFLAGS = -Wno-deprecated-declarations
-fparseln_SOURCES = test-stream.c test-stream.h fparseln.c
-proctitle_init_SOURCES = proctitle.c
-proctitle_init_CPPFLAGS = $(AM_CPPFLAGS) -DTEST_USE_SETPROCTITLE_INIT=1
+@ABI_MD5_TRUE@@ABI_TRANSPARENT_LIBMD_TRUE@md5_LDADD = $(LDADD) $(MD5_LIBS)
+@ABI_PROCTITLE_TRUE@proctitle_init_SOURCES = \
+@ABI_PROCTITLE_TRUE@	proctitle.c \
+@ABI_PROCTITLE_TRUE@	# EOL
+
+@ABI_PROCTITLE_TRUE@proctitle_init_CPPFLAGS = $(AM_CPPFLAGS) -DTEST_USE_SETPROCTITLE_INIT=1
+@ABI_PROCTITLE_TRUE@@BUILD_LIBBSD_CTOR_TRUE@proctitle_LDFLAGS = \
+@ABI_PROCTITLE_TRUE@@BUILD_LIBBSD_CTOR_TRUE@	-Wl,-u,libbsd_init_func \
+@ABI_PROCTITLE_TRUE@@BUILD_LIBBSD_CTOR_TRUE@	$(top_builddir)/src/libbsd-ctor.a \
+@ABI_PROCTITLE_TRUE@@BUILD_LIBBSD_CTOR_TRUE@	$(top_builddir)/src/libbsd.la \
+@ABI_PROCTITLE_TRUE@@BUILD_LIBBSD_CTOR_TRUE@	# EOL
+
+TESTS = $(check_SCRIPTS) $(check_PROGRAMS)
 all: all-am
 
 .SUFFIXES:
@@ -810,6 +922,14 @@ strtonum$(EXEEXT): $(strtonum_OBJECTS) $(strtonum_DEPENDENCIES) $(EXTRA_strtonum
 	@rm -f strtonum$(EXEEXT)
 	$(AM_V_CCLD)$(LINK) $(strtonum_OBJECTS) $(strtonum_LDADD) $(LIBS)
 
+timeconv32$(EXEEXT): $(timeconv32_OBJECTS) $(timeconv32_DEPENDENCIES) $(EXTRA_timeconv32_DEPENDENCIES) 
+	@rm -f timeconv32$(EXEEXT)
+	$(AM_V_CCLD)$(LINK) $(timeconv32_OBJECTS) $(timeconv32_LDADD) $(LIBS)
+
+timeconv64$(EXEEXT): $(timeconv64_OBJECTS) $(timeconv64_DEPENDENCIES) $(EXTRA_timeconv64_DEPENDENCIES) 
+	@rm -f timeconv64$(EXEEXT)
+	$(AM_V_CCLD)$(LINK) $(timeconv64_OBJECTS) $(timeconv64_LDADD) $(LIBS)
+
 vis$(EXEEXT): $(vis_OBJECTS) $(vis_DEPENDENCIES) $(EXTRA_vis_DEPENDENCIES) 
 	@rm -f vis$(EXEEXT)
 	$(AM_V_CCLD)$(LINK) $(vis_OBJECTS) $(vis_LDADD) $(LIBS)
@@ -848,6 +968,8 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/strnstr.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/strtonum.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/test-stream.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/timeconv32.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/timeconv64.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/vis-openbsd.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/vis.Po@am__quote@ # am--include-marker
 
@@ -1143,9 +1265,23 @@ overlay.log: overlay$(EXEEXT)
 	--log-file $$b.log --trs-file $$b.trs \
 	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
 	"$$tst" $(AM_TESTS_FD_REDIRECT)
-bzero.log: bzero$(EXEEXT)
-	@p='bzero$(EXEEXT)'; \
-	b='bzero'; \
+endian.log: endian$(EXEEXT)
+	@p='endian$(EXEEXT)'; \
+	b='endian'; \
+	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
+	--log-file $$b.log --trs-file $$b.trs \
+	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
+	"$$tst" $(AM_TESTS_FD_REDIRECT)
+setmode.log: setmode$(EXEEXT)
+	@p='setmode$(EXEEXT)'; \
+	b='setmode'; \
+	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
+	--log-file $$b.log --trs-file $$b.trs \
+	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
+	"$$tst" $(AM_TESTS_FD_REDIRECT)
+arc4random.log: arc4random$(EXEEXT)
+	@p='arc4random$(EXEEXT)'; \
+	b='arc4random'; \
 	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
 	--log-file $$b.log --trs-file $$b.trs \
 	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
@@ -1157,9 +1293,9 @@ closefrom.log: closefrom$(EXEEXT)
 	--log-file $$b.log --trs-file $$b.trs \
 	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
 	"$$tst" $(AM_TESTS_FD_REDIRECT)
-endian.log: endian$(EXEEXT)
-	@p='endian$(EXEEXT)'; \
-	b='endian'; \
+bzero.log: bzero$(EXEEXT)
+	@p='bzero$(EXEEXT)'; \
+	b='bzero'; \
 	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
 	--log-file $$b.log --trs-file $$b.trs \
 	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
@@ -1171,23 +1307,9 @@ explicit_bzero.log: explicit_bzero$(EXEEXT)
 	--log-file $$b.log --trs-file $$b.trs \
 	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
 	"$$tst" $(AM_TESTS_FD_REDIRECT)
-humanize.log: humanize$(EXEEXT)
-	@p='humanize$(EXEEXT)'; \
-	b='humanize'; \
-	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
-	--log-file $$b.log --trs-file $$b.trs \
-	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
-	"$$tst" $(AM_TESTS_FD_REDIRECT)
 fgetln.log: fgetln$(EXEEXT)
 	@p='fgetln$(EXEEXT)'; \
 	b='fgetln'; \
-	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
-	--log-file $$b.log --trs-file $$b.trs \
-	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
-	"$$tst" $(AM_TESTS_FD_REDIRECT)
-funopen.log: funopen$(EXEEXT)
-	@p='funopen$(EXEEXT)'; \
-	b='funopen'; \
 	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
 	--log-file $$b.log --trs-file $$b.trs \
 	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
@@ -1206,6 +1328,20 @@ fpurge.log: fpurge$(EXEEXT)
 	--log-file $$b.log --trs-file $$b.trs \
 	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
 	"$$tst" $(AM_TESTS_FD_REDIRECT)
+funopen.log: funopen$(EXEEXT)
+	@p='funopen$(EXEEXT)'; \
+	b='funopen'; \
+	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
+	--log-file $$b.log --trs-file $$b.trs \
+	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
+	"$$tst" $(AM_TESTS_FD_REDIRECT)
+humanize.log: humanize$(EXEEXT)
+	@p='humanize$(EXEEXT)'; \
+	b='humanize'; \
+	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
+	--log-file $$b.log --trs-file $$b.trs \
+	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
+	"$$tst" $(AM_TESTS_FD_REDIRECT)
 md5.log: md5$(EXEEXT)
 	@p='md5$(EXEEXT)'; \
 	b='md5'; \
@@ -1220,13 +1356,6 @@ nlist.log: nlist$(EXEEXT)
 	--log-file $$b.log --trs-file $$b.trs \
 	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
 	"$$tst" $(AM_TESTS_FD_REDIRECT)
-proctitle-init.log: proctitle-init$(EXEEXT)
-	@p='proctitle-init$(EXEEXT)'; \
-	b='proctitle-init'; \
-	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
-	--log-file $$b.log --trs-file $$b.trs \
-	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
-	"$$tst" $(AM_TESTS_FD_REDIRECT)
 progname.log: progname$(EXEEXT)
 	@p='progname$(EXEEXT)'; \
 	b='progname'; \
@@ -1234,16 +1363,23 @@ progname.log: progname$(EXEEXT)
 	--log-file $$b.log --trs-file $$b.trs \
 	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
 	"$$tst" $(AM_TESTS_FD_REDIRECT)
-pwcache.log: pwcache$(EXEEXT)
-	@p='pwcache$(EXEEXT)'; \
-	b='pwcache'; \
+proctitle-init.log: proctitle-init$(EXEEXT)
+	@p='proctitle-init$(EXEEXT)'; \
+	b='proctitle-init'; \
 	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
 	--log-file $$b.log --trs-file $$b.trs \
 	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
 	"$$tst" $(AM_TESTS_FD_REDIRECT)
-setmode.log: setmode$(EXEEXT)
-	@p='setmode$(EXEEXT)'; \
-	b='setmode'; \
+proctitle.log: proctitle$(EXEEXT)
+	@p='proctitle$(EXEEXT)'; \
+	b='proctitle'; \
+	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
+	--log-file $$b.log --trs-file $$b.trs \
+	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
+	"$$tst" $(AM_TESTS_FD_REDIRECT)
+pwcache.log: pwcache$(EXEEXT)
+	@p='pwcache$(EXEEXT)'; \
+	b='pwcache'; \
 	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
 	--log-file $$b.log --trs-file $$b.trs \
 	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
@@ -1290,16 +1426,16 @@ vis-openbsd.log: vis-openbsd$(EXEEXT)
 	--log-file $$b.log --trs-file $$b.trs \
 	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
 	"$$tst" $(AM_TESTS_FD_REDIRECT)
-arc4random.log: arc4random$(EXEEXT)
-	@p='arc4random$(EXEEXT)'; \
-	b='arc4random'; \
+timeconv32.log: timeconv32$(EXEEXT)
+	@p='timeconv32$(EXEEXT)'; \
+	b='timeconv32'; \
 	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
 	--log-file $$b.log --trs-file $$b.trs \
 	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
 	"$$tst" $(AM_TESTS_FD_REDIRECT)
-proctitle.log: proctitle$(EXEEXT)
-	@p='proctitle$(EXEEXT)'; \
-	b='proctitle'; \
+timeconv64.log: timeconv64$(EXEEXT)
+	@p='timeconv64$(EXEEXT)'; \
+	b='timeconv64'; \
 	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
 	--log-file $$b.log --trs-file $$b.trs \
 	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
@@ -1420,6 +1556,8 @@ distclean: distclean-am
 	-rm -f ./$(DEPDIR)/strnstr.Po
 	-rm -f ./$(DEPDIR)/strtonum.Po
 	-rm -f ./$(DEPDIR)/test-stream.Po
+	-rm -f ./$(DEPDIR)/timeconv32.Po
+	-rm -f ./$(DEPDIR)/timeconv64.Po
 	-rm -f ./$(DEPDIR)/vis-openbsd.Po
 	-rm -f ./$(DEPDIR)/vis.Po
 	-rm -f Makefile
@@ -1491,6 +1629,8 @@ maintainer-clean: maintainer-clean-am
 	-rm -f ./$(DEPDIR)/strnstr.Po
 	-rm -f ./$(DEPDIR)/strtonum.Po
 	-rm -f ./$(DEPDIR)/test-stream.Po
+	-rm -f ./$(DEPDIR)/timeconv32.Po
+	-rm -f ./$(DEPDIR)/timeconv64.Po
 	-rm -f ./$(DEPDIR)/vis-openbsd.Po
 	-rm -f ./$(DEPDIR)/vis.Po
 	-rm -f Makefile
